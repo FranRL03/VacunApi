@@ -4,8 +4,8 @@ import java.util.List;
 
 public record EditVacunaDto(
         String nombre,
-        String descripcionEnfermedad,
-        List<GetCalendarioDeVacunaDto> calendarios
+        String descripcionEnfermedad
+        //List<Long> calendarios
 ) {
 
 }

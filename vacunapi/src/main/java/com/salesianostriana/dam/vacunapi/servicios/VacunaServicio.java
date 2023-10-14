@@ -8,7 +8,7 @@ import com.salesianostriana.dam.vacunapi.repositorios.VacunaRepositorio;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 @Service
@@ -19,8 +19,6 @@ public class VacunaServicio {
 
     private final CalendarioRepositorio calendarioRepositorio;
 
-    private final CalendarioServicio calendarioServicio;
-
     public Vacuna save(EditVacunaDto nuevo){
 
         Vacuna v = new Vacuna();
@@ -28,13 +26,13 @@ public class VacunaServicio {
         v.setNombre(nuevo.nombre());
         v.setDescripcionEnfermedad(nuevo.descripcionEnfermedad());
 
-        List<Calendario> calendarios = nuevo.calendarios()
-                .stream()
-                .map(calendarioRepositorio::getReferenceById)
-                .toList();
-
-
-        v.setMomentos(calendarios);
+//        List<Calendario> calendarios = nuevo.calendarios()
+//                .stream()
+//                .map(calendarioRepositorio::getReferenceById)
+//                .toList();
+//
+//
+//        v.setMomentos(calendarios);
 
         return repositorio.save(v);
     }
