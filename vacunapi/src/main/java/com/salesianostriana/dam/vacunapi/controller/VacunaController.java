@@ -1,5 +1,7 @@
 package com.salesianostriana.dam.vacunapi.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.salesianostriana.dam.vacunapi.View.VacunaView.*;
 import com.salesianostriana.dam.vacunapi.dto.EditVacunaDto;
 import com.salesianostriana.dam.vacunapi.dto.GetVacunaDto;
 import com.salesianostriana.dam.vacunapi.modelo.Vacuna;
@@ -15,10 +17,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /*
 http://localhost:8080/swagger-ui/index.html
@@ -64,5 +65,52 @@ public class VacunaController {
         return ResponseEntity
                 .status(201)
                 .body(GetVacunaDto.of(v));
+    }
+
+    @Operation(summary = "Muestra una lista de las vacunas")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Lista de las vacunas que hay en la base de datos",
+                    content = { @Content(mediaType = "aplication/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Vacuna.class)),
+                            examples = {@ExampleObject(
+                                    value = """
+                                            [
+                                                {
+                                                    "id": 1, 
+                                                    "nombre": "Viruela"
+                                                }
+                                            ]
+                                            """
+                            )}
+                    )}),
+
+            @ApiResponse(responseCode = "404",
+                    description = "Not found",
+                    content = @Content)
+    })
+    @GetMapping("/")
+    @JsonView(VacunaList.class)
+    public ResponseEntity<List<GetVacunaDto>> findAll (){
+
+        List<Vacuna> vacunas = vacunaRepositorio.findAll();
+
+        if (vacunas.isEmpty())
+            return ResponseEntity.notFound().build();
+
+        return ResponseEntity.ok(
+                vacunas.stream()
+                        .map(GetVacunaDto::of)
+                        .toList()
+        );
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id){
+
+        if(vacunaRepositorio.existsById(id))
+            vacunaRepositorio.deleteById(id);
+
+        return ResponseEntity.noContent().build();
     }
 }
