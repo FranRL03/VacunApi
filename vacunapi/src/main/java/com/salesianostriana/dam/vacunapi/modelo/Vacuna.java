@@ -1,5 +1,6 @@
 package com.salesianostriana.dam.vacunapi.modelo;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,9 +16,14 @@ import java.util.List;
 public class Vacuna {
 
     @Id @GeneratedValue
+    @Schema(example = "1", description = "Identificador clave primaria vacuna")
     private Long id;
 
-    private String nombre, descripcionEnfermedad;
+    @Schema(example = "Varicela", description = "Nombre de la vacuna")
+    private String nombre;
+
+    @Schema(example = "Puntitos rojos con irritación")
+    private String descripcionEnfermedad;
 
     @OneToMany(mappedBy = "vacuna", fetch = FetchType.EAGER)
     private List<Calendario> momentos = new ArrayList<>();
