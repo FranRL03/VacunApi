@@ -104,4 +104,17 @@ public class VacunaController {
                         .toList()
         );
     }
+
+    @Operation(summary = "Borra una vacuna por su id")
+    @ApiResponse(responseCode = "204 No Content",
+            description = "Borrado con éxito",
+            content = @Content)
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id){
+
+        if(vacunaRepositorio.existsById(id))
+            vacunaRepositorio.deleteById(id);
+
+        return ResponseEntity.noContent().build();
+    }
 }
