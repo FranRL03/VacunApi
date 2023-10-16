@@ -67,50 +67,5 @@ public class VacunaController {
                 .body(GetVacunaDto.of(v));
     }
 
-    @Operation(summary = "Muestra una lista de las vacunas")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",
-                    description = "Lista de las vacunas que hay en la base de datos",
-                    content = { @Content(mediaType = "aplication/json",
-                            array = @ArraySchema(schema = @Schema(implementation = Vacuna.class)),
-                            examples = {@ExampleObject(
-                                    value = """
-                                            [
-                                                {
-                                                    "id": 1, 
-                                                    "nombre": "Viruela"
-                                                }
-                                            ]
-                                            """
-                            )}
-                    )}),
-
-            @ApiResponse(responseCode = "404",
-                    description = "Not found",
-                    content = @Content)
-    })
-    @GetMapping("/")
-    @JsonView(VacunaList.class)
-    public ResponseEntity<List<GetVacunaDto>> findAll (){
-
-        List<Vacuna> vacunas = vacunaRepositorio.findAll();
-
-        if (vacunas.isEmpty())
-            return ResponseEntity.notFound().build();
-
-        return ResponseEntity.ok(
-                vacunas.stream()
-                        .map(GetVacunaDto::of)
-                        .toList()
-        );
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id){
-
-        if(vacunaRepositorio.existsById(id))
-            vacunaRepositorio.deleteById(id);
-
-        return ResponseEntity.noContent().build();
-    }
+    
 }
