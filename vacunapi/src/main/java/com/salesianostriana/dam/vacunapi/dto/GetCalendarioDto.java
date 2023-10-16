@@ -1,5 +1,7 @@
 package com.salesianostriana.dam.vacunapi.dto;
 
+import com.salesianostriana.dam.vacunapi.modelo.Calendario;
+
 import java.util.List;
 
 public record GetCalendarioDto(
@@ -15,5 +17,15 @@ public record GetCalendarioDto(
         String discriminante
 ) {
 
+    public static GetCalendarioDto of (Calendario c){
+
+        return new GetCalendarioDto(
+                c.getId(),
+                c.getEdad(),
+                c.getTipoDosis(),
+                c.getRecomendaciones(),
+                c.getRecomendaciones()
+        );
+    }
 
 }
