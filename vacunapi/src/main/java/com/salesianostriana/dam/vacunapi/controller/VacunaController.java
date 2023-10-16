@@ -3,6 +3,7 @@ package com.salesianostriana.dam.vacunapi.controller;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.salesianostriana.dam.vacunapi.View.VacunaView.*;
 import com.salesianostriana.dam.vacunapi.dto.EditVacunaDto;
+import com.salesianostriana.dam.vacunapi.dto.GetCalendarioDeVacunaDto;
 import com.salesianostriana.dam.vacunapi.dto.GetVacunaDto;
 import com.salesianostriana.dam.vacunapi.modelo.Vacuna;
 import com.salesianostriana.dam.vacunapi.repositorios.VacunaRepositorio;
@@ -93,16 +94,26 @@ public class VacunaController {
     @JsonView(VacunaList.class)
     public ResponseEntity<List<GetVacunaDto>> findAll (){
 
-        List<Vacuna> vacunas = vacunaRepositorio.findAll();
+        //List<Vacuna> vacunas = vacunaRepositorio.findAll();
 
-        if (vacunas.isEmpty())
+        if (vacunaServicio.findAll().isEmpty())
             return ResponseEntity.notFound().build();
 
         return ResponseEntity.ok(
-                vacunas.stream()
+                vacunaServicio.findAll().stream()
                         .map(GetVacunaDto::of)
                         .toList()
         );
+    }
+
+    @GetMapping("/{id}")
+    @JsonView(VacunaDetails.class)
+    public ResponseEntity<GetVacunaDto> findById(@PathVariable Long id){
+
+        return ResponseEntity.of(vacunaServicio.findById(id)
+                .map(GetVacunaDto::find));
+
+
     }
 
     @Operation(summary = "Borra una vacuna por su id")

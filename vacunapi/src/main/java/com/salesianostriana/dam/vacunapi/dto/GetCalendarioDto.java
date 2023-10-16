@@ -24,7 +24,7 @@ public record GetCalendarioDto(
                 c.getEdad(),
                 c.getTipoDosis(),
                 c.getRecomendaciones(),
-                c.getRecomendaciones()
+                c.getDiscriminante()
         );
     }
 
