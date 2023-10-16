@@ -3,7 +3,6 @@ package com.salesianostriana.dam.vacunapi.controller;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.salesianostriana.dam.vacunapi.View.VacunaView.*;
 import com.salesianostriana.dam.vacunapi.dto.EditVacunaDto;
-import com.salesianostriana.dam.vacunapi.dto.GetCalendarioDeVacunaDto;
 import com.salesianostriana.dam.vacunapi.dto.GetVacunaDto;
 import com.salesianostriana.dam.vacunapi.modelo.Vacuna;
 import com.salesianostriana.dam.vacunapi.repositorios.VacunaRepositorio;
@@ -106,9 +105,41 @@ public class VacunaController {
         );
     }
 
+    @Operation(summary = "Buscas una vacuna por su id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Vacuna por id",
+                    content = { @Content(mediaType = "aplication/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Vacuna.class)),
+                            examples = {@ExampleObject(
+                                    value = """
+                                            { “id”: 1, 
+                                            “nombre”: “Nombre vacuna”, 
+                                            “descripcion”: “Esta vacuna sirve para . . .”, 
+                                            “momentos”: [
+                                                 {“id”: 2, 
+                                                 “edad”: 2 meses”, 
+                                                 “tipoDosis”: “Primera”, 
+                                                 “recomendaciones”: “aplicar hielo tras la administración”, 
+                                                 “discriminante”: “T”},
+                                                 ...
+                                              ] }
+                                              
+                                            """
+                            )}
+                    )}),
+
+            @ApiResponse(responseCode = "404",
+                    description = "Error al crear una vacuna",
+                    content = @Content)
+    })
     @GetMapping("/{id}")
     @JsonView(VacunaDetails.class)
     public ResponseEntity<GetVacunaDto> findById(@PathVariable Long id){
+
+
+        if (vacunaServicio.findAll().isEmpty())
+            return ResponseEntity.notFound().build();
 
         return ResponseEntity.of(vacunaServicio.findById(id)
                 .map(GetVacunaDto::find));

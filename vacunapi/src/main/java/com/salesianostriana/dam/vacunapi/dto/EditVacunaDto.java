@@ -1,5 +1,6 @@
 package com.salesianostriana.dam.vacunapi.dto;
 
+import java.util.Arrays;
 import java.util.List;
 
 public record EditVacunaDto(
@@ -7,5 +8,7 @@ public record EditVacunaDto(
         String descripcionEnfermedad
         //List<Long> calendarios
 ) {
+
+
 
 }
