@@ -147,6 +147,19 @@ public class VacunaController {
 
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<GetVacunaDto> edit (@PathVariable Long id,
+                                              @RequestBody EditVacunaDto editVacuna){
+
+        if (vacunaServicio.findAll().isEmpty())
+            return ResponseEntity.notFound().build();
+
+        return ResponseEntity.ok(
+                GetVacunaDto.of(
+                        vacunaServicio.edit(editVacuna, id)));
+
+    }
+
     @Operation(summary = "Borra una vacuna por su id")
     @ApiResponse(responseCode = "204 No Content",
             description = "Borrado con éxito",
