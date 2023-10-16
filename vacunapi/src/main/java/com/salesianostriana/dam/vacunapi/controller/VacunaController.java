@@ -93,16 +93,58 @@ public class VacunaController {
     @JsonView(VacunaList.class)
     public ResponseEntity<List<GetVacunaDto>> findAll (){
 
-        List<Vacuna> vacunas = vacunaRepositorio.findAll();
+        //List<Vacuna> vacunas = vacunaRepositorio.findAll();
 
-        if (vacunas.isEmpty())
+        if (vacunaServicio.findAll().isEmpty())
             return ResponseEntity.notFound().build();
 
         return ResponseEntity.ok(
-                vacunas.stream()
+                vacunaServicio.findAll().stream()
                         .map(GetVacunaDto::of)
                         .toList()
         );
+    }
+
+    @Operation(summary = "Buscas una vacuna por su id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Vacuna por id",
+                    content = { @Content(mediaType = "aplication/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Vacuna.class)),
+                            examples = {@ExampleObject(
+                                    value = """
+                                            { “id”: 1, 
+                                            “nombre”: “Nombre vacuna”, 
+                                            “descripcion”: “Esta vacuna sirve para . . .”, 
+                                            “momentos”: [
+                                                 {“id”: 2, 
+                                                 “edad”: 2 meses”, 
+                                                 “tipoDosis”: “Primera”, 
+                                                 “recomendaciones”: “aplicar hielo tras la administración”, 
+                                                 “discriminante”: “T”},
+                                                 ...
+                                              ] }
+                                              
+                                            """
+                            )}
+                    )}),
+
+            @ApiResponse(responseCode = "404",
+                    description = "Error al crear una vacuna",
+                    content = @Content)
+    })
+    @GetMapping("/{id}")
+    @JsonView(VacunaDetails.class)
+    public ResponseEntity<GetVacunaDto> findById(@PathVariable Long id){
+
+
+        if (vacunaServicio.findAll().isEmpty())
+            return ResponseEntity.notFound().build();
+
+        return ResponseEntity.of(vacunaServicio.findById(id)
+                .map(GetVacunaDto::find));
+
+
     }
 
     @Operation(summary = "Borra una vacuna por su id")

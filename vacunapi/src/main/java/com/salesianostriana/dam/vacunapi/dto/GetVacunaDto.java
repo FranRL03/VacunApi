@@ -13,23 +13,40 @@ public record GetVacunaDto(
 
         @JsonView(VacunaList.class)
         String nombre,
-        String descripcionEnfermedad
-        //List<GetCalendarioDeVacunaDto> calendario
+
+        @JsonView(VacunaDetails.class)
+        String descripcionEnfermedad,
+
+        @JsonView(VacunaDetails.class)
+        List<GetCalendarioDeVacunaDto> calendario
 ) {
 
+    //@JsonView(VacunaList.class)
     public static GetVacunaDto of (Vacuna v){
 
         return new GetVacunaDto(
                 v.getId(),
                 v.getNombre(),
-                v.getDescripcionEnfermedad()
-//                v.getMomentos()
-//                        .stream()
-//                        .map(GetCalendarioDeVacunaDto::of)
-                        //.toList()
+                v.getDescripcionEnfermedad(),
+                v.getMomentos()
+                        .stream()
+                        .map(GetCalendarioDeVacunaDto::of)
+                        .toList()
         );
     }
 
-
+    //@JsonView(VacunaDetails.class)
+    public static GetVacunaDto find (Vacuna v2){
+        
+        return new GetVacunaDto(
+                v2.getId(),
+                v2.getNombre(),
+                v2.getDescripcionEnfermedad(),
+                v2.getMomentos()
+                        .stream()
+                        .map(GetCalendarioDeVacunaDto::of)
+                        .toList()
+        );
+    }
 
 }
