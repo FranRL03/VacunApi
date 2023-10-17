@@ -37,7 +37,7 @@ public record GetVacunaDto(
 
     //@JsonView(VacunaDetails.class)
     public static GetVacunaDto find (Vacuna v2){
-        
+
         return new GetVacunaDto(
                 v2.getId(),
                 v2.getNombre(),

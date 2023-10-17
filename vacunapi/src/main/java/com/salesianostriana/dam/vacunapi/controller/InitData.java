@@ -1,5 +1,6 @@
 package com.salesianostriana.dam.vacunapi.controller;
 
+import com.salesianostriana.dam.vacunapi.View.VacunaView;
 import com.salesianostriana.dam.vacunapi.modelo.Calendario;
 import com.salesianostriana.dam.vacunapi.modelo.Vacuna;
 import com.salesianostriana.dam.vacunapi.repositorios.CalendarioRepositorio;
@@ -41,7 +42,6 @@ public class InitData {
                 .descripcionEnfermedad("Alergia contra el polen y los ácaros")
                 .momentos(List.of(c1, c2))
                 .build();
-
         vacunaRepositorio.save(v);
 
     }
