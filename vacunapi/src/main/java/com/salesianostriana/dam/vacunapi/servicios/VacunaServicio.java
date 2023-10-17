@@ -56,15 +56,14 @@ public class VacunaServicio {
     }
 
     public Vacuna edit(EditVacunaDto editVacuna, Long id){
-
-        Optional<Vacuna> encontrado = repositorio.findById(id);
-        Vacuna edit = encontrado.get();
-        edit.setNombre(editVacuna.nombre());
-        edit.setDescripcionEnfermedad(editVacuna.descripcionEnfermedad());
-
-        return repositorio.save(edit);
-
-
+        if(repositorio.findById(id).isPresent()) {
+            Optional<Vacuna> encontrado = repositorio.findById(id);
+            Vacuna edit = encontrado.get();
+            edit.setNombre(editVacuna.nombre());
+            edit.setDescripcionEnfermedad(editVacuna.descripcionEnfermedad());
+            return repositorio.save(edit);
+        }
+    return null;
     }
 
 }

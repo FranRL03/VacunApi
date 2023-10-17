@@ -21,26 +21,30 @@ public class InitData {
     @PostConstruct
     public void init(){
 
+        Vacuna v = Vacuna.builder()
+                .nombre("Alergia")
+                .descripcionEnfermedad("Alergia contra el polen y los ácaros")
+                //.momentos(List.of(c1, c2))
+                .build();
+
         Calendario c1 = Calendario.builder()
                 .edad(2)
                 .tipoDosis("Segunda")
                 .recomendaciones("Reposo durante el día")
                 .discriminante("T")
+                .vacuna(v)
                 .build();
         Calendario c2 = Calendario.builder()
                 .edad(6)
                 .tipoDosis("Refuerzo")
                 .recomendaciones("Ponerse frío")
                 .discriminante("H")
+                .vacuna(v)
                 .build();
 
         calendarioRepositorio.saveAll(List.of(c1, c2));
 
-        Vacuna v = Vacuna.builder()
-                .nombre("Alergia")
-                .descripcionEnfermedad("Alergia contra el polen y los ácaros")
-                .momentos(List.of(c1, c2))
-                .build();
+        v.setMomentos(List.of(c1, c2));
 
         vacunaRepositorio.save(v);
 

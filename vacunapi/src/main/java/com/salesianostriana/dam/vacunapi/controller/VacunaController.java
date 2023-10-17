@@ -147,6 +147,7 @@ public class VacunaController {
 
     }
 
+    @JsonView(VacunaList.class)
     @PutMapping("/{id}")
     public ResponseEntity<GetVacunaDto> edit (@PathVariable Long id,
                                               @RequestBody EditVacunaDto editVacuna){
