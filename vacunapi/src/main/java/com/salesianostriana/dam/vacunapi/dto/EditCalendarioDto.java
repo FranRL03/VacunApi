@@ -2,6 +2,8 @@ package com.salesianostriana.dam.vacunapi.dto;
 
 import com.salesianostriana.dam.vacunapi.modelo.Vacuna;
 
+import java.util.List;
+
 public record EditCalendarioDto(
 
         int edad,
@@ -12,7 +14,7 @@ public record EditCalendarioDto(
 
         String discriminante,
 
-        Vacuna vacuna
+        List<Long> vacuna
 ) {
 
 }
