@@ -49,7 +49,7 @@ public class VacunaServicio {
 
     public Optional<Vacuna> findById(Long id){
 
-      Optional<Vacuna> encontrado = repositorio.findById(id);
+      Optional<Vacuna> encontrado = Optional.of(repositorio.getReferenceById(id));
 
       return encontrado;
 
@@ -57,13 +57,17 @@ public class VacunaServicio {
 
     public Vacuna edit(EditVacunaDto editVacuna, Long id){
         if(repositorio.findById(id).isPresent()) {
-            Optional<Vacuna> encontrado = repositorio.findById(id);
+            Optional<Vacuna> encontrado = Optional.of(repositorio.getReferenceById(id));
             Vacuna edit = encontrado.get();
             edit.setNombre(editVacuna.nombre());
             edit.setDescripcionEnfermedad(editVacuna.descripcionEnfermedad());
             return repositorio.save(edit);
         }
     return null;
+    }
+
+    public Vacuna getReferenceByIdCreate(Long id) {
+        return repositorio.getReferenceById(id);
     }
 
 }

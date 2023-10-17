@@ -2,22 +2,24 @@ package com.salesianostriana.dam.vacunapi.dto;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import static com.salesianostriana.dam.vacunapi.View.VacunaView.*;
+
+import com.salesianostriana.dam.vacunapi.View.CalendarioView;
 import com.salesianostriana.dam.vacunapi.modelo.Vacuna;
 
 import java.util.List;
 
 public record GetVacunaDto(
 
-        @JsonView(VacunaList.class)
+        @JsonView({VacunaList.class})
         Long id,
 
-        @JsonView(VacunaList.class)
+        @JsonView({VacunaList.class})
         String nombre,
 
-        @JsonView(VacunaDetails.class)
+        @JsonView({VacunaDetails.class})
         String descripcionEnfermedad,
 
-        @JsonView(VacunaDetails.class)
+        @JsonView({VacunaDetails.class})
         List<GetCalendarioDeVacunaDto> calendario
 ) {
 

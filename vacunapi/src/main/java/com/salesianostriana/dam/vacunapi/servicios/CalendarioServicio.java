@@ -8,7 +8,8 @@ import com.salesianostriana.dam.vacunapi.repositorios.VacunaRepositorio;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Optional;
+
 
 @Service
 @RequiredArgsConstructor
@@ -27,10 +28,12 @@ public class CalendarioServicio {
         c.setRecomendaciones(nuevo.recomendaciones());
         c.setDiscriminante(nuevo.discriminante());
 
-        List<Vacuna> v = nuevo.vacuna()
-                .stream()
-                .map(vacunaRepositorio::getReferenceById)
-                .toList();
+
+        Optional<Vacuna> va = Optional.ofNullable(vacunaServicio.getReferenceByIdCreate(nuevo.idVacuna()));
+        c.setVacuna(va.orElseThrow());
+
+//        c.getVacuna().getNombre();
+//        c.getVacuna().getDescripcionEnfermedad();
 
         return repositorio.save(c);
 

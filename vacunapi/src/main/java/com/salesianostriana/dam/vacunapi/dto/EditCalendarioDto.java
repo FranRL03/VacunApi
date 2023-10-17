@@ -14,7 +14,7 @@ public record EditCalendarioDto(
 
         String discriminante,
 
-        List<Long> vacuna
+       Long idVacuna
 ) {
 
 }
