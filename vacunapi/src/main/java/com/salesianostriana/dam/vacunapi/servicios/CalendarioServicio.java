@@ -8,6 +8,7 @@ import com.salesianostriana.dam.vacunapi.repositorios.VacunaRepositorio;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -37,6 +38,16 @@ public class CalendarioServicio {
 
         return repositorio.save(c);
 
+    }
+
+    public List<Calendario> findAll(){
+
+        return repositorio.findAll();
+    }
+
+    public Calendario getReferenceByIdCreate(Long id) {
+
+        return repositorio.getReferenceById(id);
     }
 
 }
