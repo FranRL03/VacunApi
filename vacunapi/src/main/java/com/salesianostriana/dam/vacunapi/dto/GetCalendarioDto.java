@@ -18,7 +18,7 @@ public record GetCalendarioDto(
 
         String discriminante,
 
-        Vacuna vacuna
+        Long idVacuna
 
 ) {
 
@@ -31,7 +31,7 @@ public record GetCalendarioDto(
                 c.getTipoDosis(),
                 c.getRecomendaciones(),
                 c.getDiscriminante(),
-                c.getVacuna()
+                c.getVacuna().getId()
         );
     }
 
