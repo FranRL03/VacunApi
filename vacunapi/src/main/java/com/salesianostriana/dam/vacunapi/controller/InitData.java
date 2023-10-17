@@ -27,6 +27,8 @@ public class InitData {
                 //.momentos(List.of(c1, c2))
                 .build();
 
+        vacunaRepositorio.save(v);
+
         Calendario c1 = Calendario.builder()
                 .edad(2)
                 .tipoDosis("Segunda")

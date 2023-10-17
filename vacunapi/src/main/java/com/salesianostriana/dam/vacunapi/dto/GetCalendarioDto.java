@@ -1,6 +1,7 @@
 package com.salesianostriana.dam.vacunapi.dto;
 
 import com.salesianostriana.dam.vacunapi.modelo.Calendario;
+import com.salesianostriana.dam.vacunapi.modelo.Vacuna;
 
 import java.util.List;
 
@@ -14,8 +15,11 @@ public record GetCalendarioDto(
 
         String recomendaciones,
 
-        String discriminante
+        String discriminante,
+
+        Long idVacuna
 ) {
+
 
     public static GetCalendarioDto of (Calendario c){
 
@@ -24,8 +28,8 @@ public record GetCalendarioDto(
                 c.getEdad(),
                 c.getTipoDosis(),
                 c.getRecomendaciones(),
-                c.getDiscriminante()
+                c.getDiscriminante(),
+                c.getVacuna()
         );
     }
-
 }
