@@ -46,6 +46,7 @@ public record GetCalendarioDto(
                 c.getRecomendaciones(),
                 c.getDiscriminante(),
                 c.getVacuna().getId()
+
 //                v.getNombre(),
 //                v.getDescripcionEnfermedad()
         );
