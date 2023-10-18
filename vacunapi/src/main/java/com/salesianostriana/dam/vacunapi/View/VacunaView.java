@@ -6,4 +6,6 @@ public class VacunaView {
 
     public static class VacunaList{}
     public static class VacunaDetails extends VacunaList{}
+
+    public static class CalendarioEdit{}
 }
