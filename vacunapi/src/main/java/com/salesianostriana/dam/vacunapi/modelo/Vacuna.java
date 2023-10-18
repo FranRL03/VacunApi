@@ -28,7 +28,7 @@ public class Vacuna {
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @OneToMany(mappedBy = "vacuna", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "vacuna", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Calendario> momentos = new ArrayList<>();
 
 
