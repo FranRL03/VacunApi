@@ -2,10 +2,7 @@ package com.salesianostriana.dam.vacunapi.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.salesianostriana.dam.vacunapi.View.CalendarioView;
-import com.salesianostriana.dam.vacunapi.dto.EditCalendarioDto;
-import com.salesianostriana.dam.vacunapi.dto.GetCalendarioDto;
-import com.salesianostriana.dam.vacunapi.dto.GetVacunaDto;
-import com.salesianostriana.dam.vacunapi.dto.VacunaCalendarioDto;
+import com.salesianostriana.dam.vacunapi.dto.*;
 import com.salesianostriana.dam.vacunapi.modelo.Calendario;
 import com.salesianostriana.dam.vacunapi.modelo.Vacuna;
 import com.salesianostriana.dam.vacunapi.servicios.CalendarioServicio;
@@ -148,6 +145,65 @@ public class CalendarioController {
                     momento.getRecomendaciones(),
                     momento.getDiscriminante(),
                     momento.getVacuna().getMomentos().size()
+
+            );
+
+            return ResponseEntity.ok(dto);
+        }
+
+        return ResponseEntity.notFound().build();
+    }
+
+    @Operation(summary = "Obtener todos los momentos de vacunación")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Full momentos vacunación",
+                    content = { @Content(mediaType = "aplication/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Vacuna.class)),
+                            examples = {@ExampleObject(
+                                    value = """
+                                            [
+                                                {
+                                                    "vacuna": {
+                                                         "id": 1,
+                                                         "nombre": "Alergia",
+                                                         "descripcionEnfermedad": "Alergia contra el polen y los ácaros",
+                                                         "calendario": [
+                                                             {
+                                                                "id": 1,
+                                                                "tipoDosis": "Primera",
+                                                                "recomendaciones": "Reposo durante el día",
+                                                                "discriminante": "T"
+                                                             },
+                                                             {
+                                                                "id": 2,
+                                                                "tipoDosis": "Segunda",
+                                                                "recomendaciones": "Ponerse frío",
+                                                                "discriminante": "H"
+                                                             }
+                                                         ]
+                                                    }
+                                                }
+                                            ]
+                                            """
+                            )}
+                    )}),
+
+            @ApiResponse(responseCode = "404",
+                    description = "Error al obtener el momento de vacunación",
+                    content = @Content)
+    })
+    @GetMapping("/vacuna/{id}")
+    public ResponseEntity<VacunaDetailsDto> obtenerFullVacunaion(@PathVariable Long id){
+
+        Calendario momento = calendarioServicio.getVacunaCalendarioById(id);
+
+        if(momento != null){
+
+            VacunaDetailsDto dto = new VacunaDetailsDto(
+
+                    GetVacunaDto.of(momento.getVacuna())
+
             );
 
             return ResponseEntity.ok(dto);
