@@ -141,8 +141,11 @@ public class VacunaController {
         if (vacunaServicio.findAll().isEmpty())
             return ResponseEntity.notFound().build();
 
-        return ResponseEntity.of(vacunaServicio.findById(id)
-                .map(GetVacunaDto::find));
+        //return ResponseEntity.of(vacunaServicio.findById(id)
+                //.map(GetVacunaDto::find));
+
+        return ResponseEntity.of(vacunaServicio.findVacunaByIdWithMomentos(id)
+        .map(GetVacunaDto::find));
 
 
     }

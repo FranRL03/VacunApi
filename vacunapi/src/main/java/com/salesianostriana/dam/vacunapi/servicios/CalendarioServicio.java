@@ -31,21 +31,17 @@ public class CalendarioServicio {
         c.setRecomendaciones(nuevo.recomendaciones());
         c.setDiscriminante(nuevo.discriminante());
 
-
-        //Optional<Vacuna> va = Optional.ofNullable(vacunaServicio.getReferenceByIdCreate(nuevo.idVacuna()));
-        //c.setVacuna(va.orElseThrow());
-
-        Vacuna vacuna = vacunaServicio.getReferenceByIdCreate(nuevo.idVacuna());
-        if (vacuna != null)
-            c.setVacuna(vacuna);
-        //Optional<Vacuna> vacuna = vacunaServicio.findById(nuevo.idVacuna());
-        //if (vacuna.isPresent())
-        //    c.setVacuna(vacuna.get());
+        //Vacuna vacuna = vacunaServicio.getReferenceByIdCreate(nuevo.idVacuna());
+//        if (vacuna != null)
+//            c.setVacuna(vacuna);
 
 
+        Optional<Vacuna> vacuna = vacunaServicio.findById(nuevo.idVacuna());
+        if (vacuna.isPresent())
+            c.setVacuna(vacuna.get());
 
-//        c.getVacuna().getNombre();
-//        c.getVacuna().getDescripcionEnfermedad();
+        c.getVacuna().getNombre();
+        c.getVacuna().getDescripcionEnfermedad();
 
         return repositorio.save(c);
 

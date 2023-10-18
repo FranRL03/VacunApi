@@ -13,10 +13,10 @@ public record GetVacunaDto(
         @JsonView({VacunaList.class})
         Long id,
 
-        @JsonView({VacunaList.class, CalendarioView.VacunaCalendario.class})
+        @JsonView({VacunaList.class})
         String nombre,
 
-        @JsonView({VacunaDetails.class, CalendarioView.VacunaCalendario.class})
+        @JsonView({VacunaDetails.class})
         String descripcionEnfermedad,
 
         @JsonView({VacunaDetails.class})

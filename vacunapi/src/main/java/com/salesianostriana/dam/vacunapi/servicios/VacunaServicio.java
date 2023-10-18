@@ -56,16 +56,44 @@ public class VacunaServicio {
 
     }
 
-    public Vacuna edit(EditVacunaDto editVacuna, Long id){
-        if(repositorio.findById(id).isPresent()) {
-            Optional<Vacuna> encontrado = Optional.of(repositorio.getReferenceById(id));
-            Vacuna edit = encontrado.get();
+    public Optional<Vacuna> findVacunaByIdWithMomentos(Long id) {
+        Optional<Vacuna> optionalVacuna = repositorio.findById(id);
+
+        if (optionalVacuna.isPresent()) {
+            Vacuna vacuna = optionalVacuna.get();
+            // La lista de momentos asociados se puede cargar aquí si es necesario.
+            vacuna.getMomentos().size(); // Esto forzará la carga de la lista de momentos.
+
+            return Optional.of(vacuna);
+        } else {
+            return Optional.empty(); // Devuelve un Optional vacío si la vacuna no se encuentra.
+        }
+    }
+
+//    public Vacuna edit(EditVacunaDto editVacuna, Long id){
+//        if(repositorio.findById(id).isPresent()) {
+//            Optional<Vacuna> encontrado = Optional.of(repositorio.getReferenceById(id));
+//            Vacuna edit = encontrado.get();
+//            edit.setNombre(editVacuna.nombre());
+//            edit.setDescripcionEnfermedad(editVacuna.descripcionEnfermedad());
+//            return repositorio.save(edit);
+//        }
+//    return null;
+//    }
+
+    public Vacuna edit(EditVacunaDto editVacuna, Long id) {
+        Optional<Vacuna> optionalVacuna = repositorio.findById(id);
+
+        if (optionalVacuna.isPresent()) {
+            Vacuna edit = optionalVacuna.get();
             edit.setNombre(editVacuna.nombre());
             edit.setDescripcionEnfermedad(editVacuna.descripcionEnfermedad());
             return repositorio.save(edit);
         }
-    return null;
+
+        return null;
     }
+
 
     public Vacuna getReferenceByIdCreate(Long id) {
 
