@@ -2,6 +2,7 @@ package com.salesianostriana.dam.vacunapi.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.salesianostriana.dam.vacunapi.View.CalendarioView;
+import com.salesianostriana.dam.vacunapi.View.VacunaView;
 import com.salesianostriana.dam.vacunapi.dto.*;
 import com.salesianostriana.dam.vacunapi.modelo.Calendario;
 import com.salesianostriana.dam.vacunapi.modelo.Vacuna;
@@ -225,6 +226,18 @@ public class CalendarioController {
         }
 
         return ResponseEntity.notFound().build();
+    }
+
+    @JsonView(VacunaView.CalendarioEdit.class)
+    @PutMapping("/{id}")
+    public ResponseEntity<GetCalendarioDto> edit(@PathVariable Long id,
+                                                 @RequestBody EditCalendarioDto editCalendario){
+        if(calendarioServicio.findAll().isEmpty())
+            return ResponseEntity.notFound().build();
+
+        return ResponseEntity.ok(
+                GetCalendarioDto.of(
+                        calendarioServicio.edit(editCalendario, id)));
     }
 
     

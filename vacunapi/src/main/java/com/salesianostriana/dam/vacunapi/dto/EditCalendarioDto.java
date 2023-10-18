@@ -2,6 +2,7 @@ package com.salesianostriana.dam.vacunapi.dto;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.salesianostriana.dam.vacunapi.View.CalendarioView;
+import com.salesianostriana.dam.vacunapi.View.VacunaView;
 import com.salesianostriana.dam.vacunapi.modelo.Calendario;
 import com.salesianostriana.dam.vacunapi.modelo.Vacuna;
 
@@ -10,16 +11,16 @@ public record EditCalendarioDto(
         @JsonView({CalendarioView.VacunaCalendario.class})
         Long id,
 
-        @JsonView({CalendarioView.VacunaCalendario.class})
+        @JsonView({CalendarioView.VacunaCalendario.class, VacunaView.CalendarioEdit.class})
         int edad,
 
-        @JsonView({CalendarioView.VacunaCalendario.class})
+        @JsonView({CalendarioView.VacunaCalendario.class, VacunaView.CalendarioEdit.class})
         String tipoDosis,
 
-        @JsonView({CalendarioView.VacunaCalendario.class})
+        @JsonView({CalendarioView.VacunaCalendario.class, VacunaView.CalendarioEdit.class})
         String recomendaciones,
 
-        @JsonView({CalendarioView.VacunaCalendario.class})
+        @JsonView({CalendarioView.VacunaCalendario.class, VacunaView.CalendarioEdit.class})
         String discriminante,
 
         @JsonView({CalendarioView.VacunaCalendario.class})

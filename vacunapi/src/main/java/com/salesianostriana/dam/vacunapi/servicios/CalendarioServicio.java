@@ -1,5 +1,6 @@
 package com.salesianostriana.dam.vacunapi.servicios;
 
+import com.salesianostriana.dam.vacunapi.dto.EditCalendarioDto;
 import com.salesianostriana.dam.vacunapi.dto.GetCalendarioDto;
 import com.salesianostriana.dam.vacunapi.modelo.Calendario;
 import com.salesianostriana.dam.vacunapi.modelo.Vacuna;
@@ -66,6 +67,21 @@ public class CalendarioServicio {
 
         return null;
 
+    }
+
+    public Calendario edit (EditCalendarioDto editCalendario, Long id){
+        Optional<Calendario> optionalCalendario = repositorio.findById(id);
+
+        if (optionalCalendario.isPresent()) {
+            Calendario edit = optionalCalendario.get();
+            edit.setEdad(editCalendario.edad());
+            edit.setTipoDosis(editCalendario.tipoDosis());
+            edit.setRecomendaciones(editCalendario.recomendaciones());
+            edit.setDiscriminante(editCalendario.discriminante());
+            return repositorio.save(edit);
+        }
+
+        return null;
     }
 
 }
