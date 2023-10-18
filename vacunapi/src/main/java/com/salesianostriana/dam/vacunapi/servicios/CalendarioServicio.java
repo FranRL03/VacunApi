@@ -5,6 +5,7 @@ import com.salesianostriana.dam.vacunapi.modelo.Calendario;
 import com.salesianostriana.dam.vacunapi.modelo.Vacuna;
 import com.salesianostriana.dam.vacunapi.repositorios.CalendarioRepositorio;
 import com.salesianostriana.dam.vacunapi.repositorios.VacunaRepositorio;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ public class CalendarioServicio {
     private final VacunaServicio vacunaServicio;
     private final VacunaRepositorio vacunaRepositorio;
 
+    @Transactional // La ha puesto Luismi XD
     public Calendario save (GetCalendarioDto nuevo){
 
         Calendario c = new Calendario();
@@ -30,8 +32,17 @@ public class CalendarioServicio {
         c.setDiscriminante(nuevo.discriminante());
 
 
-        Optional<Vacuna> va = Optional.ofNullable(vacunaServicio.getReferenceByIdCreate(nuevo.idVacuna()));
-        c.setVacuna(va.orElseThrow());
+        //Optional<Vacuna> va = Optional.ofNullable(vacunaServicio.getReferenceByIdCreate(nuevo.idVacuna()));
+        //c.setVacuna(va.orElseThrow());
+
+        Vacuna vacuna = vacunaServicio.getReferenceByIdCreate(nuevo.idVacuna());
+        if (vacuna != null)
+            c.setVacuna(vacuna);
+        //Optional<Vacuna> vacuna = vacunaServicio.findById(nuevo.idVacuna());
+        //if (vacuna.isPresent())
+        //    c.setVacuna(vacuna.get());
+
+
 
 //        c.getVacuna().getNombre();
 //        c.getVacuna().getDescripcionEnfermedad();

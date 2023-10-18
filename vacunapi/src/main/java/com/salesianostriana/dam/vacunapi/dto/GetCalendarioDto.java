@@ -31,8 +31,6 @@ public record GetCalendarioDto(
         @JsonView({CalendarioView.CalendarioWithNameVacuna.class})
         String nombre
 
-       // @JsonView({CalendarioView.VacunaCalendario.class})
-        //String descripcionEnfermedad
 
 ) {
 
@@ -49,7 +47,6 @@ public record GetCalendarioDto(
                 c.getDiscriminante(),
                 c.getVacuna().getId(),
                 c.getVacuna().getNombre()
-                //c.getVacuna().getDescripcionEnfermedad()
 
         );
     }

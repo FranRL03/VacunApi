@@ -2,10 +2,7 @@ package com.salesianostriana.dam.vacunapi.modelo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Data
@@ -29,6 +26,7 @@ public class Calendario {
 
     @Schema(example = "T", description = "T - Todos, H - Hombres, M - Mujeres")
     private String discriminante; // T - Todos, H - Hombres, M - Mujeres
+
 
     @ManyToOne
     private Vacuna vacuna;
