@@ -5,6 +5,7 @@ import com.salesianostriana.dam.vacunapi.View.CalendarioView;
 import com.salesianostriana.dam.vacunapi.dto.*;
 import com.salesianostriana.dam.vacunapi.modelo.Calendario;
 import com.salesianostriana.dam.vacunapi.modelo.Vacuna;
+import com.salesianostriana.dam.vacunapi.repositorios.CalendarioRepositorio;
 import com.salesianostriana.dam.vacunapi.servicios.CalendarioServicio;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -27,6 +28,7 @@ import java.util.List;
 public class CalendarioController {
 
     private final CalendarioServicio calendarioServicio;
+    private final CalendarioRepositorio calendarioRepositorio;
 
     @Operation(summary = "Añades un calendario")
     @ApiResponses(value = {
@@ -152,6 +154,19 @@ public class CalendarioController {
         }
 
         return ResponseEntity.notFound().build();
+    }
+
+    @Operation(summary = "Borra un momento")
+    @ApiResponse(responseCode = "204 No Content",
+            description = "Borrado con éxito",
+            content = @Content)
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id){
+
+        if(calendarioRepositorio.existsById(id))
+            calendarioRepositorio.deleteById(id);
+
+        return ResponseEntity.noContent().build();
     }
 
     @Operation(summary = "Obtener todos los momentos de vacunación")
