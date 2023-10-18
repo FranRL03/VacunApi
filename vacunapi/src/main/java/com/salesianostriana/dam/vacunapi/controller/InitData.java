@@ -31,14 +31,14 @@ public class InitData {
 
         Calendario c1 = Calendario.builder()
                 .edad(2)
-                .tipoDosis("Segunda")
+                .tipoDosis("Primera")
                 .recomendaciones("Reposo durante el día")
                 .discriminante("T")
                 .vacuna(v)
                 .build();
         Calendario c2 = Calendario.builder()
                 .edad(6)
-                .tipoDosis("Refuerzo")
+                .tipoDosis("Segunda")
                 .recomendaciones("Ponerse frío")
                 .discriminante("H")
                 .vacuna(v)

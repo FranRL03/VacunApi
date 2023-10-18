@@ -57,4 +57,15 @@ public class CalendarioServicio {
         return repositorio.getReferenceById(id);
     }
 
+    public Calendario getVacunaCalendarioById (Long id){
+
+        Optional<Calendario> momento = repositorio.findById(id);
+
+        if (momento.isPresent())
+             return momento.get();
+
+        return null;
+
+    }
+
 }

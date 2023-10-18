@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.salesianostriana.dam.vacunapi.View.CalendarioView;
 import com.salesianostriana.dam.vacunapi.dto.EditCalendarioDto;
 import com.salesianostriana.dam.vacunapi.dto.GetCalendarioDto;
+import com.salesianostriana.dam.vacunapi.dto.GetVacunaDto;
 import com.salesianostriana.dam.vacunapi.dto.VacunaCalendarioDto;
 import com.salesianostriana.dam.vacunapi.modelo.Calendario;
 import com.salesianostriana.dam.vacunapi.modelo.Vacuna;
@@ -89,7 +90,7 @@ public class CalendarioController {
                     )}),
 
             @ApiResponse(responseCode = "404",
-                    description = "Error al crear un calendario",
+                    description = "Error lista vacía",
                     content = @Content)
     })
     @GetMapping("/")
@@ -107,10 +108,52 @@ public class CalendarioController {
         );
     }
 
+    @Operation(summary = "De un Calendario obtienes el número de vacunas que se han puesto")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Calendario con número vacunas",
+                    content = { @Content(mediaType = "aplication/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Vacuna.class)),
+                            examples = {@ExampleObject(
+                                    value = """
+                                            [
+                                                {
+                                                     "id": 1,
+                                                     "edad": 2,
+                                                     "tipoDosis": "Primera",
+                                                     "recomendaciones": "Reposo durante el día",
+                                                     "discriminante": "T",
+                                                     "dosisTotales": 2
+                                                }
+                                            ]
+                                            """
+                            )}
+                    )}),
+
+            @ApiResponse(responseCode = "404",
+                    description = "Error al obtener un calendario",
+                    content = @Content)
+    })
     @GetMapping("/{id}")
     public ResponseEntity<VacunaCalendarioDto> obtenerVacunaion(@PathVariable Long id){
 
-        return null;
+        Calendario momento = calendarioServicio.getVacunaCalendarioById(id);
+
+        if(momento != null){
+
+            VacunaCalendarioDto dto = new VacunaCalendarioDto(
+                    momento.getId(),
+                    momento.getEdad(),
+                    momento.getTipoDosis(),
+                    momento.getRecomendaciones(),
+                    momento.getDiscriminante(),
+                    momento.getVacuna().getMomentos().size()
+            );
+
+            return ResponseEntity.ok(dto);
+        }
+
+        return ResponseEntity.notFound().build();
     }
 
     

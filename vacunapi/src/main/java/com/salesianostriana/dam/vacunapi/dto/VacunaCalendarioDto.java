@@ -9,10 +9,11 @@ public record VacunaCalendarioDto(
         String tipoDosis,
         String recomendaciones,
         String discriminante,
-        String vacuna
+        int dosisTotales
+        //GetVacunaDto vacuna
 ) {
 
-    public static VacunaCalendarioDto of (Calendario c){
+    public static VacunaCalendarioDto of (Calendario c, int dosisTotales){
 
         return new VacunaCalendarioDto(
                 c.getId(),
@@ -20,7 +21,9 @@ public record VacunaCalendarioDto(
                 c.getTipoDosis(),
                 c.getRecomendaciones(),
                 c.getDiscriminante(),
-                c.getVacuna().toString()
+                dosisTotales
+                //GetVacunaDto.of(c.getVacuna())
+
         );
     }
 

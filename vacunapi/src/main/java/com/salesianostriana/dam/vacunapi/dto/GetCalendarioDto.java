@@ -31,7 +31,6 @@ public record GetCalendarioDto(
         @JsonView({CalendarioView.CalendarioWithNameVacuna.class})
         String nombre
 
-
 ) {
 
 
