@@ -1,6 +1,9 @@
 package com.salesianostriana.dam.vacunapi.dto;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.salesianostriana.dam.vacunapi.View.CalendarioView;
 import com.salesianostriana.dam.vacunapi.modelo.Calendario;
+import com.salesianostriana.dam.vacunapi.modelo.Vacuna;
 
 public record VacunaCalendarioDto(
 
@@ -10,7 +13,8 @@ public record VacunaCalendarioDto(
         String recomendaciones,
         String discriminante,
         int dosisTotales
-        //GetVacunaDto vacuna
+//        @JsonView({CalendarioView.FullVacuna.class})
+       // GetVacunaDto vacuna
 ) {
 
     public static VacunaCalendarioDto of (Calendario c, int dosisTotales){
@@ -22,9 +26,8 @@ public record VacunaCalendarioDto(
                 c.getRecomendaciones(),
                 c.getDiscriminante(),
                 dosisTotales
-                //GetVacunaDto.of(c.getVacuna())
+                //GetVacunaDto.of(c.getVacuna().getMomentos())
 
         );
     }
-
 }
