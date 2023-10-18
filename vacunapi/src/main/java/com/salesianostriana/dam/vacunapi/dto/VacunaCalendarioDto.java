@@ -13,8 +13,6 @@ public record VacunaCalendarioDto(
         String recomendaciones,
         String discriminante,
         int dosisTotales
-//        @JsonView({CalendarioView.FullVacuna.class})
-       // GetVacunaDto vacuna
 ) {
 
     public static VacunaCalendarioDto of (Calendario c, int dosisTotales){
@@ -26,7 +24,6 @@ public record VacunaCalendarioDto(
                 c.getRecomendaciones(),
                 c.getDiscriminante(),
                 dosisTotales
-                //GetVacunaDto.of(c.getVacuna().getMomentos())
 
         );
     }

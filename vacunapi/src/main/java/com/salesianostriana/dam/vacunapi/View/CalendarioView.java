@@ -5,6 +5,5 @@ public class CalendarioView {
     public static class VacunaCalendario extends  CalendarioWithNameVacuna{}
     public static class CalendarioWithNameVacuna{}
 
-    public static class FullVacuna{}
 
 }
