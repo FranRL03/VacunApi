@@ -153,7 +153,7 @@ public class PacienteController {
                     )}),
 
             @ApiResponse(responseCode = "404",
-                    description = "Error al buscar una vacuna",
+                    description = "Error al buscar un paciente",
                     content = @Content)
     })
     @GetMapping("/{id}")

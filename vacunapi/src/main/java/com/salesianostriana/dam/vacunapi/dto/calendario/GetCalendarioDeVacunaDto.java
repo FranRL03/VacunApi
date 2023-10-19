@@ -1,12 +1,21 @@
 package com.salesianostriana.dam.vacunapi.dto.calendario;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.salesianostriana.dam.vacunapi.View.AdministracionView;
 import com.salesianostriana.dam.vacunapi.modelo.Calendario;
 
 public record GetCalendarioDeVacunaDto(
 
+        @JsonView({AdministracionView.findById.class})
         Long id,
+
+        @JsonView({AdministracionView.findById.class})
         String tipoDosis,
+
+        @JsonView({AdministracionView.findById.class})
         String recomendaciones,
+
+        @JsonView({AdministracionView.findById.class})
         String discriminante
 ) {
 

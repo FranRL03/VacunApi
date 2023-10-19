@@ -37,7 +37,12 @@ public class AdministracionServicio {
 //    }
 
     public List<Administracion> findAll(){
+
         return repositorio.findAll();
+    }
+
+    public Optional<Administracion> findById(Long id){
+        return repositorio.findById(id);
     }
 
 }
