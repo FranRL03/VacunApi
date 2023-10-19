@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.salesianostriana.dam.vacunapi.View.PacienteView;
 import com.salesianostriana.dam.vacunapi.dto.paciente.EditPacienteDto;
 import com.salesianostriana.dam.vacunapi.dto.paciente.GetPacienteDto;
+import com.salesianostriana.dam.vacunapi.dto.paciente.GetPacienteFindAll;
 import com.salesianostriana.dam.vacunapi.modelo.Paciente;
 import com.salesianostriana.dam.vacunapi.modelo.Vacuna;
 import com.salesianostriana.dam.vacunapi.servicios.PacienteServicio;
@@ -17,10 +18,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/paciente")
@@ -34,7 +34,7 @@ public class PacienteController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201",
                     description = "Creación de paciente",
-                    content = { @Content(mediaType = "aplication/json",
+                    content = {@Content(mediaType = "aplication/json",
                             array = @ArraySchema(schema = @Schema(implementation = Vacuna.class)),
                             examples = {@ExampleObject(
                                     value = """
@@ -58,13 +58,62 @@ public class PacienteController {
     })
     @PostMapping("/")
     @JsonView({PacienteView.informacionPaciente.class})
-    public ResponseEntity<GetPacienteDto> addPaciente (@RequestBody EditPacienteDto newPaciente){
+    public ResponseEntity<GetPacienteDto> addPaciente(@RequestBody EditPacienteDto newPaciente) {
 
         Paciente p = pacienteServicio.save(newPaciente);
 
         return ResponseEntity
                 .status(201)
                 .body(GetPacienteDto.of(p));
+    }
+
+    @Operation(summary = "Muestra una lista de los pacientes")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Lista de los pacientes que hay en la base de datos",
+                    content = {@Content(mediaType = "aplication/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Vacuna.class)),
+                            examples = {@ExampleObject(
+                                    value = """
+                                            [
+                                                {
+                                            
+                                                    "id": 1,
+                                                    "nombre": "Fran",
+                                                    "apellidos": "Ruiz",
+                                                    "edad": 20,
+                                                    "cantidadVacuna": 1
+                                                
+                                                },
+                                                {
+                                                     "id": 2,
+                                                     "nombre": "Paciente",
+                                                     "apellidos": "1",
+                                                     "edad": 3,
+                                                     "cantidadVacuna": 1
+                                                }
+                                            ]
+                                            """
+                            )}
+                    )}),
+
+            @ApiResponse(responseCode = "404",
+                    description = "Not found",
+                    content = @Content)
+    })
+    @GetMapping("/")
+    public ResponseEntity<List<GetPacienteFindAll>> findAll() {
+
+        if (pacienteServicio.findAll().isEmpty())
+            return ResponseEntity.notFound().build();
+
+        return ResponseEntity.ok(
+                pacienteServicio.findAll()
+                        .stream()
+                        .map(GetPacienteFindAll::of)
+                        .toList()
+        );
+
     }
 
 }

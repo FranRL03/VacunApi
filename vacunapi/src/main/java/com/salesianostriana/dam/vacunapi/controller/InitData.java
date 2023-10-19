@@ -71,7 +71,7 @@ public class InitData {
                 .nombre("Paciente")
                 .apellidos("1")
                 .telefonoContacto("1232456789")
-                .fechaNacimiento(LocalDate.of(1996, 9, 15))
+                .fechaNacimiento(LocalDate.of(2023, 7, 15))
                 .notas("Este paciente está en revision")
                 .build();
 
@@ -95,7 +95,7 @@ public class InitData {
 
         administracionRepositorio.saveAll(List.of(a, a2));
 
-        p1.setVacunasAdministradas((List<Administracion>) a);
+        p1.setVacunasAdministradas(List.of(a));
         p2.setVacunasAdministradas(List.of(a, a2));
 
         pacienteRepositorio.saveAll(List.of(p1, p2));
