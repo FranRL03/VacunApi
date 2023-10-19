@@ -86,4 +86,66 @@ public class AdministracionController {
                         .toList()
         );
     }
+
+    @Operation(summary = "Buscas una administracion por su id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Administracion por id",
+                    content = { @Content(mediaType = "aplication/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Vacuna.class)),
+                            examples = {@ExampleObject(
+                                    value = """
+                                            {  
+                                                   "id": 2,
+                                                      "fecha": "2023-11-19",
+                                                      "edadAlAdministrar": 10,
+                                                      "paciente": {
+                                                          "id": 2,
+                                                          "nombre": "Paciente",
+                                                          "apellidos": "1",
+                                                          "cantidadVacuna": 1
+                                                      },
+                                                      "calendario": {
+                                                          "vacuna": {
+                                                              "id": 1,
+                                                              "nombre": "Alergia",
+                                                              "descripcionEnfermedad": "Alergia contra el polen y los ácaros",
+                                                              "calendario": [
+                                                                  {
+                                                                      "id": 1,
+                                                                      "tipoDosis": "Primera",
+                                                                      "recomendaciones": "Reposo durante el día",
+                                                                      "discriminante": "T"
+                                                                  },
+                                                                  {
+                                                                      "id": 2,
+                                                                      "tipoDosis": "Segunda",
+                                                                      "recomendaciones": "Ponerse frío",
+                                                                      "discriminante": "H"
+                                                                  }
+                                                              ]
+                                                          }
+                                                      }
+                                             }
+                                              
+                                            """
+                            )}
+                    )}),
+
+            @ApiResponse(responseCode = "404",
+                    description = "Error al buscar una administracion",
+                    content = @Content)
+    })
+    @GetMapping("/{id}")
+    @JsonView(AdministracionView.findById.class)
+    public ResponseEntity<GetAdministracionDto> findById (@PathVariable Long id){
+
+        if(administracionServicio.findAll().isEmpty())
+            return ResponseEntity.notFound().build();
+
+        return ResponseEntity.of(administracionServicio.findById(id)
+                .map(GetAdministracionDto::find));
+
+    }
+
 }

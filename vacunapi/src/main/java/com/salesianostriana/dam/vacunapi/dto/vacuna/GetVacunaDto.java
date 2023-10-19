@@ -20,11 +20,12 @@ public record GetVacunaDto(
                 CalendarioEdit.class, AdministracionView.findAll.class})
         String nombre,
 
-        @JsonView({VacunaDetails.class, CalendarioView.VacunaCalendario.class, CalendarioEdit.class})
+        @JsonView({VacunaDetails.class, CalendarioView.VacunaCalendario.class,
+                CalendarioEdit.class, AdministracionView.findById.class})
         String descripcionEnfermedad,
 
-        @JsonView({VacunaDetails.class})
-        List<GetCalendarioDeVacunaDto> calendario
+        @JsonView({VacunaDetails.class, AdministracionView.findById.class})
+        List<GetCalendarioDeVacunaDto> momentos
 ) {
 
     //@JsonView(VacunaList.class)
