@@ -3,6 +3,7 @@ package com.salesianostriana.dam.vacunapi.dto.paciente;
 import com.salesianostriana.dam.vacunapi.modelo.Paciente;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public record GetPacienteFindAll(
 
@@ -17,24 +18,35 @@ public record GetPacienteFindAll(
         int cantidadVacuna
 ) {
 
-    public GetPacienteFindAll of (Paciente p){
+    public static GetPacienteFindAll of(Paciente p) {
 
-        return new GetPacienteFindAll(
-                p.getId(),
-                p.getNombre(),
-                p.getApellidos(),
-                p.getFechaNacimiento(),
-                p.getVacunasAdministradas().size()
-        );
+        LocalDate fechaNaciemiento = p.getFechaNacimiento();
+
+        int edad = edadPacienteYears(fechaNaciemiento);
+
+            return new GetPacienteFindAll(
+                    p.getId(),
+                    p.getNombre(),
+                    p.getApellidos(),
+                    edad,
+                    p.getVacunasAdministradas().size()
+            );
+        }
+
+        /*
+        ANOTACIÓN: EL MÉTODO TE MUESTRA LA EDAD EN MESES O EN AÑO PERO NO HE PODIDO
+               CONSEGUIR CONCATENARLO PARA QUE APAREZCA DETRÁS DE LA EDAD "AÑOS" O "MESES"
+         */
+
+    public static int edadPacienteYears(LocalDate fechaNacimiento) {
+
+        LocalDate fechaActual = LocalDate.now();
+        int meses = (int) fechaNacimiento.until(fechaActual, ChronoUnit.MONTHS);
+
+        if (meses < 24) {
+            return meses;
+        } else {
+            return (int) fechaNacimiento.until(fechaActual, ChronoUnit.YEARS);
+        }
     }
-
-    public int edadPaciente (LocalDate fechaNacimiento){
-
-        
-    }
-
-    /*
-    Hacer un método que te compare la fecha de nacimiento con la actual
-    para calcular la edad del paciente
-     */
 }

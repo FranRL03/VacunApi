@@ -7,6 +7,8 @@ import com.salesianostriana.dam.vacunapi.repositorios.PacienteRepositorio;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class PacienteServicio {
@@ -24,6 +26,11 @@ public class PacienteServicio {
         p.setNotas(nuevo.notas());
 
         return repositorio.save(p);
+    }
+
+    public List<Paciente> findAll (){
+
+        return repositorio.findAll();
     }
 
 }
