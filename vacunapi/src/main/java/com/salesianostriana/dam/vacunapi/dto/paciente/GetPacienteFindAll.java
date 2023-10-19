@@ -14,5 +14,13 @@ public record GetPacienteFindAll(
 
         int cantidadVacuna
 ) {
-    
+
+    /*
+    Hacer un método que te compare la fecha de nacimiento con la actual
+    para calcular la edad del paciente
+     */
+
+    /*
+    La cantidad de vacuna se saca con administración con un .lenght
+     */
 }
