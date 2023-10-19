@@ -6,6 +6,7 @@ import com.salesianostriana.dam.vacunapi.View.PacienteView;
 import com.salesianostriana.dam.vacunapi.dto.administracion.GetAdministracionDto;
 import com.salesianostriana.dam.vacunapi.dto.paciente.GetPacienteDto;
 import com.salesianostriana.dam.vacunapi.modelo.Vacuna;
+import com.salesianostriana.dam.vacunapi.repositorios.AdministracionRepositorio;
 import com.salesianostriana.dam.vacunapi.servicios.AdministracionServicio;
 import com.salesianostriana.dam.vacunapi.servicios.PacienteServicio;
 import io.swagger.v3.oas.annotations.Operation;
@@ -17,10 +18,13 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/administracion")
@@ -29,6 +33,7 @@ import java.util.List;
 public class AdministracionController {
 
     private final AdministracionServicio administracionServicio;
+    private final AdministracionRepositorio administracionRepositorio;
     private final PacienteServicio pacienteServicio;
 
 //    @PostMapping("/")
@@ -199,6 +204,16 @@ public class AdministracionController {
                 .map(GetPacienteDto::find));
     }
 
-    
+    @Operation(summary = "Borra una administracion por su id")
+    @ApiResponse(responseCode = "204 No Content",
+            description = "Borrado con éxito",
+            content = @Content)
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id){
 
+        Map<String, String> response = new HashMap<>();
+        response.put("mensaje", "No se puede borrar la información de administración de una vacuna a un paciente");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+
+    }
 }
