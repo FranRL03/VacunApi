@@ -165,4 +165,17 @@ public class PacienteController {
                 .map(GetPacienteDto::find));
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<GetPacienteDto> edit (@PathVariable Long id,
+                                                @RequestBody EditPacienteDto editPaciente){
+
+        if (pacienteServicio.findAll().isEmpty())
+            return ResponseEntity.notFound().build();
+
+        return ResponseEntity.ok(
+                GetPacienteDto.of(
+                        pacienteServicio.edit(id, editPaciente)));
+    }
+
+
 }
