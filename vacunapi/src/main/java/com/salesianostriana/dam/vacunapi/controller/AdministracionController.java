@@ -3,8 +3,10 @@ package com.salesianostriana.dam.vacunapi.controller;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.salesianostriana.dam.vacunapi.View.AdministracionView;
 import com.salesianostriana.dam.vacunapi.View.PacienteView;
+import com.salesianostriana.dam.vacunapi.dto.administracion.EditAdministracionDto;
 import com.salesianostriana.dam.vacunapi.dto.administracion.GetAdministracionDto;
 import com.salesianostriana.dam.vacunapi.dto.paciente.GetPacienteDto;
+import com.salesianostriana.dam.vacunapi.modelo.Administracion;
 import com.salesianostriana.dam.vacunapi.modelo.Vacuna;
 import com.salesianostriana.dam.vacunapi.repositorios.AdministracionRepositorio;
 import com.salesianostriana.dam.vacunapi.servicios.AdministracionServicio;
@@ -33,18 +35,7 @@ import java.util.Map;
 public class AdministracionController {
 
     private final AdministracionServicio administracionServicio;
-    private final AdministracionRepositorio administracionRepositorio;
     private final PacienteServicio pacienteServicio;
-
-//    @PostMapping("/")
-//    @JsonView({AdministracionView.administracionCreate.class})
-//    public ResponseEntity<EditAdministracionDto> addAdministracion(@RequestBody GetAdministracionDto newAdministracion){
-//        Administracion a = administracionServicio.save(newAdministracion);
-//
-//        return ResponseEntity
-//                .status(201)
-//                .body(EditAdministracionDto.of(a));
-//    }
 
     @Operation(summary = "Muestra una lista de todas las administraciones")
     @ApiResponses(value = {
