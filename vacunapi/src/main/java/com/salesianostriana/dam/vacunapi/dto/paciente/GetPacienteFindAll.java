@@ -1,4 +1,18 @@
 package com.salesianostriana.dam.vacunapi.dto.paciente;
 
-public record GetPacienteFindAll() {
+import java.time.LocalDate;
+
+public record GetPacienteFindAll(
+
+        Long id,
+
+        String nombre,
+
+        String apellidos,
+
+        int edad,
+
+        int cantidadVacuna
+) {
+    
 }

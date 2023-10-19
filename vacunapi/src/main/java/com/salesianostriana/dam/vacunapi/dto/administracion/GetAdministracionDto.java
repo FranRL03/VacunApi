@@ -1,6 +1,4 @@
 package com.salesianostriana.dam.vacunapi.dto.administracion;
-
-import com.salesianostriana.dam.vacunapi.dto.paciente.GetAdministracionPacienteDto;
 import com.salesianostriana.dam.vacunapi.modelo.Administracion;
 
 import java.time.LocalDate;
