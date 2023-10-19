@@ -2,6 +2,7 @@ package com.salesianostriana.dam.vacunapi.dto.paciente;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.salesianostriana.dam.vacunapi.View.PacienteView;
+import com.salesianostriana.dam.vacunapi.dto.administracion.GetAdministracionDto;
 import com.salesianostriana.dam.vacunapi.dto.vacuna.GetVacunaDto;
 import com.salesianostriana.dam.vacunapi.modelo.Administracion;
 import com.salesianostriana.dam.vacunapi.modelo.Paciente;
@@ -30,7 +31,7 @@ public record GetPacienteDto(
         @JsonView({PacienteView.informacionPaciente.class})
         String notas,
 
-        List<GetAdministracionPacienteDto> administracion
+        List<GetAdministracionDto> administracion
 
 ) {
 
@@ -45,7 +46,7 @@ public record GetPacienteDto(
                 p.getNotas(),
                 p.getVacunasAdministradas()
                         .stream()
-                        .map(GetAdministracionPacienteDto::of)
+                        .map(GetAdministracionDto::of)
                         .toList()
         );
     }

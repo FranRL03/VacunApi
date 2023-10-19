@@ -12,6 +12,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Paciente {
 
     @Id @GeneratedValue
