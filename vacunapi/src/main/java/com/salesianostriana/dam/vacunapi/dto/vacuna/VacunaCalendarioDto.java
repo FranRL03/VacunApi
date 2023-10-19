@@ -1,9 +1,6 @@
-package com.salesianostriana.dam.vacunapi.dto;
+package com.salesianostriana.dam.vacunapi.dto.vacuna;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import com.salesianostriana.dam.vacunapi.View.CalendarioView;
 import com.salesianostriana.dam.vacunapi.modelo.Calendario;
-import com.salesianostriana.dam.vacunapi.modelo.Vacuna;
 
 public record VacunaCalendarioDto(
 
