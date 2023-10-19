@@ -139,6 +139,7 @@ public class CalendarioController {
                     content = @Content)
     })
     @GetMapping("/{id}")
+    @JsonView(CalendarioView.findById .class)
     public ResponseEntity<VacunaCalendarioDto> obtenerVacunaion(@PathVariable Long id){
 
         Calendario momento = calendarioServicio.getVacunaCalendarioById(id);
@@ -151,6 +152,7 @@ public class CalendarioController {
                     momento.getTipoDosis(),
                     momento.getRecomendaciones(),
                     momento.getDiscriminante(),
+                    GetVacunaDto.of(momento.getVacuna()),
                     momento.getVacuna().getMomentos().size()
 
             );

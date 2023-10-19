@@ -3,6 +3,7 @@ package com.salesianostriana.dam.vacunapi.dto.calendario;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.salesianostriana.dam.vacunapi.View.CalendarioView;
 import com.salesianostriana.dam.vacunapi.View.VacunaView;
+import com.salesianostriana.dam.vacunapi.dto.vacuna.GetVacunaDto;
 import com.salesianostriana.dam.vacunapi.modelo.Calendario;
 import com.salesianostriana.dam.vacunapi.modelo.Vacuna;
 
@@ -23,14 +24,17 @@ public record EditCalendarioDto(
         @JsonView({CalendarioView.VacunaCalendario.class, VacunaView.CalendarioEdit.class})
         String discriminante,
 
-        @JsonView({CalendarioView.VacunaCalendario.class})
-        Long idVacuna,
+//        @JsonView({CalendarioView.VacunaCalendario.class})
+//        Long idVacuna,
+//
+//        @JsonView({CalendarioView.VacunaCalendario.class})
+//        String nombre,
+//
+//       @JsonView({CalendarioView.VacunaCalendario.class})
+//        String descripcionEnfermedad
 
-        @JsonView({CalendarioView.VacunaCalendario.class})
-        String nombre,
-
-       @JsonView({CalendarioView.VacunaCalendario.class})
-        String descripcionEnfermedad
+        @JsonView({CalendarioView.CalendarioWithNameVacuna.class, CalendarioView.VacunaCalendario.class})
+        GetVacunaDto vacuna
 
 
         ) {
@@ -45,9 +49,10 @@ public record EditCalendarioDto(
                 c.getTipoDosis(),
                 c.getRecomendaciones(),
                 c.getDiscriminante(),
-                c.getVacuna().getId(),
-                c.getVacuna().getNombre(),
-                c.getVacuna().getDescripcionEnfermedad()
+//                c.getVacuna().getId(),
+//                c.getVacuna().getNombre(),
+//                c.getVacuna().getDescripcionEnfermedad()
+                GetVacunaDto.of(c.getVacuna())
         );
     }
 
