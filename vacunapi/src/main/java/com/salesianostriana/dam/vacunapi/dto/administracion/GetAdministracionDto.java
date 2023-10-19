@@ -9,19 +9,18 @@ import com.salesianostriana.dam.vacunapi.modelo.Administracion;
 import java.time.LocalDate;
 
 public record GetAdministracionDto(
-        @JsonView({PacienteView.findByIdWithAllEntities.class, AdministracionView.administracionCreate.class})
+        @JsonView({PacienteView.findByIdWithAllEntities.class})
         Long id,
 
-        @JsonView({PacienteView.findByIdWithAllEntities.class, AdministracionView.administracionCreate.class})
+        @JsonView({PacienteView.findByIdWithAllEntities.class})
         LocalDate fecha,
 
-        @JsonView({PacienteView.findByIdWithAllEntities.class, AdministracionView.administracionCreate.class})
+        @JsonView({PacienteView.findByIdWithAllEntities.class})
         int edadAlAdministrar,
 
-        @JsonView({AdministracionView.administracionCreate.class})
         String nota,
 
-        @JsonView({PacienteView.findByIdWithAllEntities.class, AdministracionView.administracionCreate.class})
+        @JsonView({PacienteView.findByIdWithAllEntities.class})
         GetCalendarioDto getCalendario
 ) {
 
