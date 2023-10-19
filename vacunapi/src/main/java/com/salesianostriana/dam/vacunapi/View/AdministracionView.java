@@ -7,4 +7,5 @@ public class AdministracionView {
     public static class findAll{}
 
     public static class findById extends findAll{}
+
 }

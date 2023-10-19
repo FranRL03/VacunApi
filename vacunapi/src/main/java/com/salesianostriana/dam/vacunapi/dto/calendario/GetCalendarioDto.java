@@ -27,7 +27,7 @@ public record GetCalendarioDto(
         @JsonView({CalendarioView.CalendarioWithNameVacuna.class, VacunaView.CalendarioEdit.class})
         String discriminante,
 
-        @JsonView({VacunaView.CalendarioEdit .class, AdministracionView.findAll.class})
+        @JsonView({VacunaView.CalendarioEdit .class, AdministracionView.findAll.class, PacienteView.idPacienteAdministracion.class})
         GetVacunaDto vacuna
 ) {
 

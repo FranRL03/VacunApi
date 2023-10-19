@@ -26,7 +26,7 @@ public record GetAdministracionDto(
         @JsonView({AdministracionView.findAll.class})
         GetPacienteFindAll paciente,
 
-        @JsonView({AdministracionView.findAll.class})
+        @JsonView({AdministracionView.findAll.class, PacienteView.idPacienteAdministracion.class})
         GetCalendarioDto calendario
 
 

@@ -2,9 +2,12 @@ package com.salesianostriana.dam.vacunapi.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.salesianostriana.dam.vacunapi.View.AdministracionView;
+import com.salesianostriana.dam.vacunapi.View.PacienteView;
 import com.salesianostriana.dam.vacunapi.dto.administracion.GetAdministracionDto;
+import com.salesianostriana.dam.vacunapi.dto.paciente.GetPacienteDto;
 import com.salesianostriana.dam.vacunapi.modelo.Vacuna;
 import com.salesianostriana.dam.vacunapi.servicios.AdministracionServicio;
+import com.salesianostriana.dam.vacunapi.servicios.PacienteServicio;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -26,6 +29,7 @@ import java.util.List;
 public class AdministracionController {
 
     private final AdministracionServicio administracionServicio;
+    private final PacienteServicio pacienteServicio;
 
 //    @PostMapping("/")
 //    @JsonView({AdministracionView.administracionCreate.class})

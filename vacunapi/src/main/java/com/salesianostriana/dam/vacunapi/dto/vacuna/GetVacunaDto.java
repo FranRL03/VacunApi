@@ -17,7 +17,7 @@ public record GetVacunaDto(
         Long id,
 
         @JsonView({VacunaList.class, CalendarioView.CalendarioWithNameVacuna.class, PacienteView.findByIdWithAllEntities.class,
-                CalendarioEdit.class, AdministracionView.findAll.class})
+                CalendarioEdit.class, AdministracionView.findAll.class, PacienteView.idPacienteAdministracion.class})
         String nombre,
 
         @JsonView({VacunaDetails.class, CalendarioView.VacunaCalendario.class,
