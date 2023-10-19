@@ -130,7 +130,7 @@ public class VacunaController {
                     )}),
 
             @ApiResponse(responseCode = "404",
-                    description = "Error al crear una vacuna",
+                    description = "Error al buscar una vacuna",
                     content = @Content)
     })
     @GetMapping("/{id}")

@@ -3,11 +3,13 @@ package com.salesianostriana.dam.vacunapi.servicios;
 
 import com.salesianostriana.dam.vacunapi.dto.paciente.EditPacienteDto;
 import com.salesianostriana.dam.vacunapi.modelo.Paciente;
+import com.salesianostriana.dam.vacunapi.modelo.Vacuna;
 import com.salesianostriana.dam.vacunapi.repositorios.PacienteRepositorio;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,6 +33,14 @@ public class PacienteServicio {
     public List<Paciente> findAll (){
 
         return repositorio.findAll();
+    }
+
+    public Optional<Paciente> findById (Long id){
+
+        //Optional<Paciente> encontrado = Optional.of(repositorio.getReferenceById(id));
+        //return encontrado;
+
+        return repositorio.findById(id);
     }
 
 }
