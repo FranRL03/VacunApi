@@ -20,7 +20,6 @@ public class CalendarioServicio {
 
     private final CalendarioRepositorio repositorio;
     private final VacunaServicio vacunaServicio;
-    private final VacunaRepositorio vacunaRepositorio;
 
     @Transactional // La ha puesto Luismi XD
     public Calendario save (GetCalendarioDto nuevo){
@@ -32,12 +31,7 @@ public class CalendarioServicio {
         c.setRecomendaciones(nuevo.recomendaciones());
         c.setDiscriminante(nuevo.discriminante());
 
-        //Vacuna vacuna = vacunaServicio.getReferenceByIdCreate(nuevo.idVacuna());
-//        if (vacuna != null)
-//            c.setVacuna(vacuna);
-
-
-        Optional<Vacuna> vacuna = vacunaServicio.findById(nuevo.idVacuna());
+        Optional<Vacuna> vacuna = vacunaServicio.findById(nuevo.id());
         if (vacuna.isPresent())
             c.setVacuna(vacuna.get());
 

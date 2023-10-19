@@ -8,6 +8,7 @@ import com.salesianostriana.dam.vacunapi.repositorios.AdministracionRepositorio;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -34,5 +35,9 @@ public class AdministracionServicio {
 //
 //        return repositorio.save(a);
 //    }
+
+    public List<Administracion> findAll(){
+        return repositorio.findAll();
+    }
 
 }

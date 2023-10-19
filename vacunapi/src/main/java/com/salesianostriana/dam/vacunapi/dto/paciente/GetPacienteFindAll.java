@@ -10,18 +10,18 @@ import java.time.temporal.ChronoUnit;
 
 public record GetPacienteFindAll(
 
-        @JsonView({PacienteView.findByIdWithAllEntities.class})
+        @JsonView({PacienteView.findByIdWithAllEntities.class, AdministracionView.findAll.class})
         Long id,
 
-        @JsonView({PacienteView.findByIdWithAllEntities.class})
+        @JsonView({PacienteView.findByIdWithAllEntities.class, AdministracionView.findAll.class})
         String nombre,
 
-        @JsonView({PacienteView.findByIdWithAllEntities.class})
+        @JsonView({PacienteView.findByIdWithAllEntities.class, AdministracionView.findAll.class})
         String apellidos,
 
         int edad,
 
-        @JsonView({PacienteView.findByIdWithAllEntities.class})
+        @JsonView({PacienteView.findByIdWithAllEntities.class, AdministracionView.findAll.class})
         int cantidadVacuna
 ) {
 
@@ -56,4 +56,5 @@ public record GetPacienteFindAll(
             return (int) fechaNacimiento.until(fechaActual, ChronoUnit.YEARS);
         }
     }
+
 }
