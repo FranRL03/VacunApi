@@ -1,4 +1,4 @@
-package com.salesianostriana.dam.vacunapi.dto;
+package com.salesianostriana.dam.vacunapi.dto.calendario;
 
 import com.salesianostriana.dam.vacunapi.modelo.Calendario;
 

@@ -1,4 +1,4 @@
-package com.salesianostriana.dam.vacunapi.dto;
+package com.salesianostriana.dam.vacunapi.dto.calendario;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.salesianostriana.dam.vacunapi.View.CalendarioView;

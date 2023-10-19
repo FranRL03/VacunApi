@@ -1,9 +1,6 @@
 package com.salesianostriana.dam.vacunapi.servicios;
 
-import com.salesianostriana.dam.vacunapi.dto.EditVacunaDto;
-import com.salesianostriana.dam.vacunapi.dto.GetCalendarioDto;
-import com.salesianostriana.dam.vacunapi.dto.GetVacunaDto;
-import com.salesianostriana.dam.vacunapi.modelo.Calendario;
+import com.salesianostriana.dam.vacunapi.dto.vacuna.EditVacunaDto;
 import com.salesianostriana.dam.vacunapi.modelo.Vacuna;
 import com.salesianostriana.dam.vacunapi.repositorios.CalendarioRepositorio;
 import com.salesianostriana.dam.vacunapi.repositorios.VacunaRepositorio;

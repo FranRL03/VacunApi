@@ -2,8 +2,8 @@ package com.salesianostriana.dam.vacunapi.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.salesianostriana.dam.vacunapi.View.VacunaView.*;
-import com.salesianostriana.dam.vacunapi.dto.EditVacunaDto;
-import com.salesianostriana.dam.vacunapi.dto.GetVacunaDto;
+import com.salesianostriana.dam.vacunapi.dto.vacuna.EditVacunaDto;
+import com.salesianostriana.dam.vacunapi.dto.vacuna.GetVacunaDto;
 import com.salesianostriana.dam.vacunapi.modelo.Vacuna;
 import com.salesianostriana.dam.vacunapi.repositorios.VacunaRepositorio;
 import com.salesianostriana.dam.vacunapi.servicios.VacunaServicio;
