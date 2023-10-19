@@ -43,4 +43,20 @@ public class PacienteServicio {
         return repositorio.findById(id);
     }
 
+    public Paciente edit (Long id, EditPacienteDto editPaciente){
+
+        Optional<Paciente> p = findById(id);
+
+        if(p.isPresent()){
+            Paciente edit = p.get();
+            edit.setNombre(editPaciente.nombre());
+            edit.setApellidos(editPaciente.apellidos());
+            edit.setTelefonoContacto(editPaciente.telefonoContacto());
+            edit.setNotas(editPaciente.notas());
+            return repositorio.save(edit);
+        }
+
+        return null;
+    }
+
 }
