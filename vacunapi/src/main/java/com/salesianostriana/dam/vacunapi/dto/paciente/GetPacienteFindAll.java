@@ -1,5 +1,8 @@
 package com.salesianostriana.dam.vacunapi.dto.paciente;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.salesianostriana.dam.vacunapi.View.AdministracionView;
+import com.salesianostriana.dam.vacunapi.View.PacienteView;
 import com.salesianostriana.dam.vacunapi.modelo.Paciente;
 
 import java.time.LocalDate;
@@ -7,14 +10,18 @@ import java.time.temporal.ChronoUnit;
 
 public record GetPacienteFindAll(
 
+        @JsonView({PacienteView.findByIdWithAllEntities.class})
         Long id,
 
+        @JsonView({PacienteView.findByIdWithAllEntities.class})
         String nombre,
 
+        @JsonView({PacienteView.findByIdWithAllEntities.class})
         String apellidos,
 
         int edad,
 
+        @JsonView({PacienteView.findByIdWithAllEntities.class})
         int cantidadVacuna
 ) {
 
