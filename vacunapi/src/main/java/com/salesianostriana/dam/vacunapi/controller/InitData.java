@@ -20,6 +20,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class InitData {
 
+    /*
+    http://localhost:8080/swagger-ui/index.html
+     */
+
     private final VacunaRepositorio vacunaRepositorio;
     private final CalendarioRepositorio calendarioRepositorio;
 

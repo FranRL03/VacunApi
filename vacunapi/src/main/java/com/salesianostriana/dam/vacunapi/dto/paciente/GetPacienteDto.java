@@ -13,29 +13,46 @@ import java.util.List;
 
 public record GetPacienteDto(
 
-        @JsonView({PacienteView.informacionPaciente.class})
+        @JsonView({PacienteView.informacionPaciente.class, PacienteView.findByIdWithAllEntities.class})
         Long id,
 
-        @JsonView({PacienteView.informacionPaciente.class})
+        @JsonView({PacienteView.informacionPaciente.class, PacienteView.findByIdWithAllEntities.class})
         String nombre,
 
-        @JsonView({PacienteView.informacionPaciente.class})
+        @JsonView({PacienteView.informacionPaciente.class, PacienteView.findByIdWithAllEntities.class})
         String apellidos,
 
-        @JsonView({PacienteView.informacionPaciente.class})
+        @JsonView({PacienteView.informacionPaciente.class, PacienteView.findByIdWithAllEntities.class})
         String telefonoContacto,
 
-        @JsonView({PacienteView.informacionPaciente.class})
+        @JsonView({PacienteView.informacionPaciente.class, PacienteView.findByIdWithAllEntities.class})
         LocalDate fechaNacimiento,
 
-        @JsonView({PacienteView.informacionPaciente.class})
+        @JsonView({PacienteView.informacionPaciente.class, PacienteView.findByIdWithAllEntities.class})
         String notas,
 
+        @JsonView({PacienteView.findByIdWithAllEntities.class})
         List<GetAdministracionDto> administracion
 
 ) {
 
     public static GetPacienteDto of (Paciente p){
+
+        return new GetPacienteDto(
+                p.getId(),
+                p.getNombre(),
+                p.getApellidos(),
+                p.getTelefonoContacto(),
+                p.getFechaNacimiento(),
+                p.getNotas(),
+                p.getVacunasAdministradas()
+                        .stream()
+                        .map(GetAdministracionDto::of)
+                        .toList()
+        );
+    }
+
+    public static GetPacienteDto find (Paciente p){
 
         return new GetPacienteDto(
                 p.getId(),

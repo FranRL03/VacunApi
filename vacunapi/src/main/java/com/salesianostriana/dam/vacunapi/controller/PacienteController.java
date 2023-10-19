@@ -5,6 +5,7 @@ import com.salesianostriana.dam.vacunapi.View.PacienteView;
 import com.salesianostriana.dam.vacunapi.dto.paciente.EditPacienteDto;
 import com.salesianostriana.dam.vacunapi.dto.paciente.GetPacienteDto;
 import com.salesianostriana.dam.vacunapi.dto.paciente.GetPacienteFindAll;
+import com.salesianostriana.dam.vacunapi.dto.vacuna.GetVacunaDto;
 import com.salesianostriana.dam.vacunapi.modelo.Paciente;
 import com.salesianostriana.dam.vacunapi.modelo.Vacuna;
 import com.salesianostriana.dam.vacunapi.servicios.PacienteServicio;
@@ -21,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/paciente")
@@ -114,6 +116,53 @@ public class PacienteController {
                         .toList()
         );
 
+    }
+
+    @Operation(summary = "Buscas un paciente por su id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Paciente por id",
+                    content = { @Content(mediaType = "aplication/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Vacuna.class)),
+                            examples = {@ExampleObject(
+                                    value = """
+                                            {  
+                                                  "id": 1,
+                                                  "nombre": "Fran",
+                                                  "apellidos": "Ruiz",
+                                                  "telefonoContacto": "987654321",
+                                                  "fechaNacimiento": "2003-02-07",
+                                                  "notas": "Este paciente está en tratamiento",
+                                                  "administracion": [
+                                                      {
+                                                          "id": 1,
+                                                          "fecha": "2023-10-19",
+                                                          "edadAlAdministrar": 10,
+                                                          "getCalendario": {
+                                                              "tipoDosis": "Primera",
+                                                              "nombre": "Alergia"
+                                                          }
+                                                      }
+                                                  ]
+                                              }
+                                              
+                                            """
+                            )}
+                    )}),
+
+            @ApiResponse(responseCode = "404",
+                    description = "Error al buscar una vacuna",
+                    content = @Content)
+    })
+    @GetMapping("/{id}")
+    @JsonView(PacienteView.findByIdWithAllEntities.class)
+    public ResponseEntity<GetPacienteDto> findById(@PathVariable Long id){
+
+        if (pacienteServicio.findAll().isEmpty())
+            return ResponseEntity.notFound().build();
+
+        return ResponseEntity.of(pacienteServicio.findById(id)
+                .map(GetPacienteDto::find));
     }
 
 }
