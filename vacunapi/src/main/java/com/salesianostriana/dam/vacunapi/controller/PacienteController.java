@@ -8,6 +8,7 @@ import com.salesianostriana.dam.vacunapi.dto.paciente.GetPacienteFindAll;
 import com.salesianostriana.dam.vacunapi.dto.vacuna.GetVacunaDto;
 import com.salesianostriana.dam.vacunapi.modelo.Paciente;
 import com.salesianostriana.dam.vacunapi.modelo.Vacuna;
+import com.salesianostriana.dam.vacunapi.repositorios.PacienteRepositorio;
 import com.salesianostriana.dam.vacunapi.servicios.PacienteServicio;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -31,6 +32,7 @@ import java.util.Optional;
 public class PacienteController {
 
     private final PacienteServicio pacienteServicio;
+    private final PacienteRepositorio pacienteRepositorio;
 
     @Operation(summary = "Añades un paciente")
     @ApiResponses(value = {
@@ -175,6 +177,19 @@ public class PacienteController {
         return ResponseEntity.ok(
                 GetPacienteDto.of(
                         pacienteServicio.edit(id, editPaciente)));
+    }
+
+    @Operation(summary = "Borra un paciente por su id")
+    @ApiResponse(responseCode = "204 No Content",
+            description = "Borrado con éxito",
+            content = @Content)
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id){
+
+        if(pacienteRepositorio.existsById(id))
+            pacienteRepositorio.deleteById(id);
+
+        return ResponseEntity.noContent().build();
     }
 
 

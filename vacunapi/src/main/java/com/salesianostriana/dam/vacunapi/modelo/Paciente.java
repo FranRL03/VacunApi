@@ -34,7 +34,7 @@ public class Paciente {
     @Schema(example = "El paciente está en tratamiento", description = "Anotación sobre el paciente")
     private String notas;
 
-    @OneToMany(mappedBy = "paciente", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "paciente", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Administracion> vacunasAdministradas = new ArrayList<>();
 
 }
