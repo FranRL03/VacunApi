@@ -2,9 +2,12 @@ package com.salesianostriana.dam.vacunapi.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.salesianostriana.dam.vacunapi.View.AdministracionView;
+import com.salesianostriana.dam.vacunapi.View.PacienteView;
 import com.salesianostriana.dam.vacunapi.dto.administracion.GetAdministracionDto;
+import com.salesianostriana.dam.vacunapi.dto.paciente.GetPacienteDto;
 import com.salesianostriana.dam.vacunapi.modelo.Vacuna;
 import com.salesianostriana.dam.vacunapi.servicios.AdministracionServicio;
+import com.salesianostriana.dam.vacunapi.servicios.PacienteServicio;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -26,6 +29,7 @@ import java.util.List;
 public class AdministracionController {
 
     private final AdministracionServicio administracionServicio;
+    private final PacienteServicio pacienteServicio;
 
 //    @PostMapping("/")
 //    @JsonView({AdministracionView.administracionCreate.class})
@@ -147,5 +151,54 @@ public class AdministracionController {
                 .map(GetAdministracionDto::find));
 
     }
+
+    @Operation(summary = "Buscas un paciente por su id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Paciente por id",
+                    content = { @Content(mediaType = "aplication/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Vacuna.class)),
+                            examples = {@ExampleObject(
+                                    value = """
+                                            {  
+                                                  "id": 1,
+                                                  "nombre": "Fran",
+                                                  "apellidos": "Ruiz",
+                                                  "telefonoContacto": "987654321",
+                                                  "fechaNacimiento": "2003-02-07",
+                                                  "notas": "Este paciente está en tratamiento",
+                                                  "administracion": [
+                                                      {
+                                                          "id": 1,
+                                                          "fecha": "2023-10-19",
+                                                          "edadAlAdministrar": 10,
+                                                          "getCalendario": {
+                                                              "tipoDosis": "Primera",
+                                                              "nombre": "Alergia"
+                                                          }
+                                                      }
+                                                  ]
+                                             }
+                                              
+                                            """
+                            )}
+                    )}),
+
+            @ApiResponse(responseCode = "404",
+                    description = "Error al buscar un paciente",
+                    content = @Content)
+    })
+    @GetMapping("/paciente/{id}")
+    @JsonView(PacienteView.idPacienteAdministracion.class)
+    public ResponseEntity<GetPacienteDto> findByIdPanciente(@PathVariable Long id){
+
+        if (pacienteServicio.findAll().isEmpty())
+            return ResponseEntity.notFound().build();
+
+        return ResponseEntity.of(pacienteServicio.findById(id)
+                .map(GetPacienteDto::find));
+    }
+
+    
 
 }
