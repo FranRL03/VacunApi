@@ -9,10 +9,10 @@
 
 <p>El proyecto se base en: </p>
 
-  <li><strong>Clase POJO: </strong>Contiene las entidades con sus atributis y asociaciones</li>
-  <li><strong>Clase Servicio :</strong>Contiene la lógica de negocio del proyecto</li>
-  <li><strong>Clase Controller :</strong>Contiene las peticiones</li>
-  <li><strong>Clase Dto :</strong>Contiene elementos de las entidades que nos permite ver ciertos atributos</li>
+  <li><strong>Clase POJO: </strong> Contiene las entidades con sus atributis y asociaciones</li>
+  <li><strong>Clase Servicio :</strong> Contiene la lógica de negocio del proyecto</li>
+  <li><strong>Clase Controller :</strong> Contiene las peticiones</li>
+  <li><strong>Clase Dto :</strong> Contiene elementos de las entidades que nos permite ver ciertos atributos</li>
   <li><strong>Clase View :</strong> Una clase que nos ahorra crear muchos DTOs y nos ayuda a mostrar los datos que queramos</li>
 
   <h2 align=center">Documentación</h2>
