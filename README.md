@@ -14,6 +14,7 @@
   <li><strong>Clase Controller :</strong> Contiene las peticiones</li>
   <li><strong>Clase Dto :</strong> Contiene elementos de las entidades que nos permite ver ciertos atributos</li>
   <li><strong>Clase View :</strong> Una clase que nos ahorra crear muchos DTOs y nos ayuda a mostrar los datos que queramos</li>
+  <li><strong>Clase Repositorios :</strong> Contiene la BBDD del proyecto</li>
 
   <h2 align=center">Documentación</h2>
 
@@ -31,6 +32,16 @@
   <li>Swagger</li>
   <li>Postman</li>
   <li>Intellij</li>
+</ul>
+
+<h2 align=center">Dependencias utilizadas de Spring Boot 3</h2>
+
+<ul>
+  <li>Data JPA</li>
+  <li>Starter Web</li>
+  <li>Starter Webmvc UI</li>
+  <li>H2 DataBase</li>
+  <li>Lombok</li>
 </ul>
 
 <h2 align=center">Ejecución del proyecto</h2>
