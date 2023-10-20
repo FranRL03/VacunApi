@@ -8,4 +8,6 @@ public class VacunaView {
     public static class VacunaDetails extends VacunaList{}
 
     public static class CalendarioEdit{}
+
+    public static class vacunaCreate{}
 }

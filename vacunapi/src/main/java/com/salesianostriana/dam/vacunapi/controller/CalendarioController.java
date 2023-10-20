@@ -49,7 +49,7 @@ public class CalendarioController {
                                                     "tipoDosis": "Segunda",
                                                     "recomendaciones": "efef",
                                                     "discriminante": "T",
-                                                    "idVacuna": 1 
+                                                    "id": 1 
                                                 }
                                             ]
                                             """
