@@ -42,7 +42,7 @@ public class AdministracionController {
             @ApiResponse(responseCode = "200",
                     description = "Lista de administraciones",
                     content = { @Content(mediaType = "aplication/json",
-                            array = @ArraySchema(schema = @Schema(implementation = Vacuna.class)),
+                            array = @ArraySchema(schema = @Schema(implementation = Administracion.class)),
                             examples = {@ExampleObject(
                                     value = """
                                             [
@@ -92,7 +92,7 @@ public class AdministracionController {
             @ApiResponse(responseCode = "200",
                     description = "Administracion por id",
                     content = { @Content(mediaType = "aplication/json",
-                            array = @ArraySchema(schema = @Schema(implementation = Vacuna.class)),
+                            array = @ArraySchema(schema = @Schema(implementation = Administracion.class)),
                             examples = {@ExampleObject(
                                     value = """
                                             {  
@@ -153,7 +153,7 @@ public class AdministracionController {
             @ApiResponse(responseCode = "200",
                     description = "Paciente por id",
                     content = { @Content(mediaType = "aplication/json",
-                            array = @ArraySchema(schema = @Schema(implementation = Vacuna.class)),
+                            array = @ArraySchema(schema = @Schema(implementation = Administracion.class)),
                             examples = {@ExampleObject(
                                     value = """
                                             {  
