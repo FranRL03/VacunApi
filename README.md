@@ -1,12 +1,10 @@
 # VacunApi
 
-<h1 aligm="center">VacuApi</h1>
-
 <p>Este proyecto contiene el código de una aplicacíon que gestiona las vacunas de administradas de un paciente.</p>
 
 <h2 align=center">Estructura del proyecto</h2>
 
-[image](htt!ps://github.com/FranRL03/VacunApi/assets/122262348/d671f871-aa80-4e35-9c6e-eaa8143abe49)
+![Captura de pantalla 2023-10-20 125948](https://github.com/FranRL03/VacunApi/assets/122262348/20ca9697-b981-42b7-9c0d-9553555225b8)
 
 
 <p>El proyecto se base en: </p>
