@@ -30,7 +30,7 @@ public record GetPacienteFindAll(
 
     public int edadPaciente (LocalDate fechaNacimiento){
 
-        
+
     }
 
     /*
