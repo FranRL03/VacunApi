@@ -23,7 +23,7 @@ public record GetVacunaDto(
         String nombre,
 
         @JsonView({VacunaDetails.class, CalendarioView.VacunaCalendario.class,
-                CalendarioEdit.class, AdministracionView.findById.class, vacunaCreate.class})
+                CalendarioEdit.class, AdministracionView.findById.class, vacunaCreate.class, VacunaList.class})
         String descripcionEnfermedad,
 
         @JsonView({VacunaDetails.class, AdministracionView.findById.class})

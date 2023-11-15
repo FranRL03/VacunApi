@@ -39,7 +39,7 @@ public class PacienteController {
             @ApiResponse(responseCode = "201",
                     description = "Creación de paciente",
                     content = {@Content(mediaType = "aplication/json",
-                            array = @ArraySchema(schema = @Schema(implementation = Vacuna.class)),
+                            array = @ArraySchema(schema = @Schema(implementation = Paciente.class)),
                             examples = {@ExampleObject(
                                     value = """
                                             [
@@ -76,7 +76,7 @@ public class PacienteController {
             @ApiResponse(responseCode = "200",
                     description = "Lista de los pacientes que hay en la base de datos",
                     content = {@Content(mediaType = "aplication/json",
-                            array = @ArraySchema(schema = @Schema(implementation = Vacuna.class)),
+                            array = @ArraySchema(schema = @Schema(implementation = Paciente.class)),
                             examples = {@ExampleObject(
                                     value = """
                                             [
@@ -125,7 +125,7 @@ public class PacienteController {
             @ApiResponse(responseCode = "200",
                     description = "Paciente por id",
                     content = { @Content(mediaType = "aplication/json",
-                            array = @ArraySchema(schema = @Schema(implementation = Vacuna.class)),
+                            array = @ArraySchema(schema = @Schema(implementation = Paciente.class)),
                             examples = {@ExampleObject(
                                     value = """
                                             {  
