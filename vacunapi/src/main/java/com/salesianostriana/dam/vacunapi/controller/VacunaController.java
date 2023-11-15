@@ -136,15 +136,16 @@ public class VacunaController {
     })
     @GetMapping("/{id}")
     @JsonView(VacunaDetails.class)
-    public ResponseEntity<GetVacunaDto> findById(@PathVariable Long id){
+//    public ResponseEntity <GetVacunaDto> findById(@PathVariable Long id){
+        public Vacuna findById(@PathVariable Long id){
 
+//        if (vacunaServicio.findAll().isEmpty())
+//            return ResponseEntity.notFound().build();
+//
+//        return ResponseEntity.of(vacunaServicio.findVacunaByIdWithMomentos(id)
+//        .map(GetVacunaDto::find));
 
-        if (vacunaServicio.findAll().isEmpty())
-            return ResponseEntity.notFound().build();
-
-        return ResponseEntity.of(vacunaServicio.findVacunaByIdWithMomentos(id)
-        .map(GetVacunaDto::find));
-
+        return vacunaServicio.findById2(id);
 
     }
 

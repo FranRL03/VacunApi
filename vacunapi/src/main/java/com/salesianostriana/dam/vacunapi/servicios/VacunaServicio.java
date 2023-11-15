@@ -1,6 +1,7 @@
 package com.salesianostriana.dam.vacunapi.servicios;
 
 import com.salesianostriana.dam.vacunapi.dto.vacuna.EditVacunaDto;
+import com.salesianostriana.dam.vacunapi.error.model.VacunaNotFoundExcepcion;
 import com.salesianostriana.dam.vacunapi.modelo.Vacuna;
 import com.salesianostriana.dam.vacunapi.repositorios.CalendarioRepositorio;
 import com.salesianostriana.dam.vacunapi.repositorios.VacunaRepositorio;
@@ -50,6 +51,13 @@ public class VacunaServicio {
       Optional<Vacuna> encontrado = Optional.of(repositorio.getReferenceById(id));
 
       return encontrado;
+
+    }
+
+    public Vacuna findById2(Long id){
+
+        return repositorio.findById(id)
+                .orElseThrow(() -> new VacunaNotFoundExcepcion(id));
 
     }
 
