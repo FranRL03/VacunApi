@@ -11,6 +11,9 @@ public record GetCalendarioDeVacunaDto(
         @JsonView({AdministracionView.findById.class, VacunaView.VacunaDetails.class})
         Long id,
 
+        @JsonView({VacunaView.VacunaDetails.class})
+        String edad,
+
         @JsonView({AdministracionView.findById.class, PacienteView.idPacienteAdministracion.class, VacunaView.VacunaDetails.class})
         String tipoDosis,
 
@@ -25,6 +28,7 @@ public record GetCalendarioDeVacunaDto(
 
         return  new GetCalendarioDeVacunaDto(
                 c.getId(),
+                c.getEdad() + " meses",
                 c.getTipoDosis(),
                 c.getRecomendaciones(),
                 c.getDiscriminante()

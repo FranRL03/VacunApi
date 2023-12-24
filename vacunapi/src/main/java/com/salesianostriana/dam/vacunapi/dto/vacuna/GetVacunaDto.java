@@ -30,7 +30,6 @@ public record GetVacunaDto(
         List<GetCalendarioDeVacunaDto> momentos
 ) {
 
-    //@JsonView(VacunaList.class)
     public static GetVacunaDto of (Vacuna v){
 
         return new GetVacunaDto(
@@ -44,18 +43,5 @@ public record GetVacunaDto(
         );
     }
 
-    //@JsonView(VacunaDetails.class)
-    public static GetVacunaDto find (Vacuna v2){
-        
-        return new GetVacunaDto(
-                v2.getId(),
-                v2.getNombre(),
-                v2.getDescripcionEnfermedad(),
-                v2.getMomentos()
-                        .stream()
-                        .map(GetCalendarioDeVacunaDto::of)
-                        .toList()
-        );
-    }
 
 }

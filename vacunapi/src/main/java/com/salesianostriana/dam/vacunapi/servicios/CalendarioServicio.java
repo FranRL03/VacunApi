@@ -31,7 +31,7 @@ public class CalendarioServicio {
         c.setRecomendaciones(nuevo.recomendaciones());
         c.setDiscriminante(nuevo.discriminante());
 
-        Optional<Vacuna> vacuna = vacunaServicio.findById(nuevo.id());
+        Optional<Vacuna> vacuna = Optional.ofNullable(vacunaServicio.findById(nuevo.id()));
         if (vacuna.isPresent())
             c.setVacuna(vacuna.get());
 

@@ -1,7 +1,8 @@
 package com.salesianostriana.dam.vacunapi.servicios;
 
 import com.salesianostriana.dam.vacunapi.dto.vacuna.EditVacunaDto;
-import com.salesianostriana.dam.vacunapi.error.model.VacunaNotFoundExcepcion;
+import com.salesianostriana.dam.vacunapi.exception.EmptyVacunaListException;
+import com.salesianostriana.dam.vacunapi.exception.VacunaNotFoundExcepcion;
 import com.salesianostriana.dam.vacunapi.modelo.Vacuna;
 import com.salesianostriana.dam.vacunapi.repositorios.CalendarioRepositorio;
 import com.salesianostriana.dam.vacunapi.repositorios.VacunaRepositorio;
@@ -27,14 +28,6 @@ public class VacunaServicio {
         v.setNombre(nuevo.nombre());
         v.setDescripcionEnfermedad(nuevo.descripcionEnfermedad());
 
-//        List<Calendario> calendarios = nuevo.calendarios()
-//                .stream()
-//                .map(calendarioRepositorio::getReferenceById)
-//                .toList();
-//
-//
-//        v.setMomentos(calendarios);
-
         return repositorio.save(v);
     }
 
@@ -42,22 +35,20 @@ public class VacunaServicio {
 
         List<Vacuna> vacunas = repositorio.findAll();
 
+        if (vacunas.isEmpty())
+            throw new EmptyVacunaListException();
+
         return vacunas;
-
     }
 
-    public Optional<Vacuna> findById(Long id){
+    public Vacuna findById(Long id){
 
-      Optional<Vacuna> encontrado = Optional.of(repositorio.getReferenceById(id));
+        Optional <Vacuna> encontrado = repositorio.findById(id);
 
-      return encontrado;
+        if (!encontrado.isPresent())
+            throw new VacunaNotFoundExcepcion(id);
 
-    }
-
-    public Vacuna findById2(Long id){
-
-        return repositorio.findById(id)
-                .orElseThrow(() -> new VacunaNotFoundExcepcion(id));
+        return encontrado.get();
 
     }
 
@@ -94,9 +85,9 @@ public class VacunaServicio {
             edit.setNombre(editVacuna.nombre());
             edit.setDescripcionEnfermedad(editVacuna.descripcionEnfermedad());
             return repositorio.save(edit);
+        }else{
+            throw new VacunaNotFoundExcepcion(id);
         }
-
-        return null;
     }
 
 

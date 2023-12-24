@@ -20,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 /*
 http://localhost:8080/swagger-ui/index.html
@@ -44,7 +45,7 @@ public class VacunaController {
                                     value = """
                                             [
                                                 {
-                                                    "id": 1, 
+                                                    "id": 1, .
                                                     "nombre": "Vacunesil",
                                                     "descripcion": "Vacuna 
                                                 }
@@ -92,18 +93,12 @@ public class VacunaController {
     })
     @GetMapping("/")
     @JsonView(VacunaList.class)
-    public ResponseEntity<List<GetVacunaDto>> findAll (){
+    public List<GetVacunaDto> findAll (){
 
-        //List<Vacuna> vacunas = vacunaRepositorio.findAll();
+        return vacunaServicio.findAll().stream()
+                .map(GetVacunaDto::of)
+                .toList();
 
-        if (vacunaServicio.findAll().isEmpty())
-            return ResponseEntity.notFound().build();
-
-        return ResponseEntity.ok(
-                vacunaServicio.findAll().stream()
-                        .map(GetVacunaDto::of)
-                        .toList()
-        );
     }
 
     @Operation(summary = "Buscas una vacuna por su id")
@@ -136,16 +131,11 @@ public class VacunaController {
     })
     @GetMapping("/{id}")
     @JsonView(VacunaDetails.class)
-//    public ResponseEntity <GetVacunaDto> findById(@PathVariable Long id){
-        public Vacuna findById(@PathVariable Long id){
+    public GetVacunaDto findById(@PathVariable Long id){
 
-//        if (vacunaServicio.findAll().isEmpty())
-//            return ResponseEntity.notFound().build();
-//
-//        return ResponseEntity.of(vacunaServicio.findVacunaByIdWithMomentos(id)
-//        .map(GetVacunaDto::find));
+        Vacuna v = vacunaServicio.findById(id);
 
-        return vacunaServicio.findById2(id);
+        return GetVacunaDto.of(v);
 
     }
 

@@ -1,4 +1,4 @@
-package com.salesianostriana.dam.vacunapi.error.model;
+package com.salesianostriana.dam.vacunapi.exception;
 
 public class VacunaNotFoundExcepcion extends RuntimeException{
 

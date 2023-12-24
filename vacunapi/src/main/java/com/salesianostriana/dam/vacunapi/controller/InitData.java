@@ -62,7 +62,6 @@ public class InitData {
 
         vacunaRepositorio.save(v);
 
-
         Paciente p1 = Paciente.builder()
                 .nombre("Fran")
                 .apellidos("Ruiz")
