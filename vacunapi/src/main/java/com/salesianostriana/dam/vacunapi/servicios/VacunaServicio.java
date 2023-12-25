@@ -90,10 +90,9 @@ public class VacunaServicio {
         }
     }
 
+    public void delete (Long id){
 
-    public Vacuna getReferenceByIdCreate(Long id) {
-
-        return repositorio.getReferenceById(id);
+         repositorio.deleteById(id);
     }
 
 

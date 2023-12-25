@@ -31,8 +31,6 @@ http://localhost:8080/swagger-ui/index.html
 @Tag(name = "Vacuna", description = "API REST de vacuna con operaciones CRUD")
 public class VacunaController {
 
-    private final VacunaRepositorio vacunaRepositorio;
-
     private final VacunaServicio vacunaServicio;
 
     @Operation(summary = "Añades una vacuna")
@@ -144,9 +142,6 @@ public class VacunaController {
     public ResponseEntity<GetVacunaDto> edit (@PathVariable Long id,
                                               @RequestBody EditVacunaDto editVacuna){
 
-        if (vacunaServicio.findAll().isEmpty())
-            return ResponseEntity.notFound().build();
-
         return ResponseEntity.ok(
                 GetVacunaDto.of(
                         vacunaServicio.edit(editVacuna, id)));
@@ -160,8 +155,7 @@ public class VacunaController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id){
 
-        if(vacunaRepositorio.existsById(id))
-            vacunaRepositorio.deleteById(id);
+        vacunaServicio.delete(id);
 
         return ResponseEntity.noContent().build();
     }

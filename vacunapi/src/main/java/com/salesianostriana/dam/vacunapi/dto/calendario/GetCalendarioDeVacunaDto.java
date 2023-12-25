@@ -28,7 +28,7 @@ public record GetCalendarioDeVacunaDto(
 
         return  new GetCalendarioDeVacunaDto(
                 c.getId(),
-                c.getEdad() + " meses",
+                c.getEdad() == 1 ? c.getEdad() + " mes" : c.getEdad() + " meses",
                 c.getTipoDosis(),
                 c.getRecomendaciones(),
                 c.getDiscriminante()
