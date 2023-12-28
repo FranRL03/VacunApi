@@ -9,6 +9,7 @@ import com.salesianostriana.dam.vacunapi.modelo.Paciente;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public record GetPacienteDto(
@@ -26,7 +27,7 @@ public record GetPacienteDto(
         String telefonoContacto,
 
         @JsonView({PacienteView.informacionPaciente.class, PacienteView.findByIdWithAllEntities.class})
-        LocalDate fechaNacimiento,
+        String fechaNacimiento,
 
         @JsonView({PacienteView.informacionPaciente.class, PacienteView.findByIdWithAllEntities.class})
         String notas,
@@ -43,7 +44,7 @@ public record GetPacienteDto(
                 p.getNombre(),
                 p.getApellidos(),
                 p.getTelefonoContacto(),
-                p.getFechaNacimiento(),
+                p.getFechaNacimiento().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")),
                 p.getNotas(),
                 p.getVacunasAdministradas()
                         .stream()
@@ -59,7 +60,7 @@ public record GetPacienteDto(
                 p.getNombre(),
                 p.getApellidos(),
                 p.getTelefonoContacto(),
-                p.getFechaNacimiento(),
+                p.getFechaNacimiento().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")),
                 p.getNotas(),
                 p.getVacunasAdministradas()
                         .stream()

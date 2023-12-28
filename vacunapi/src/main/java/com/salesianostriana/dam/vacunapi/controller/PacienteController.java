@@ -19,6 +19,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -106,17 +107,12 @@ public class PacienteController {
                     content = @Content)
     })
     @GetMapping("/")
-    public ResponseEntity<List<GetPacienteFindAll>> findAll() {
+    public List<GetPacienteFindAll> findAll() {
 
-        if (pacienteServicio.findAll().isEmpty())
-            return ResponseEntity.notFound().build();
-
-        return ResponseEntity.ok(
-                pacienteServicio.findAll()
+        return pacienteServicio.findAll()
                         .stream()
                         .map(GetPacienteFindAll::of)
-                        .toList()
-        );
+                        .toList();
 
     }
 
