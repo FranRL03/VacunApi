@@ -11,20 +11,19 @@ import com.salesianostriana.dam.vacunapi.modelo.Vacuna;
 
 public record GetCalendarioDto(
 
-        @JsonView({CalendarioView.CalendarioWithNameVacuna.class})
         Long id,
 
-        @JsonView({CalendarioView.CalendarioWithNameVacuna.class, VacunaView.CalendarioEdit.class})
-        int edad,
+        @JsonView({VacunaView.CalendarioEdit.class})
+        String edad,
 
-        @JsonView({CalendarioView.CalendarioWithNameVacuna.class, VacunaView.CalendarioEdit.class,
+        @JsonView({VacunaView.CalendarioEdit.class,
                 PacienteView.findByIdWithAllEntities.class})
         String tipoDosis,
 
-        @JsonView({CalendarioView.CalendarioWithNameVacuna.class, VacunaView.CalendarioEdit.class})
+        @JsonView({VacunaView.CalendarioEdit.class})
         String recomendaciones,
 
-        @JsonView({CalendarioView.CalendarioWithNameVacuna.class, VacunaView.CalendarioEdit.class})
+        @JsonView({VacunaView.CalendarioEdit.class})
         String discriminante,
 
         @JsonView({VacunaView.CalendarioEdit .class, AdministracionView.findAll.class, PacienteView.idPacienteAdministracion.class})
@@ -34,11 +33,9 @@ public record GetCalendarioDto(
 
     public static GetCalendarioDto of (Calendario c){
 
-        Vacuna v = c.getVacuna();
-
         return new GetCalendarioDto(
                 c.getId(),
-                c.getEdad(),
+                c.getEdad() == 1 ? c.getEdad() + " mes" : c.getEdad() + " meses",
                 c.getTipoDosis(),
                 c.getRecomendaciones(),
                 c.getDiscriminante(),

@@ -1,6 +1,6 @@
 package com.salesianostriana.dam.vacunapi.error;
 
-import com.salesianostriana.dam.vacunapi.exception.VacunaNotFoundExcepcion;
+import com.salesianostriana.dam.vacunapi.exception.VacunaException.VacunaNotFoundExcepcion;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.annotation.ExceptionHandler;

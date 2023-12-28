@@ -5,13 +5,16 @@ import com.salesianostriana.dam.vacunapi.View.CalendarioView;
 import com.salesianostriana.dam.vacunapi.View.VacunaView;
 import com.salesianostriana.dam.vacunapi.dto.calendario.EditCalendarioDto;
 import com.salesianostriana.dam.vacunapi.dto.calendario.GetCalendarioDto;
+import com.salesianostriana.dam.vacunapi.dto.calendario.GetCalendarioFindAllDto;
 import com.salesianostriana.dam.vacunapi.dto.vacuna.GetVacunaDto;
+import com.salesianostriana.dam.vacunapi.dto.vacuna.GetVacunaPruebaDto;
 import com.salesianostriana.dam.vacunapi.dto.vacuna.VacunaCalendarioDto;
 import com.salesianostriana.dam.vacunapi.dto.vacuna.VacunaDetailsDto;
 import com.salesianostriana.dam.vacunapi.modelo.Calendario;
 import com.salesianostriana.dam.vacunapi.modelo.Vacuna;
 import com.salesianostriana.dam.vacunapi.repositorios.CalendarioRepositorio;
 import com.salesianostriana.dam.vacunapi.servicios.CalendarioServicio;
+import com.salesianostriana.dam.vacunapi.servicios.VacunaServicio;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -25,6 +28,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/calendario")
@@ -34,6 +38,7 @@ public class CalendarioController {
 
     private final CalendarioServicio calendarioServicio;
     private final CalendarioRepositorio calendarioRepositorio;
+    private final VacunaServicio vacunaServicio;
 
     @Operation(summary = "Añades un calendario")
     @ApiResponses(value = {
@@ -49,7 +54,7 @@ public class CalendarioController {
                                                     "tipoDosis": "Segunda",
                                                     "recomendaciones": "efef",
                                                     "discriminante": "T",
-                                                    "id": 1 
+                                                    "id": 1
                                                 }
                                             ]
                                             """
@@ -98,18 +103,12 @@ public class CalendarioController {
                     content = @Content)
     })
     @GetMapping("/")
-    @JsonView(CalendarioView.CalendarioWithNameVacuna.class)
-    public ResponseEntity<List<GetCalendarioDto>> findAll(){
+    public List<GetCalendarioFindAllDto> findAll(){
 
-        if (calendarioServicio.findAll().isEmpty())
-            return ResponseEntity.notFound().build();
-
-        return ResponseEntity.ok(
-                calendarioServicio.findAll()
+        return calendarioServicio.findAll()
                         .stream()
-                        .map(GetCalendarioDto::of)
-                        .toList()
-        );
+                        .map(GetCalendarioFindAllDto::of)
+                        .toList();
     }
 
     @Operation(summary = "De un Calendario obtienes el número de vacunas que se han puesto")
@@ -120,16 +119,19 @@ public class CalendarioController {
                             array = @ArraySchema(schema = @Schema(implementation = Calendario.class)),
                             examples = {@ExampleObject(
                                     value = """
-                                            [
-                                                {
-                                                     "id": 1,
-                                                     "edad": 2,
-                                                     "tipoDosis": "Primera",
-                                                     "recomendaciones": "Reposo durante el día",
-                                                     "discriminante": "T",
-                                                     "dosisTotales": 2
+                                            {
+                                                "id": 1,
+                                                "edad": "2",
+                                                "tipoDosis": "Primera",
+                                                "recomendaciones": "Reposo durante el día",
+                                                "discriminante": "T",
+                                                "vacuna": {
+                                                    "id": 1,
+                                                    "nombre": "Alergia",
+                                                    "descripcionEnfermedad": "Alergia contra el polen y los ácaros",
+                                                    "dosisTotales": 2
                                                 }
-                                            ]
+                                            }
                                             """
                             )}
                     )}),
@@ -139,28 +141,12 @@ public class CalendarioController {
                     content = @Content)
     })
     @GetMapping("/{id}")
-    @JsonView(CalendarioView.findById .class)
-    public ResponseEntity<VacunaCalendarioDto> obtenerVacunaion(@PathVariable Long id){
+    public VacunaCalendarioDto obtenerVacunacion(@PathVariable Long id){
 
         Calendario momento = calendarioServicio.getVacunaCalendarioById(id);
 
-        if(momento != null){
+        return VacunaCalendarioDto.of(momento, calendarioServicio.cantidadMomentos(id));
 
-            VacunaCalendarioDto dto = new VacunaCalendarioDto(
-                    momento.getId(),
-                    momento.getEdad(),
-                    momento.getTipoDosis(),
-                    momento.getRecomendaciones(),
-                    momento.getDiscriminante(),
-                    GetVacunaDto.of(momento.getVacuna()),
-                    momento.getVacuna().getMomentos().size()
-
-            );
-
-            return ResponseEntity.ok(dto);
-        }
-
-        return ResponseEntity.notFound().build();
     }
 
     @Operation(summary = "Borra un momento")
@@ -170,8 +156,7 @@ public class CalendarioController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id){
 
-        if(calendarioRepositorio.existsById(id))
-            calendarioRepositorio.deleteById(id);
+       calendarioServicio.delete(id);
 
         return ResponseEntity.noContent().build();
     }
@@ -184,29 +169,28 @@ public class CalendarioController {
                             array = @ArraySchema(schema = @Schema(implementation = Calendario.class)),
                             examples = {@ExampleObject(
                                     value = """
-                                            [
-                                                {
-                                                    "vacuna": {
-                                                         "id": 1,
-                                                         "nombre": "Alergia",
-                                                         "descripcionEnfermedad": "Alergia contra el polen y los ácaros",
-                                                         "calendario": [
-                                                             {
-                                                                "id": 1,
-                                                                "tipoDosis": "Primera",
-                                                                "recomendaciones": "Reposo durante el día",
-                                                                "discriminante": "T"
-                                                             },
-                                                             {
-                                                                "id": 2,
-                                                                "tipoDosis": "Segunda",
-                                                                "recomendaciones": "Ponerse frío",
-                                                                "discriminante": "H"
-                                                             }
-                                                         ]
-                                                    }
-                                                }
-                                            ]
+                                            {
+                                                  "id": 1,
+                                                  "nombre": "Alergia",
+                                                  "descripcionEnfermedad": "Alergia contra el polen y los ácaros",
+                                                  "dosisTotales": 3,
+                                                  "momentos": [
+                                                      {
+                                                          "id": 1,
+                                                          "edad": "2 meses",
+                                                          "tipoDosis": "Primera",
+                                                          "recomendaciones": "Reposo durante el día",
+                                                          "discriminante": "T"
+                                                      },
+                                                      {
+                                                          "id": 2,
+                                                          "edad": "6 meses",
+                                                          "tipoDosis": "Segunda",
+                                                          "recomendaciones": "Ponerse frío",
+                                                          "discriminante": "H"
+                                                      }
+                                                  ]
+                                              }
                                             """
                             )}
                     )}),
@@ -216,30 +200,18 @@ public class CalendarioController {
                     content = @Content)
     })
     @GetMapping("/vacuna/{id}")
-    public ResponseEntity<VacunaDetailsDto> obtenerFullVacunaion(@PathVariable Long id){
+    public VacunaDetailsDto obtenerFullVacunaion(@PathVariable Long id){
 
-        Calendario momento = calendarioServicio.getVacunaCalendarioById(id);
+        Vacuna v = vacunaServicio.findById(id);
 
-        if(momento != null){
+        return VacunaDetailsDto.of(v, calendarioServicio.cantidadMomentos(id));
 
-            VacunaDetailsDto dto = new VacunaDetailsDto(
-
-                    GetVacunaDto.of(momento.getVacuna())
-
-            );
-
-            return ResponseEntity.ok(dto);
-        }
-
-        return ResponseEntity.notFound().build();
     }
 
     @JsonView(VacunaView.CalendarioEdit.class)
     @PutMapping("/{id}")
     public ResponseEntity<GetCalendarioDto> edit(@PathVariable Long id,
                                                  @RequestBody EditCalendarioDto editCalendario){
-        if(calendarioServicio.findAll().isEmpty())
-            return ResponseEntity.notFound().build();
 
         return ResponseEntity.ok(
                 GetCalendarioDto.of(

@@ -6,38 +6,34 @@ import com.salesianostriana.dam.vacunapi.modelo.Calendario;
 
 public record VacunaCalendarioDto(
 
-        @JsonView({CalendarioView.findById.class})
+//        @JsonView({CalendarioView.findById.class})
         Long id,
 
-        @JsonView({CalendarioView.findById.class})
-        int edad,
+//        @JsonView({CalendarioView.findById.class})
+        String edad,
 
-        @JsonView({CalendarioView.findById.class})
+//        @JsonView({CalendarioView.findById.class})
         String tipoDosis,
 
-        @JsonView({CalendarioView.findById.class})
+//        @JsonView({CalendarioView.findById.class})
         String recomendaciones,
 
-        @JsonView({CalendarioView.findById.class})
+//        @JsonView({CalendarioView.findById.class})
         String discriminante,
 
-        @JsonView({CalendarioView.findById.class})
-        GetVacunaDto vacuna,
-
-        @JsonView({CalendarioView.findById.class})
-        int dosisTotales
+//        @JsonView({CalendarioView.findById.class})
+        GetVacunaPruebaDto vacuna
 ) {
 
-    public static VacunaCalendarioDto of (Calendario c, int dosisTotales){
+    public static VacunaCalendarioDto of (Calendario c, int cantidadMomentos){
 
         return new VacunaCalendarioDto(
                 c.getId(),
-                c.getEdad(),
+                c.getEdad() == 1 ? c.getEdad() + " mes" : c.getEdad() + " meses",
                 c.getTipoDosis(),
                 c.getRecomendaciones(),
                 c.getDiscriminante(),
-                GetVacunaDto.of(c.getVacuna()),
-                dosisTotales
+                GetVacunaPruebaDto.of(c.getVacuna(), cantidadMomentos)
 
         );
     }

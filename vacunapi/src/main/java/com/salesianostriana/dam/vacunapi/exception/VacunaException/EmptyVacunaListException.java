@@ -1,4 +1,4 @@
-package com.salesianostriana.dam.vacunapi.exception;
+package com.salesianostriana.dam.vacunapi.exception.VacunaException;
 
 public class EmptyVacunaListException extends RuntimeException{
 

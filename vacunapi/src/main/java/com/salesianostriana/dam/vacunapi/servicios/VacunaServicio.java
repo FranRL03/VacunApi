@@ -1,8 +1,10 @@
 package com.salesianostriana.dam.vacunapi.servicios;
 
 import com.salesianostriana.dam.vacunapi.dto.vacuna.EditVacunaDto;
-import com.salesianostriana.dam.vacunapi.exception.EmptyVacunaListException;
-import com.salesianostriana.dam.vacunapi.exception.VacunaNotFoundExcepcion;
+import com.salesianostriana.dam.vacunapi.exception.VacunaException.EmptyVacunaListException;
+import com.salesianostriana.dam.vacunapi.exception.VacunaException.VacunaNotDeleteException;
+import com.salesianostriana.dam.vacunapi.exception.VacunaException.VacunaNotFoundExcepcion;
+import com.salesianostriana.dam.vacunapi.modelo.Calendario;
 import com.salesianostriana.dam.vacunapi.modelo.Vacuna;
 import com.salesianostriana.dam.vacunapi.repositorios.CalendarioRepositorio;
 import com.salesianostriana.dam.vacunapi.repositorios.VacunaRepositorio;
@@ -31,6 +33,10 @@ public class VacunaServicio {
         return repositorio.save(v);
     }
 
+    public void updateVacuna(Vacuna vacuna) {
+        repositorio.save(vacuna);
+    }
+
     public List<Vacuna> findAll(){
 
         List<Vacuna> vacunas = repositorio.findAll();
@@ -46,7 +52,7 @@ public class VacunaServicio {
         Optional <Vacuna> encontrado = repositorio.findById(id);
 
         if (!encontrado.isPresent())
-            throw new VacunaNotFoundExcepcion(id);
+            throw new VacunaNotFoundExcepcion();
 
         return encontrado.get();
 
@@ -86,13 +92,17 @@ public class VacunaServicio {
             edit.setDescripcionEnfermedad(editVacuna.descripcionEnfermedad());
             return repositorio.save(edit);
         }else{
-            throw new VacunaNotFoundExcepcion(id);
+            throw new VacunaNotFoundExcepcion();
         }
     }
 
     public void delete (Long id){
 
-         repositorio.deleteById(id);
+        int num = repositorio.contarCalendariosConAdministraciones(id);
+        if (num == 0)
+            repositorio.deleteById(id);
+        else
+            throw new VacunaNotDeleteException();
     }
 
 

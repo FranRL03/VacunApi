@@ -24,15 +24,6 @@ public record EditCalendarioDto(
         @JsonView({CalendarioView.VacunaCalendario.class, VacunaView.CalendarioEdit.class})
         String discriminante,
 
-//        @JsonView({CalendarioView.VacunaCalendario.class})
-//        Long idVacuna,
-//
-//        @JsonView({CalendarioView.VacunaCalendario.class})
-//        String nombre,
-//
-//       @JsonView({CalendarioView.VacunaCalendario.class})
-//        String descripcionEnfermedad
-
         @JsonView({CalendarioView.CalendarioWithNameVacuna.class, CalendarioView.VacunaCalendario.class})
         GetVacunaDto vacuna
 
@@ -49,9 +40,6 @@ public record EditCalendarioDto(
                 c.getTipoDosis(),
                 c.getRecomendaciones(),
                 c.getDiscriminante(),
-//                c.getVacuna().getId(),
-//                c.getVacuna().getNombre(),
-//                c.getVacuna().getDescripcionEnfermedad()
                 GetVacunaDto.of(c.getVacuna())
         );
     }
