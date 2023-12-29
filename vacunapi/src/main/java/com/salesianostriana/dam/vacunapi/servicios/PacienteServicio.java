@@ -3,7 +3,10 @@ package com.salesianostriana.dam.vacunapi.servicios;
 
 import com.salesianostriana.dam.vacunapi.dto.paciente.EditPacienteDto;
 import com.salesianostriana.dam.vacunapi.exception.PacienteException.EmptyPacienteListException;
-import com.salesianostriana.dam.vacunapi.exception.VacunaException.EmptyVacunaListException;
+import com.salesianostriana.dam.vacunapi.exception.PacienteException.PacienteNotDeleteException;
+import com.salesianostriana.dam.vacunapi.exception.PacienteException.PacienteNotFoundExcepcion;
+import com.salesianostriana.dam.vacunapi.exception.VacunaException.VacunaNotDeleteException;
+import com.salesianostriana.dam.vacunapi.exception.VacunaException.VacunaNotFoundExcepcion;
 import com.salesianostriana.dam.vacunapi.modelo.Paciente;
 import com.salesianostriana.dam.vacunapi.modelo.Vacuna;
 import com.salesianostriana.dam.vacunapi.repositorios.PacienteRepositorio;
@@ -11,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,17 +47,19 @@ public class PacienteServicio {
         return pacientes;
     }
 
-    public Optional<Paciente> findById (Long id){
+    public Paciente findById (Long id){
 
-        //Optional<Paciente> encontrado = Optional.of(repositorio.getReferenceById(id));
-        //return encontrado;
+        Optional <Paciente> encontrado = repositorio.findById(id);
 
-        return repositorio.findById(id);
+        if (!encontrado.isPresent())
+            throw new PacienteNotFoundExcepcion();
+
+        return encontrado.get();
     }
 
     public Paciente edit (Long id, EditPacienteDto editPaciente){
 
-        Optional<Paciente> p = findById(id);
+        Optional<Paciente> p = Optional.ofNullable(findById(id));
 
         if(p.isPresent()){
             Paciente edit = p.get();
@@ -63,9 +68,17 @@ public class PacienteServicio {
             edit.setTelefonoContacto(editPaciente.telefonoContacto());
             edit.setNotas(editPaciente.notas());
             return repositorio.save(edit);
+        }else{
+            throw new PacienteNotFoundExcepcion();
         }
+    }
 
-        return null;
+    public void delete (Long id){
+        int num = repositorio.comprobarPacienteEnAdministracion(id);
+        if (num == 0)
+            repositorio.deleteById(id);
+        else
+            throw new PacienteNotDeleteException();
     }
 
 }

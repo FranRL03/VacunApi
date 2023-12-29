@@ -7,6 +7,7 @@ import com.salesianostriana.dam.vacunapi.dto.administracion.EditAdministracionDt
 import com.salesianostriana.dam.vacunapi.dto.administracion.GetAdministracionDto;
 import com.salesianostriana.dam.vacunapi.dto.paciente.GetPacienteDto;
 import com.salesianostriana.dam.vacunapi.modelo.Administracion;
+import com.salesianostriana.dam.vacunapi.modelo.Paciente;
 import com.salesianostriana.dam.vacunapi.modelo.Vacuna;
 import com.salesianostriana.dam.vacunapi.repositorios.AdministracionRepositorio;
 import com.salesianostriana.dam.vacunapi.servicios.AdministracionServicio;
@@ -186,13 +187,11 @@ public class AdministracionController {
     })
     @GetMapping("/paciente/{id}")
     @JsonView(PacienteView.idPacienteAdministracion.class)
-    public ResponseEntity<GetPacienteDto> findByIdPanciente(@PathVariable Long id){
+    public GetPacienteDto findByIdPanciente(@PathVariable Long id){
 
-        if (pacienteServicio.findAll().isEmpty())
-            return ResponseEntity.notFound().build();
+        Paciente p = pacienteServicio.findById(id);
 
-        return ResponseEntity.of(pacienteServicio.findById(id)
-                .map(GetPacienteDto::find));
+        return GetPacienteDto.find(p);
     }
 
     @Operation(summary = "Borra una administracion por su id")

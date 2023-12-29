@@ -5,6 +5,7 @@ import com.salesianostriana.dam.vacunapi.View.PacienteView;
 import com.salesianostriana.dam.vacunapi.dto.paciente.EditPacienteDto;
 import com.salesianostriana.dam.vacunapi.dto.paciente.GetPacienteDto;
 import com.salesianostriana.dam.vacunapi.dto.paciente.GetPacienteFindAll;
+import com.salesianostriana.dam.vacunapi.dto.paciente.GetUpdatePacienteDto;
 import com.salesianostriana.dam.vacunapi.dto.vacuna.GetVacunaDto;
 import com.salesianostriana.dam.vacunapi.modelo.Paciente;
 import com.salesianostriana.dam.vacunapi.modelo.Vacuna;
@@ -81,23 +82,21 @@ public class PacienteController {
                             examples = {@ExampleObject(
                                     value = """
                                             [
-                                                {
-                                            
-                                                    "id": 1,
-                                                    "nombre": "Fran",
-                                                    "apellidos": "Ruiz",
-                                                    "edad": 20,
-                                                    "cantidadVacuna": 1
-                                                
-                                                },
-                                                {
-                                                     "id": 2,
-                                                     "nombre": "Paciente",
-                                                     "apellidos": "1",
-                                                     "edad": 3,
-                                                     "cantidadVacuna": 1
-                                                }
-                                            ]
+                                                  {
+                                                      "id": 1,
+                                                      "nombre": "Fran",
+                                                      "apellidos": "Ruiz",
+                                                      "edad": "20 años",
+                                                      "cantidadVacuna": 1
+                                                  },
+                                                  {
+                                                      "id": 2,
+                                                      "nombre": "Paciente",
+                                                      "apellidos": "1",
+                                                      "edad": "5 meses",
+                                                      "cantidadVacuna": 1
+                                                  }
+                                              ]
                                             """
                             )}
                     )}),
@@ -124,25 +123,23 @@ public class PacienteController {
                             array = @ArraySchema(schema = @Schema(implementation = Paciente.class)),
                             examples = {@ExampleObject(
                                     value = """
-                                            {  
+                                            {
                                                   "id": 1,
                                                   "nombre": "Fran",
                                                   "apellidos": "Ruiz",
                                                   "telefonoContacto": "987654321",
-                                                  "fechaNacimiento": "2003-02-07",
+                                                  "fechaNacimiento": "07-02-2003",
                                                   "notas": "Este paciente está en tratamiento",
-                                                  "administracion": [
+                                                  "vacunasAdministradas": [
                                                       {
                                                           "id": 1,
-                                                          "fecha": "2023-10-19",
-                                                          "edadAlAdministrar": 10,
-                                                          "getCalendario": {
-                                                              "tipoDosis": "Primera",
-                                                              "nombre": "Alergia"
-                                                          }
+                                                          "fecha": "19-10-2023",
+                                                          "edadAlAdministrar": "10 meses",
+                                                          "vacuna": "Alergia",
+                                                          "tipoDosis": "Primera"
                                                       }
                                                   ]
-                                             }
+                                              }
                                               
                                             """
                             )}
@@ -154,24 +151,22 @@ public class PacienteController {
     })
     @GetMapping("/{id}")
     @JsonView(PacienteView.findByIdWithAllEntities.class)
-    public ResponseEntity<GetPacienteDto> findById(@PathVariable Long id){
+    public GetPacienteDto findById(@PathVariable Long id){
 
-        if (pacienteServicio.findAll().isEmpty())
-            return ResponseEntity.notFound().build();
+        Paciente p = pacienteServicio.findById(id);
 
-        return ResponseEntity.of(pacienteServicio.findById(id)
-                .map(GetPacienteDto::find));
+        return GetPacienteDto.find(p);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<GetPacienteDto> edit (@PathVariable Long id,
-                                                @RequestBody EditPacienteDto editPaciente){
+    public ResponseEntity<GetUpdatePacienteDto> edit (@PathVariable Long id,
+                                                      @RequestBody EditPacienteDto editPaciente){
 
         if (pacienteServicio.findAll().isEmpty())
             return ResponseEntity.notFound().build();
 
         return ResponseEntity.ok(
-                GetPacienteDto.of(
+                GetUpdatePacienteDto.of(
                         pacienteServicio.edit(id, editPaciente)));
     }
 
@@ -182,8 +177,7 @@ public class PacienteController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id){
 
-        if(pacienteRepositorio.existsById(id))
-            pacienteRepositorio.deleteById(id);
+        pacienteServicio.delete(id);
 
         return ResponseEntity.noContent().build();
     }

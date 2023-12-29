@@ -33,7 +33,7 @@ public record GetPacienteDto(
         String notas,
 
         @JsonView({PacienteView.findByIdWithAllEntities.class})
-        List<GetAdministracionDto> administracion
+        List<GetAdministracionDto> vacunasAdministradas
 
 ) {
 

@@ -3,23 +3,29 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.salesianostriana.dam.vacunapi.View.AdministracionView;
 import com.salesianostriana.dam.vacunapi.View.PacienteView;
 import com.salesianostriana.dam.vacunapi.dto.calendario.GetCalendarioDto;
-import com.salesianostriana.dam.vacunapi.dto.paciente.EditPacienteDto;
-import com.salesianostriana.dam.vacunapi.dto.paciente.GetPacienteDto;
 import com.salesianostriana.dam.vacunapi.dto.paciente.GetPacienteFindAll;
 import com.salesianostriana.dam.vacunapi.modelo.Administracion;
 import com.salesianostriana.dam.vacunapi.modelo.Paciente;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 public record GetAdministracionDto(
         @JsonView({PacienteView.findByIdWithAllEntities.class, AdministracionView.findAll.class})
         Long id,
 
         @JsonView({PacienteView.findByIdWithAllEntities.class, AdministracionView.findAll.class})
-        LocalDate fecha,
+        String fecha,
 
         @JsonView({PacienteView.findByIdWithAllEntities.class, AdministracionView.findAll.class})
-        int edadAlAdministrar,
+        String edadAlAdministrar,
+
+        @JsonView({PacienteView.findByIdWithAllEntities.class})
+        String vacuna,
+
+        @JsonView({PacienteView.findByIdWithAllEntities.class})
+        String tipoDosis,
 
         String nota,
 
@@ -36,8 +42,10 @@ public record GetAdministracionDto(
 
         return new GetAdministracionDto(
                 a.getId(),
-                a.getFecha(),
-                a.getEdadAlAdministrar(),
+                a.getFecha().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")),
+                edad(a),
+                a.getMomento().getVacuna().getNombre(),
+                a.getMomento().getTipoDosis(),
                 a.getNotas(),
                 GetPacienteFindAll.of(a.getPaciente()),
                 GetCalendarioDto.of(a.getMomento())
@@ -48,12 +56,24 @@ public record GetAdministracionDto(
 
         return new GetAdministracionDto(
                 a.getId(),
-                a.getFecha(),
-                a.getEdadAlAdministrar(),
+                a.getFecha().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")),
+                edad(a),
+                a.getMomento().getVacuna().getNombre(),
+                a.getMomento().getTipoDosis(),
                 a.getNotas(),
                 GetPacienteFindAll.of(a.getPaciente()),
                 GetCalendarioDto.of(a.getMomento())
         );
+    }
+
+    public static String edad (Administracion a){
+
+        if (a.getEdadAlAdministrar() < 24) {
+            return a.getEdadAlAdministrar() + " meses";
+        } else {
+            String años = String.valueOf(a.getEdadAlAdministrar());
+            return años + " años";
+        }
     }
 
 

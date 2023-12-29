@@ -19,7 +19,7 @@ public record GetPacienteFindAll(
         @JsonView({PacienteView.findByIdWithAllEntities.class, AdministracionView.findAll.class})
         String apellidos,
 
-        int edad,
+        String edad,
 
         @JsonView({PacienteView.findByIdWithAllEntities.class, AdministracionView.findAll.class})
         int cantidadVacuna
@@ -27,9 +27,7 @@ public record GetPacienteFindAll(
 
     public static GetPacienteFindAll of(Paciente p) {
 
-        LocalDate fechaNaciemiento = p.getFechaNacimiento();
-
-        int edad = edadPacienteYears(fechaNaciemiento);
+        String edad = edad(p);
 
             return new GetPacienteFindAll(
                     p.getId(),
@@ -40,20 +38,15 @@ public record GetPacienteFindAll(
             );
         }
 
-        /*
-        ANOTACIÓN: EL MÉTODO TE MUESTRA LA EDAD EN MESES O EN AÑO PERO NO HE PODIDO
-               CONSEGUIR CONCATENARLO PARA QUE APAREZCA DETRÁS DE LA EDAD "AÑOS" O "MESES"
-         */
-
-    public static int edadPacienteYears(LocalDate fechaNacimiento) {
-
+    public static String edad (Paciente p){
         LocalDate fechaActual = LocalDate.now();
-        int meses = (int) fechaNacimiento.until(fechaActual, ChronoUnit.MONTHS);
+        int meses = (int) p.getFechaNacimiento().until(fechaActual, ChronoUnit.MONTHS);
 
         if (meses < 24) {
-            return meses;
+            return meses + " meses";
         } else {
-            return (int) fechaNacimiento.until(fechaActual, ChronoUnit.YEARS);
+            String años = String.valueOf(p.getFechaNacimiento().until(fechaActual, ChronoUnit.YEARS));
+            return años + " años";
         }
     }
 

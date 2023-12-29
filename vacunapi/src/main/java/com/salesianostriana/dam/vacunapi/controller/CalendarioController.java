@@ -6,9 +6,7 @@ import com.salesianostriana.dam.vacunapi.View.VacunaView;
 import com.salesianostriana.dam.vacunapi.dto.calendario.EditCalendarioDto;
 import com.salesianostriana.dam.vacunapi.dto.calendario.GetCalendarioDto;
 import com.salesianostriana.dam.vacunapi.dto.calendario.GetCalendarioFindAllDto;
-import com.salesianostriana.dam.vacunapi.dto.vacuna.GetVacunaDto;
-import com.salesianostriana.dam.vacunapi.dto.vacuna.GetVacunaPruebaDto;
-import com.salesianostriana.dam.vacunapi.dto.vacuna.VacunaCalendarioDto;
+import com.salesianostriana.dam.vacunapi.dto.calendario.VacunaCalendarioDto;
 import com.salesianostriana.dam.vacunapi.dto.vacuna.VacunaDetailsDto;
 import com.salesianostriana.dam.vacunapi.modelo.Calendario;
 import com.salesianostriana.dam.vacunapi.modelo.Vacuna;
@@ -28,7 +26,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/calendario")
