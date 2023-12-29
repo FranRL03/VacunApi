@@ -14,12 +14,12 @@ import java.util.List;
 public record GetVacunaDto(
 
         @JsonView({VacunaList.class, CalendarioView.VacunaCalendario.class, CalendarioEdit.class,
-                AdministracionView.findAll.class, vacunaCreate.class})
+                AdministracionView.findAll.class, vacunaCreate.class, AdministracionView.create.class})
         Long id,
 
         @JsonView({VacunaList.class, PacienteView.findByIdWithAllEntities.class,
                 CalendarioEdit.class, AdministracionView.findAll.class,
-                PacienteView.idPacienteAdministracion.class, vacunaCreate.class, CalendarioView.VacunaCalendario.class})
+                PacienteView.idPacienteAdministracion.class, vacunaCreate.class, CalendarioView.VacunaCalendario.class, AdministracionView.create.class})
         String nombre,
 
         @JsonView({VacunaDetails.class, CalendarioView.VacunaCalendario.class,

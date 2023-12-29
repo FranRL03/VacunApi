@@ -2,11 +2,16 @@ package com.salesianostriana.dam.vacunapi.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.salesianostriana.dam.vacunapi.View.AdministracionView;
+import com.salesianostriana.dam.vacunapi.View.CalendarioView;
 import com.salesianostriana.dam.vacunapi.View.PacienteView;
 import com.salesianostriana.dam.vacunapi.dto.administracion.EditAdministracionDto;
+import com.salesianostriana.dam.vacunapi.dto.administracion.GetAddAdministracionDto;
 import com.salesianostriana.dam.vacunapi.dto.administracion.GetAdministracionDto;
+import com.salesianostriana.dam.vacunapi.dto.calendario.EditCalendarioDto;
+import com.salesianostriana.dam.vacunapi.dto.calendario.GetCalendarioDto;
 import com.salesianostriana.dam.vacunapi.dto.paciente.GetPacienteDto;
 import com.salesianostriana.dam.vacunapi.modelo.Administracion;
+import com.salesianostriana.dam.vacunapi.modelo.Calendario;
 import com.salesianostriana.dam.vacunapi.modelo.Paciente;
 import com.salesianostriana.dam.vacunapi.modelo.Vacuna;
 import com.salesianostriana.dam.vacunapi.repositorios.AdministracionRepositorio;
@@ -37,6 +42,43 @@ public class AdministracionController {
 
     private final AdministracionServicio administracionServicio;
     private final PacienteServicio pacienteServicio;
+
+
+    @Operation(summary = "Añades una administracion")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201",
+                    description = "Creación de administracion",
+                    content = { @Content(mediaType = "aplication/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Administracion.class)),
+                            examples = {@ExampleObject(
+                                    value = """
+                                            [
+                                                {
+                                                    "edad": 2,
+                                                    "tipoDosis": "Segunda",
+                                                    "recomendaciones": "efef",
+                                                    "discriminante": "T",
+                                                    "id": 1
+                                                }
+                                            ]
+                                            """
+                            )}
+                    )}),
+
+            @ApiResponse(responseCode = "400",
+                    description = "Error al crear un administracion",
+                    content = @Content)
+    })
+    @PostMapping("/")
+    @JsonView( AdministracionView.create.class)
+    public ResponseEntity<GetAddAdministracionDto> addAdministracion (@RequestBody EditAdministracionDto newAdministraction){
+
+        Administracion a = administracionServicio.save(newAdministraction);
+
+        return ResponseEntity
+                .status(201)
+                .body(GetAddAdministracionDto.of(a));
+    }
 
     @Operation(summary = "Muestra una lista de todas las administraciones")
     @ApiResponses(value = {

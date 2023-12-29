@@ -27,7 +27,6 @@ public class CalendarioServicio {
 
     private final CalendarioRepositorio repositorio;
     private final VacunaServicio vacunaServicio;
-    private final VacunaRepositorio vacunaRepositorio;
 
     @Transactional
     public Calendario save (GetCalendarioDto nuevo){

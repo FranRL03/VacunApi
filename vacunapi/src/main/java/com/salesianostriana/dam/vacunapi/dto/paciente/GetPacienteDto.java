@@ -1,6 +1,7 @@
 package com.salesianostriana.dam.vacunapi.dto.paciente;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.salesianostriana.dam.vacunapi.View.AdministracionView;
 import com.salesianostriana.dam.vacunapi.View.PacienteView;
 import com.salesianostriana.dam.vacunapi.dto.administracion.GetAdministracionDto;
 import com.salesianostriana.dam.vacunapi.dto.vacuna.GetVacunaDto;
