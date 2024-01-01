@@ -13,16 +13,17 @@ public record GetPacienteFindAll(
         @JsonView({PacienteView.findByIdWithAllEntities.class, AdministracionView.findAll.class})
         Long id,
 
-        @JsonView({PacienteView.findByIdWithAllEntities.class, AdministracionView.findAll.class, AdministracionView.create.class})
+        @JsonView({PacienteView.findByIdWithAllEntities.class, AdministracionView.create.class, AdministracionView.findById.class})
         String nombre,
 
-        @JsonView({PacienteView.findByIdWithAllEntities.class, AdministracionView.findAll.class, AdministracionView.create.class})
+        @JsonView({PacienteView.findByIdWithAllEntities.class, AdministracionView.create.class, AdministracionView.findById.class})
         String apellidos,
+        @JsonView({ AdministracionView.findAll.class})
+        String nombreCompleto,
 
         String edad,
 
-        @JsonView({PacienteView.findByIdWithAllEntities.class, AdministracionView.findAll.class, AdministracionView.create.class,
-                AdministracionView.create.class})
+        @JsonView({PacienteView.findByIdWithAllEntities.class, AdministracionView.findAll.class, AdministracionView.create.class})
         int cantidadVacuna
 ) {
 
@@ -34,6 +35,7 @@ public record GetPacienteFindAll(
                     p.getId(),
                     p.getNombre(),
                     p.getApellidos(),
+                    p.getNombre() + " " + p.getApellidos(),
                     edad,
                     p.getVacunasAdministradas().size()
             );

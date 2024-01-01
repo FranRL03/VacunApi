@@ -10,6 +10,7 @@ import com.salesianostriana.dam.vacunapi.dto.administracion.GetAdministracionDto
 import com.salesianostriana.dam.vacunapi.dto.calendario.EditCalendarioDto;
 import com.salesianostriana.dam.vacunapi.dto.calendario.GetCalendarioDto;
 import com.salesianostriana.dam.vacunapi.dto.paciente.GetPacienteDto;
+import com.salesianostriana.dam.vacunapi.dto.vacuna.GetVacunaDto;
 import com.salesianostriana.dam.vacunapi.modelo.Administracion;
 import com.salesianostriana.dam.vacunapi.modelo.Calendario;
 import com.salesianostriana.dam.vacunapi.modelo.Paciente;
@@ -33,6 +34,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/administracion")
@@ -52,15 +54,21 @@ public class AdministracionController {
                             array = @ArraySchema(schema = @Schema(implementation = Administracion.class)),
                             examples = {@ExampleObject(
                                     value = """
-                                            [
-                                                {
-                                                    "edad": 2,
-                                                    "tipoDosis": "Segunda",
-                                                    "recomendaciones": "efef",
-                                                    "discriminante": "T",
-                                                    "id": 1
-                                                }
-                                            ]
+                                            {
+                                                 "id": 5,
+                                                 "fecha": "19-11-2023",
+                                                 "edadAlAdministrar": "10 meses",
+                                                 "notas": "creado",
+                                                 "paciente": {
+                                                     "nombre": "Fran",
+                                                     "apellidos": "Ruiz",
+                                                     "cantidadVacuna": 3
+                                                 },
+                                                 "vacuna": {
+                                                     "id": 1,
+                                                     "nombre": "Alergia"
+                                                 }
+                                             }
                                             """
                             )}
                     )}),
@@ -89,24 +97,52 @@ public class AdministracionController {
                             examples = {@ExampleObject(
                                     value = """
                                             [
-                                                {
-                                                    "id": 1,
-                                                    "fecha": "2023-10-19",
-                                                    "edadAlAdministrar": 10,
-                                                    "paciente": {
-                                                        "id": 1,
-                                                        "nombre": "Fran",
-                                                        "apellidos": "Ruiz",
-                                                        "cantidadVacuna": 1
-                                                    },
-                                                    "calendarioDto": {
-                                                        "vacuna": {
-                                                            "id": 1,
-                                                            "nombre": "Alergia"
-                                                        }
-                                                    }
-                                                }
-                                            ]
+                                                 {
+                                                     "id": 1,
+                                                     "fecha": "19-10-2023",
+                                                     "edadAlAdministrar": "10 meses",
+                                                     "nota": "EDFWREREV",
+                                                     "paciente": {
+                                                         "id": 1,
+                                                         "nombreCompleto": "Fran Ruiz",
+                                                         "cantidadVacuna": 2
+                                                     },
+                                                     "vacunaIdNombreDto": {
+                                                         "id": 1,
+                                                         "nombre": "Alergia"
+                                                     }
+                                                 },
+                                                 {
+                                                     "id": 2,
+                                                     "fecha": "19-11-2023",
+                                                     "edadAlAdministrar": "10 meses",
+                                                     "nota": "efweferf",
+                                                     "paciente": {
+                                                         "id": 2,
+                                                         "nombreCompleto": "Paciente 1",
+                                                         "cantidadVacuna": 1
+                                                     },
+                                                     "vacunaIdNombreDto": {
+                                                         "id": 1,
+                                                         "nombre": "Alergia"
+                                                     }
+                                                 },
+                                                 {
+                                                     "id": 3,
+                                                     "fecha": "19-11-2023",
+                                                     "edadAlAdministrar": "10 meses",
+                                                     "nota": "creado",
+                                                     "paciente": {
+                                                         "id": 1,
+                                                         "nombreCompleto": "Fran Ruiz",
+                                                         "cantidadVacuna": 2
+                                                     },
+                                                     "vacunaIdNombreDto": {
+                                                         "id": 1,
+                                                         "nombre": "Alergia"
+                                                     }
+                                                 }
+                                             ]
                                             """
                             )}
                     )}),
@@ -117,17 +153,12 @@ public class AdministracionController {
     })
     @GetMapping("/")
     @JsonView({AdministracionView.findAll.class})
-    public ResponseEntity<List<GetAdministracionDto>> findAll(){
+    public List<GetAdministracionDto> findAll(){
 
-        if(administracionServicio.findAll().isEmpty())
-            return ResponseEntity.notFound().build();
-
-        return ResponseEntity.ok(
-                administracionServicio.findAll()
+        return administracionServicio.findAll()
                         .stream()
                         .map(GetAdministracionDto::of)
-                        .toList()
-        );
+                        .toList();
     }
 
     @Operation(summary = "Buscas una administracion por su id")
@@ -138,38 +169,40 @@ public class AdministracionController {
                             array = @ArraySchema(schema = @Schema(implementation = Administracion.class)),
                             examples = {@ExampleObject(
                                     value = """
-                                            {  
-                                                   "id": 2,
-                                                      "fecha": "2023-11-19",
-                                                      "edadAlAdministrar": 10,
-                                                      "paciente": {
-                                                          "id": 2,
-                                                          "nombre": "Paciente",
-                                                          "apellidos": "1",
-                                                          "cantidadVacuna": 1
-                                                      },
-                                                      "calendario": {
-                                                          "vacuna": {
+                                            {
+                                                  "id": 1,
+                                                  "fecha": "19-10-2023",
+                                                  "edadAlAdministrar": "10 meses",
+                                                  "nota": "EDFWREREV",
+                                                  "paciente": {
+                                                      "id": 1,
+                                                      "nombre": "Fran",
+                                                      "apellidos": "Ruiz",
+                                                      "nombreCompleto": "Fran Ruiz",
+                                                      "cantidadVacuna": 1
+                                                  },
+                                                  "vacunaInfo": {
+                                                      "id": 1,
+                                                      "nombre": "Alergia",
+                                                      "descripcion": "Alergia contra el polen y los ácaros",
+                                                      "momentos": [
+                                                          {
                                                               "id": 1,
-                                                              "nombre": "Alergia",
-                                                              "descripcionEnfermedad": "Alergia contra el polen y los ácaros",
-                                                              "calendario": [
-                                                                  {
-                                                                      "id": 1,
-                                                                      "tipoDosis": "Primera",
-                                                                      "recomendaciones": "Reposo durante el día",
-                                                                      "discriminante": "T"
-                                                                  },
-                                                                  {
-                                                                      "id": 2,
-                                                                      "tipoDosis": "Segunda",
-                                                                      "recomendaciones": "Ponerse frío",
-                                                                      "discriminante": "H"
-                                                                  }
-                                                              ]
+                                                              "edad": "2 meses",
+                                                              "tipoDosis": "Primera",
+                                                              "Recomendaciones": "Reposo durante el día",
+                                                              "discriminante": "T"
+                                                          },
+                                                          {
+                                                              "id": 2,
+                                                              "edad": "6 meses",
+                                                              "tipoDosis": "Segunda",
+                                                              "Recomendaciones": "Ponerse frío",
+                                                              "discriminante": "H"
                                                           }
-                                                      }
-                                             }
+                                                      ]
+                                                  }
+                                              }
                                               
                                             """
                             )}
@@ -181,13 +214,11 @@ public class AdministracionController {
     })
     @GetMapping("/{id}")
     @JsonView(AdministracionView.findById.class)
-    public ResponseEntity<GetAdministracionDto> findById (@PathVariable Long id){
+    public GetAdministracionDto findById (@PathVariable Long id){
 
-        if(administracionServicio.findAll().isEmpty())
-            return ResponseEntity.notFound().build();
+        Administracion a = administracionServicio.findById(id);
 
-        return ResponseEntity.of(administracionServicio.findById(id)
-                .map(GetAdministracionDto::find));
+        return GetAdministracionDto.of(a);
 
     }
 
@@ -243,9 +274,9 @@ public class AdministracionController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id){
 
-        Map<String, String> response = new HashMap<>();
-        response.put("mensaje", "No se puede borrar la información de administración de una vacuna a un paciente");
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        administracionServicio.delete(id);
+
+        return ResponseEntity.noContent().build();
 
     }
 }

@@ -4,6 +4,7 @@ import com.salesianostriana.dam.vacunapi.View.AdministracionView;
 import com.salesianostriana.dam.vacunapi.View.PacienteView;
 import com.salesianostriana.dam.vacunapi.dto.calendario.GetCalendarioDto;
 import com.salesianostriana.dam.vacunapi.dto.paciente.GetPacienteFindAll;
+import com.salesianostriana.dam.vacunapi.dto.vacuna.GetVacunaIdNombreDto;
 import com.salesianostriana.dam.vacunapi.modelo.Administracion;
 import com.salesianostriana.dam.vacunapi.modelo.Paciente;
 
@@ -27,14 +28,17 @@ public record GetAdministracionDto(
         @JsonView({PacienteView.findByIdWithAllEntities.class})
         String tipoDosis,
 
+        @JsonView({AdministracionView.findAll.class})
         String nota,
 
         @JsonView({AdministracionView.findAll.class})
         GetPacienteFindAll paciente,
 
-        @JsonView({AdministracionView.findAll.class, PacienteView.idPacienteAdministracion.class})
-        GetCalendarioDto calendario
+        @JsonView({PacienteView.idPacienteAdministracion.class})
+        GetCalendarioDto calendario,
 
+        @JsonView({AdministracionView.findAll.class})
+        GetVacunaIdNombreDto vacunaInfo
 
 ) {
 
@@ -48,7 +52,8 @@ public record GetAdministracionDto(
                 a.getMomento().getTipoDosis(),
                 a.getNotas(),
                 GetPacienteFindAll.of(a.getPaciente()),
-                GetCalendarioDto.of(a.getMomento())
+                GetCalendarioDto.of(a.getMomento()),
+                GetVacunaIdNombreDto.of(a.getMomento().getVacuna())
         );
     }
 
@@ -62,7 +67,8 @@ public record GetAdministracionDto(
                 a.getMomento().getTipoDosis(),
                 a.getNotas(),
                 GetPacienteFindAll.of(a.getPaciente()),
-                GetCalendarioDto.of(a.getMomento())
+                GetCalendarioDto.of(a.getMomento()),
+                GetVacunaIdNombreDto.of(a.getMomento().getVacuna())
         );
     }
 
