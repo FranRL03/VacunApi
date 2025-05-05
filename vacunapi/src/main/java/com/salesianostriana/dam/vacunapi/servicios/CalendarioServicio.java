@@ -42,7 +42,7 @@ public class CalendarioServicio {
         if (vacuna.isPresent()) {
             c.setVacuna(vacuna.get());
             c.getVacuna().getNombre();
-            c.getVacuna().getDescripcionEnfermedad();
+            c.getVacuna().getDescripcion();
         }else {
             throw new VacunaNotFoundExcepcion();
         }

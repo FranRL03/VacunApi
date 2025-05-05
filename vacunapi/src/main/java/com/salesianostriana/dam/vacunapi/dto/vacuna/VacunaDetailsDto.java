@@ -12,13 +12,12 @@ public record VacunaDetailsDto(
 
         String nombre,
 
-        String descripcionEnfermedad,
+        String descripcion,
 
         int dosisTotales,
 
         List<GetCalendarioDeVacunaDto> momentos
 
-        //GetVacunaDto vacuna
 ) {
 
     public static VacunaDetailsDto of(Vacuna v, int dosisTotales){
@@ -26,7 +25,7 @@ public record VacunaDetailsDto(
         return new VacunaDetailsDto(
                 v.getId(),
                 v.getNombre(),
-                v.getDescripcionEnfermedad(),
+                v.getDescripcion(),
                 dosisTotales,
                 v.getMomentos()
                         .stream()

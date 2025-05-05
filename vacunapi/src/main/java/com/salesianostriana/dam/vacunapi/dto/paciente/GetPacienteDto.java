@@ -1,39 +1,33 @@
 package com.salesianostriana.dam.vacunapi.dto.paciente;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.salesianostriana.dam.vacunapi.View.AdministracionView;
-import com.salesianostriana.dam.vacunapi.View.PacienteView;
+import com.salesianostriana.dam.vacunapi.View.PacienteView.*;
 import com.salesianostriana.dam.vacunapi.dto.administracion.GetAdministracionDto;
-import com.salesianostriana.dam.vacunapi.dto.vacuna.GetVacunaDto;
-import com.salesianostriana.dam.vacunapi.modelo.Administracion;
 import com.salesianostriana.dam.vacunapi.modelo.Paciente;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public record GetPacienteDto(
 
-        @JsonView({PacienteView.informacionPaciente.class, PacienteView.findByIdWithAllEntities.class})
+        @JsonView({informacionPaciente.class, findByIdWithAllEntities.class})
         Long id,
 
-        @JsonView({PacienteView.informacionPaciente.class, PacienteView.findByIdWithAllEntities.class})
+        @JsonView({informacionPaciente.class, findByIdWithAllEntities.class})
         String nombre,
 
-        @JsonView({PacienteView.informacionPaciente.class, PacienteView.findByIdWithAllEntities.class})
+        @JsonView({informacionPaciente.class, findByIdWithAllEntities.class})
         String apellidos,
 
-        @JsonView({PacienteView.informacionPaciente.class, PacienteView.findByIdWithAllEntities.class})
+        @JsonView({informacionPaciente.class, findByIdWithAllEntities.class})
         String telefonoContacto,
 
-        @JsonView({PacienteView.informacionPaciente.class, PacienteView.findByIdWithAllEntities.class})
+        @JsonView({informacionPaciente.class, findByIdWithAllEntities.class})
         String fechaNacimiento,
 
-        @JsonView({PacienteView.informacionPaciente.class, PacienteView.findByIdWithAllEntities.class})
+        @JsonView({informacionPaciente.class, findByIdWithAllEntities.class})
         String notas,
 
-        @JsonView({PacienteView.findByIdWithAllEntities.class})
+        @JsonView({findByIdWithAllEntities.class})
         List<GetAdministracionDto> vacunasAdministradas
 
 ) {

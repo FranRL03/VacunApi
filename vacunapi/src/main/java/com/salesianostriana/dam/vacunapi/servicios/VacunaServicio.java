@@ -28,7 +28,7 @@ public class VacunaServicio {
         Vacuna v = new Vacuna();
 
         v.setNombre(nuevo.nombre());
-        v.setDescripcionEnfermedad(nuevo.descripcionEnfermedad());
+        v.setDescripcion(nuevo.descripcion());
 
         return repositorio.save(v);
     }
@@ -72,24 +72,13 @@ public class VacunaServicio {
         }
     }
 
-//    public Vacuna edit(EditVacunaDto editVacuna, Long id){
-//        if(repositorio.findById(id).isPresent()) {
-//            Optional<Vacuna> encontrado = Optional.of(repositorio.getReferenceById(id));
-//            Vacuna edit = encontrado.get();
-//            edit.setNombre(editVacuna.nombre());
-//            edit.setDescripcionEnfermedad(editVacuna.descripcionEnfermedad());
-//            return repositorio.save(edit);
-//        }
-//    return null;
-//    }
-
     public Vacuna edit(EditVacunaDto editVacuna, Long id) {
         Optional<Vacuna> optionalVacuna = repositorio.findById(id);
 
         if (optionalVacuna.isPresent()) {
             Vacuna edit = optionalVacuna.get();
             edit.setNombre(editVacuna.nombre());
-            edit.setDescripcionEnfermedad(editVacuna.descripcionEnfermedad());
+            edit.setDescripcion(editVacuna.descripcion());
             return repositorio.save(edit);
         }else{
             throw new VacunaNotFoundExcepcion();

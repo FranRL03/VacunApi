@@ -5,7 +5,6 @@ import com.salesianostriana.dam.vacunapi.View.VacunaView.*;
 import com.salesianostriana.dam.vacunapi.dto.vacuna.EditVacunaDto;
 import com.salesianostriana.dam.vacunapi.dto.vacuna.GetVacunaDto;
 import com.salesianostriana.dam.vacunapi.modelo.Vacuna;
-import com.salesianostriana.dam.vacunapi.repositorios.VacunaRepositorio;
 import com.salesianostriana.dam.vacunapi.servicios.VacunaServicio;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -20,7 +19,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 /*
 http://localhost:8080/swagger-ui/index.html
@@ -45,7 +43,7 @@ public class VacunaController {
                                                 {
                                                     "id": 1, .
                                                     "nombre": "Vacunesil",
-                                                    "descripcion": "Vacuna 
+                                                    "descripcion": "Vacuna" 
                                                 }
                                             ]
                                             """
@@ -57,7 +55,7 @@ public class VacunaController {
                     content = @Content)
     })
     @PostMapping("/")
-    @JsonView(vacunaCreate.class)
+    @JsonView(VacunaList.class)
     public ResponseEntity<GetVacunaDto> addVacuna (@RequestBody EditVacunaDto newVacuna){
 
         Vacuna v = vacunaServicio.save(newVacuna);
@@ -128,7 +126,6 @@ public class VacunaController {
                     content = @Content)
     })
     @GetMapping("/{id}")
-    @JsonView(VacunaDetails.class)
     public GetVacunaDto findById(@PathVariable Long id){
 
         Vacuna v = vacunaServicio.findById(id);

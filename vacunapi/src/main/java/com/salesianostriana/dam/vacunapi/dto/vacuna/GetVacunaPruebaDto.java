@@ -22,7 +22,7 @@ public record GetVacunaPruebaDto (
 
 //        @JsonView({VacunaView.VacunaDetails.class, CalendarioView.VacunaCalendario.class,
 //                VacunaView.CalendarioEdit.class, AdministracionView.findById.class, VacunaView.vacunaCreate.class, VacunaView.VacunaList.class})
-        String descripcionEnfermedad,
+        String descripcion,
 
 //        @JsonView({CalendarioView.findById.class})
         int dosisTotales
@@ -33,7 +33,7 @@ public record GetVacunaPruebaDto (
         return new GetVacunaPruebaDto(
                 v.getId(),
                 v.getNombre(),
-                v.getDescripcionEnfermedad(),
+                v.getDescripcion(),
                 dosisTotales
         );
     }

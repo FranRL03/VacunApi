@@ -1,8 +1,6 @@
 package com.salesianostriana.dam.vacunapi.dto.paciente;
 
 import com.salesianostriana.dam.vacunapi.modelo.Paciente;
-
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public record GetUpdatePacienteDto (

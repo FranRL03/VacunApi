@@ -24,7 +24,7 @@ public class Vacuna {
     private String nombre;
 
     @Schema(example = "Puntitos rojos con irritación")
-    private String descripcionEnfermedad;
+    private String descripcion;
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
