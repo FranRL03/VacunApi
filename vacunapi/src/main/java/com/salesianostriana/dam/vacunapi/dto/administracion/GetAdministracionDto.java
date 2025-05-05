@@ -1,7 +1,7 @@
 package com.salesianostriana.dam.vacunapi.dto.administracion;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.salesianostriana.dam.vacunapi.View.AdministracionView;
-import com.salesianostriana.dam.vacunapi.View.PacienteView;
+import com.salesianostriana.dam.vacunapi.View.PacienteView.*;
 import com.salesianostriana.dam.vacunapi.dto.calendario.GetCalendarioDto;
 import com.salesianostriana.dam.vacunapi.dto.paciente.GetPacienteFindAll;
 import com.salesianostriana.dam.vacunapi.dto.vacuna.GetVacunaIdNombreDto;
@@ -13,19 +13,19 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 public record GetAdministracionDto(
-        @JsonView({PacienteView.findByIdWithAllEntities.class, AdministracionView.findAll.class})
+        @JsonView({findByIdWithAllEntities.class, AdministracionView.findAll.class})
         Long id,
 
-        @JsonView({PacienteView.findByIdWithAllEntities.class, AdministracionView.findAll.class})
+        @JsonView({findByIdWithAllEntities.class, AdministracionView.findAll.class})
         String fecha,
 
-        @JsonView({PacienteView.findByIdWithAllEntities.class, AdministracionView.findAll.class})
+        @JsonView({findByIdWithAllEntities.class, AdministracionView.findAll.class})
         String edadAlAdministrar,
 
-        @JsonView({PacienteView.findByIdWithAllEntities.class})
+        @JsonView({findByIdWithAllEntities.class})
         String vacuna,
 
-        @JsonView({PacienteView.findByIdWithAllEntities.class})
+        @JsonView({findByIdWithAllEntities.class})
         String tipoDosis,
 
         @JsonView({AdministracionView.findAll.class})
@@ -34,7 +34,7 @@ public record GetAdministracionDto(
         @JsonView({AdministracionView.findAll.class})
         GetPacienteFindAll paciente,
 
-        @JsonView({PacienteView.idPacienteAdministracion.class})
+        @JsonView({idPacienteAdministracion.class})
         GetCalendarioDto calendario,
 
         @JsonView({AdministracionView.findAll.class})

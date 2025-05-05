@@ -47,12 +47,17 @@ public class CalendarioController {
                                     value = """
                                             [
                                                 {
-                                                    "edad": 2,
-                                                    "tipoDosis": "Segunda",
-                                                    "recomendaciones": "efef",
-                                                    "discriminante": "T",
-                                                    "id": 1
-                                                }
+                                                     "id": 3,
+                                                     "edad": 2,
+                                                     "tipoDosis": "Segunda",
+                                                     "recomendaciones": "efef",
+                                                     "discriminante": "T",
+                                                     "vacuna": {
+                                                         "id": 1,
+                                                         "nombre": "Alergia",
+                                                         "descripcion": "Alergia contra el polen y los ácaros"
+                                                     }
+                                                 }
                                             ]
                                             """
                             )}

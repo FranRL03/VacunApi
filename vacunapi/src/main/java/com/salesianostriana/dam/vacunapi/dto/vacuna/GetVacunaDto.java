@@ -14,19 +14,19 @@ import java.util.List;
 public record GetVacunaDto(
 
         @JsonView({VacunaList.class, CalendarioView.VacunaCalendario.class, CalendarioEdit.class,
-                AdministracionView.findAll.class, vacunaCreate.class, AdministracionView.create.class})
+                AdministracionView.findAll.class, AdministracionView.create.class})
         Long id,
 
         @JsonView({VacunaList.class, PacienteView.findByIdWithAllEntities.class,
                 CalendarioEdit.class, AdministracionView.findAll.class,
-                PacienteView.idPacienteAdministracion.class, vacunaCreate.class, CalendarioView.VacunaCalendario.class, AdministracionView.create.class})
+                PacienteView.idPacienteAdministracion.class, CalendarioView.VacunaCalendario.class, AdministracionView.create.class})
         String nombre,
 
-        @JsonView({VacunaDetails.class, CalendarioView.VacunaCalendario.class,
-                CalendarioEdit.class, AdministracionView.findById.class, vacunaCreate.class, VacunaList.class})
-        String descripcionEnfermedad,
+        @JsonView({CalendarioView.VacunaCalendario.class,
+                CalendarioEdit.class, AdministracionView.findById.class, VacunaList.class})
+        String descripcion,
 
-        @JsonView({VacunaDetails.class, AdministracionView.findById.class})
+        @JsonView({AdministracionView.findById.class})
         List<GetCalendarioDeVacunaDto> momentos
 ) {
 
@@ -35,7 +35,7 @@ public record GetVacunaDto(
         return new GetVacunaDto(
                 v.getId(),
                 v.getNombre(),
-                v.getDescripcionEnfermedad(),
+                v.getDescripcion(),
                 v.getMomentos()
                         .stream()
                         .map(GetCalendarioDeVacunaDto::of)

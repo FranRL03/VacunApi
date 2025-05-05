@@ -25,7 +25,7 @@ public record GetVacunaIdNombreDto(
         return new GetVacunaIdNombreDto(
                 v.getId(),
                 v.getNombre(),
-                v.getDescripcionEnfermedad(),
+                v.getDescripcion(),
                 v.getMomentos()
                         .stream()
                         .map(GetCalendarioFindAllDto::of)

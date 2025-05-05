@@ -5,22 +5,16 @@ import com.salesianostriana.dam.vacunapi.modelo.Calendario;
 
 public record VacunaCalendarioDto(
 
-//        @JsonView({CalendarioView.findById.class})
         Long id,
 
-//        @JsonView({CalendarioView.findById.class})
         String edad,
 
-//        @JsonView({CalendarioView.findById.class})
         String tipoDosis,
 
-//        @JsonView({CalendarioView.findById.class})
         String recomendaciones,
 
-//        @JsonView({CalendarioView.findById.class})
         String discriminante,
 
-//        @JsonView({CalendarioView.findById.class})
         GetVacunaPruebaDto vacuna
 ) {
 

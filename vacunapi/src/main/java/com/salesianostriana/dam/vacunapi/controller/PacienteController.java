@@ -1,15 +1,12 @@
 package com.salesianostriana.dam.vacunapi.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.salesianostriana.dam.vacunapi.View.PacienteView;
+import com.salesianostriana.dam.vacunapi.View.PacienteView.*;
 import com.salesianostriana.dam.vacunapi.dto.paciente.EditPacienteDto;
 import com.salesianostriana.dam.vacunapi.dto.paciente.GetPacienteDto;
 import com.salesianostriana.dam.vacunapi.dto.paciente.GetPacienteFindAll;
 import com.salesianostriana.dam.vacunapi.dto.paciente.GetUpdatePacienteDto;
-import com.salesianostriana.dam.vacunapi.dto.vacuna.GetVacunaDto;
 import com.salesianostriana.dam.vacunapi.modelo.Paciente;
-import com.salesianostriana.dam.vacunapi.modelo.Vacuna;
-import com.salesianostriana.dam.vacunapi.repositorios.PacienteRepositorio;
 import com.salesianostriana.dam.vacunapi.servicios.PacienteServicio;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -20,12 +17,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/paciente")
@@ -34,7 +29,6 @@ import java.util.Optional;
 public class PacienteController {
 
     private final PacienteServicio pacienteServicio;
-    private final PacienteRepositorio pacienteRepositorio;
 
     @Operation(summary = "Añades un paciente")
     @ApiResponses(value = {
@@ -63,7 +57,7 @@ public class PacienteController {
                     content = @Content)
     })
     @PostMapping("/")
-    @JsonView({PacienteView.informacionPaciente.class})
+    @JsonView({informacionPaciente.class})
     public ResponseEntity<GetPacienteDto> addPaciente(@RequestBody EditPacienteDto newPaciente) {
 
         Paciente p = pacienteServicio.save(newPaciente);
@@ -150,7 +144,7 @@ public class PacienteController {
                     content = @Content)
     })
     @GetMapping("/{id}")
-    @JsonView(PacienteView.findByIdWithAllEntities.class)
+    @JsonView(findByIdWithAllEntities.class)
     public GetPacienteDto findById(@PathVariable Long id){
 
         Paciente p = pacienteServicio.findById(id);

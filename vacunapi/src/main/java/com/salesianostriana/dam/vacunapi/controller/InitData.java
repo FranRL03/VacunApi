@@ -35,7 +35,7 @@ public class InitData {
 
         Vacuna v = Vacuna.builder()
                 .nombre("Alergia")
-                .descripcionEnfermedad("Alergia contra el polen y los ácaros")
+                .descripcion("Alergia contra el polen y los ácaros")
                 //.momentos(List.of(c1, c2))
                 .build();
 
