@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -36,14 +37,14 @@ public class AdministracionServicio {
         a.setEdadAlAdministrar(nuevo.edadAlAdministrar());
         a.setNotas(nuevo.notas());
 
-        Optional<Paciente> paciente = Optional.ofNullable(pacienteServicio.findById(nuevo.idPaciente()));
+        Optional<Paciente> paciente = Optional.ofNullable(pacienteServicio.findById(UUID.fromString(nuevo.idPaciente())));
         if (paciente.isPresent()){
             a.setPaciente(paciente.get());
         }else {
             throw new PacienteNotFoundExcepcion();
         }
 
-        Optional<Calendario> calendario = calendarioServicio.findById(nuevo.idCalendario());
+        Optional<Calendario> calendario = calendarioServicio.findById(UUID.fromString(nuevo.idCalendario()));
         if (calendario.isPresent()){
            a.setMomento(calendario.get());
         }else {

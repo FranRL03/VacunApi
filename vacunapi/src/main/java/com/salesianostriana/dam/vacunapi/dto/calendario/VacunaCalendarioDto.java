@@ -5,7 +5,7 @@ import com.salesianostriana.dam.vacunapi.modelo.Calendario;
 
 public record VacunaCalendarioDto(
 
-        Long id,
+        String id,
 
         String edad,
 
@@ -21,7 +21,7 @@ public record VacunaCalendarioDto(
     public static VacunaCalendarioDto of (Calendario c, int cantidadMomentos){
 
         return new VacunaCalendarioDto(
-                c.getId(),
+                c.getId().toString(),
                 c.getEdad() == 1 ? c.getEdad() + " mes" : c.getEdad() + " meses",
                 c.getTipoDosis(),
                 c.getRecomendaciones(),

@@ -31,10 +31,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/administracion")
@@ -260,7 +257,7 @@ public class AdministracionController {
     })
     @GetMapping("/paciente/{id}")
     @JsonView(PacienteView.idPacienteAdministracion.class)
-    public GetPacienteDto findByIdPanciente(@PathVariable Long id){
+    public GetPacienteDto findByIdPanciente(@PathVariable UUID id){
 
         Paciente p = pacienteServicio.findById(id);
 

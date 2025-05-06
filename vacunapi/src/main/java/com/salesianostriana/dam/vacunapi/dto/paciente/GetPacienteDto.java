@@ -10,7 +10,7 @@ import java.util.List;
 public record GetPacienteDto(
 
         @JsonView({informacionPaciente.class, findByIdWithAllEntities.class})
-        Long id,
+        String id,
 
         @JsonView({informacionPaciente.class, findByIdWithAllEntities.class})
         String nombre,
@@ -35,7 +35,7 @@ public record GetPacienteDto(
     public static GetPacienteDto of (Paciente p){
 
         return new GetPacienteDto(
-                p.getId(),
+                p.getId().toString(),
                 p.getNombre(),
                 p.getApellidos(),
                 p.getTelefonoContacto(),
@@ -51,7 +51,7 @@ public record GetPacienteDto(
     public static GetPacienteDto find (Paciente p){
 
         return new GetPacienteDto(
-                p.getId(),
+                p.getId().toString(),
                 p.getNombre(),
                 p.getApellidos(),
                 p.getTelefonoContacto(),

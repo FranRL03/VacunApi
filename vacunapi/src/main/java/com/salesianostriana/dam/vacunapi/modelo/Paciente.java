@@ -4,21 +4,20 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
 @Entity
-@NoArgsConstructor
+@Getter
+@Setter
 @AllArgsConstructor
-@Builder
-public class Paciente {
-
-    @Id @GeneratedValue
-    @Schema(example = "1", description = "Identificador clave primaria paciente")
-    private Long id;
+@ToString
+@SuperBuilder
+@NoArgsConstructor
+public class Paciente extends Usuario {
 
     @Schema(example = "Fran", description = "Nombre del paciente")
     private String nombre;

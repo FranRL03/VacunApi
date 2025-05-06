@@ -8,7 +8,7 @@ import java.util.List;
 
 public record VacunaDetailsDto(
 
-        Long id,
+        String id,
 
         String nombre,
 
@@ -23,7 +23,7 @@ public record VacunaDetailsDto(
     public static VacunaDetailsDto of(Vacuna v, int dosisTotales){
 
         return new VacunaDetailsDto(
-                v.getId(),
+                v.getId().toString(),
                 v.getNombre(),
                 v.getDescripcion(),
                 dosisTotales,

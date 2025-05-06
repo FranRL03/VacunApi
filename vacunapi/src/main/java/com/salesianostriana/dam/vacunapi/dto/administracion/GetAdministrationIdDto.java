@@ -8,7 +8,7 @@ import com.salesianostriana.dam.vacunapi.dto.vacuna.GetVacunaIdNombreDto;
 
 public record GetAdministrationIdDto(
         @JsonView({ AdministracionView.findAll.class})
-        Long id,
+        String id,
 
         @JsonView({ AdministracionView.findAll.class})
         String fecha,

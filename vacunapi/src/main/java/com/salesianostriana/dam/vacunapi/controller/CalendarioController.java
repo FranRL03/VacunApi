@@ -26,6 +26,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/calendario")
@@ -143,7 +144,7 @@ public class CalendarioController {
                     content = @Content)
     })
     @GetMapping("/{id}")
-    public VacunaCalendarioDto obtenerVacunacion(@PathVariable Long id){
+    public VacunaCalendarioDto obtenerVacunacion(@PathVariable UUID id){
 
         Calendario momento = calendarioServicio.getVacunaCalendarioById(id);
 
@@ -156,7 +157,7 @@ public class CalendarioController {
             description = "Borrado con éxito",
             content = @Content)
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id){
+    public ResponseEntity<?> delete(@PathVariable UUID id){
 
        calendarioServicio.delete(id);
 
@@ -202,7 +203,7 @@ public class CalendarioController {
                     content = @Content)
     })
     @GetMapping("/vacuna/{id}")
-    public VacunaDetailsDto obtenerFullVacunaion(@PathVariable Long id){
+    public VacunaDetailsDto obtenerFullVacunaion(@PathVariable UUID id){
 
         Vacuna v = vacunaServicio.findById(id);
 
@@ -212,7 +213,7 @@ public class CalendarioController {
 
     @JsonView(VacunaView.CalendarioEdit.class)
     @PutMapping("/{id}")
-    public ResponseEntity<GetCalendarioDto> edit(@PathVariable Long id,
+    public ResponseEntity<GetCalendarioDto> edit(@PathVariable UUID id,
                                                  @RequestBody EditCalendarioDto editCalendario){
 
         return ResponseEntity.ok(

@@ -1,12 +1,13 @@
 package com.salesianostriana.dam.vacunapi.modelo;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
-import java.time.LocalDate;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -16,9 +17,11 @@ import java.util.UUID;
 @ToString
 @SuperBuilder
 @NoArgsConstructor
-public class Administracion {
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Usuario {
 
     @Id
+    @GeneratedValue(generator = "UUID")
     @GenericGenerator(
             name = "UUID",
             strategy = "org.hibernate.id.UUIDGenerator",
@@ -32,18 +35,13 @@ public class Administracion {
     @Column(columnDefinition = "uuid")
     private UUID id;
 
-    private LocalDate fecha;
+    @Column(name = "email", unique = true)
+    private String email;
 
-    private int edadAlAdministrar; // en meses
+    @Column(name = "password")
+    private String password;
 
-    private String notas;
-
-    @ManyToOne
-    @JoinColumn(name = "calendario_id")
-    private Calendario momento;
-
-    @ManyToOne
-    @JoinColumn(name = "paciente_id")
-    private Paciente paciente;
+    @ElementCollection(fetch = FetchType.EAGER)
+    private Set<RolUsuario> roles;
 
 }

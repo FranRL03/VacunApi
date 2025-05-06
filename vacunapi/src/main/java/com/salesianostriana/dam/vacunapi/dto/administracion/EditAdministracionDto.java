@@ -11,10 +11,11 @@ import com.salesianostriana.dam.vacunapi.modelo.Paciente;
 
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 public record EditAdministracionDto(
 
-        Long id,
+        String id,
         @JsonView({ AdministracionView.create.class})
         LocalDate fecha,
         @JsonView({ AdministracionView.create.class})
@@ -22,9 +23,9 @@ public record EditAdministracionDto(
         @JsonView({ AdministracionView.create.class})
         String notas,
         @JsonView({ AdministracionView.create.class})
-        Long idPaciente,
+        String idPaciente,
         @JsonView({ AdministracionView.create.class})
-        Long idCalendario
+        String idCalendario
 
 ) {
 

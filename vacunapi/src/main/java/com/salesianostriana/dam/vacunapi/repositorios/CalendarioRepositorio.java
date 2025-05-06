@@ -11,15 +11,15 @@ import java.util.List;
 import java.util.UUID;
 
 
-public interface CalendarioRepositorio extends JpaRepository<Calendario, Long> {
+public interface CalendarioRepositorio extends JpaRepository<Calendario, UUID> {
     @Query("""
             SELECT COUNT(c)
             FROM Calendario c
             JOIN c.vacuna as cat
             WHERE cat.id = ?1
             """)
-    int cantidadDeMomentos (Long id);
+    int cantidadDeMomentos (UUID id);
 
     @Query("SELECT COUNT(a) FROM Administracion a WHERE a.momento.id = ?1")
-    int comprobarCalendarioEnAdministracion(Long id);
+    int comprobarCalendarioEnAdministracion(UUID id);
 }
