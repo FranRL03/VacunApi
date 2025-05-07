@@ -11,27 +11,17 @@ import com.salesianostriana.dam.vacunapi.modelo.Vacuna;
 import java.util.List;
 
 public record GetVacunaPruebaDto (
-//        @JsonView({VacunaView.VacunaList.class, CalendarioView.VacunaCalendario.class, VacunaView.CalendarioEdit.class,
-//                AdministracionView.findAll.class, VacunaView.vacunaCreate.class})
-        Long id,
 
-//        @JsonView({VacunaView.VacunaList.class, PacienteView.findByIdWithAllEntities.class,
-//                VacunaView.CalendarioEdit.class, AdministracionView.findAll.class,
-//                PacienteView.idPacienteAdministracion.class, VacunaView.vacunaCreate.class, CalendarioView.VacunaCalendario.class})
+        String id,
         String nombre,
-
-//        @JsonView({VacunaView.VacunaDetails.class, CalendarioView.VacunaCalendario.class,
-//                VacunaView.CalendarioEdit.class, AdministracionView.findById.class, VacunaView.vacunaCreate.class, VacunaView.VacunaList.class})
         String descripcion,
-
-//        @JsonView({CalendarioView.findById.class})
         int dosisTotales
 ){
 
     public static GetVacunaPruebaDto of(Vacuna v, int dosisTotales){
 
         return new GetVacunaPruebaDto(
-                v.getId(),
+                v.getId().toString(),
                 v.getNombre(),
                 v.getDescripcion(),
                 dosisTotales

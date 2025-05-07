@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -47,7 +48,7 @@ public class VacunaServicio {
         return vacunas;
     }
 
-    public Vacuna findById(Long id){
+    public Vacuna findById(UUID id){
 
         Optional <Vacuna> encontrado = repositorio.findById(id);
 
@@ -58,7 +59,7 @@ public class VacunaServicio {
 
     }
 
-    public Optional<Vacuna> findVacunaByIdWithMomentos(Long id) {
+    public Optional<Vacuna> findVacunaByIdWithMomentos(UUID id) {
         Optional<Vacuna> optionalVacuna = repositorio.findById(id);
 
         if (optionalVacuna.isPresent()) {
@@ -72,7 +73,7 @@ public class VacunaServicio {
         }
     }
 
-    public Vacuna edit(EditVacunaDto editVacuna, Long id) {
+    public Vacuna edit(EditVacunaDto editVacuna, UUID id) {
         Optional<Vacuna> optionalVacuna = repositorio.findById(id);
 
         if (optionalVacuna.isPresent()) {
@@ -85,7 +86,7 @@ public class VacunaServicio {
         }
     }
 
-    public void delete (Long id){
+    public void delete (UUID id){
 
         int num = repositorio.contarCalendariosConAdministraciones(id);
         if (num == 0)

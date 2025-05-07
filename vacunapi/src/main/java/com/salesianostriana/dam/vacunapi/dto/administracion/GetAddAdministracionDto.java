@@ -15,7 +15,7 @@ import java.time.temporal.ChronoUnit;
 
 public record GetAddAdministracionDto(
         @JsonView({ AdministracionView.create.class})
-        Long id,
+        String id,
         @JsonView({ AdministracionView.create.class})
         String fecha,
         @JsonView({ AdministracionView.create.class})
@@ -30,7 +30,7 @@ public record GetAddAdministracionDto(
 
     public static GetAddAdministracionDto of (Administracion a){
         return new GetAddAdministracionDto(
-                a.getId(),
+                a.getId().toString(),
                 a.getFecha().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")),
                 edad(a),
                 a.getNotas(),

@@ -17,6 +17,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -47,7 +48,7 @@ public class PacienteServicio {
         return pacientes;
     }
 
-    public Paciente findById (Long id){
+    public Paciente findById (UUID id){
 
         Optional <Paciente> encontrado = repositorio.findById(id);
 
@@ -57,7 +58,7 @@ public class PacienteServicio {
         return encontrado.get();
     }
 
-    public Paciente edit (Long id, EditPacienteDto editPaciente){
+    public Paciente edit (UUID id, EditPacienteDto editPaciente){
 
         Optional<Paciente> p = Optional.ofNullable(findById(id));
 
@@ -73,7 +74,7 @@ public class PacienteServicio {
         }
     }
 
-    public void delete (Long id){
+    public void delete (UUID id){
         int num = repositorio.comprobarPacienteEnAdministracion(id);
         if (num == 0)
             repositorio.deleteById(id);

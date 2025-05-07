@@ -21,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/paciente")
@@ -145,7 +146,7 @@ public class PacienteController {
     })
     @GetMapping("/{id}")
     @JsonView(findByIdWithAllEntities.class)
-    public GetPacienteDto findById(@PathVariable Long id){
+    public GetPacienteDto findById(@PathVariable UUID id){
 
         Paciente p = pacienteServicio.findById(id);
 
@@ -153,7 +154,7 @@ public class PacienteController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<GetUpdatePacienteDto> edit (@PathVariable Long id,
+    public ResponseEntity<GetUpdatePacienteDto> edit (@PathVariable UUID id,
                                                       @RequestBody EditPacienteDto editPaciente){
 
         if (pacienteServicio.findAll().isEmpty())
@@ -169,7 +170,7 @@ public class PacienteController {
             description = "Borrado con éxito",
             content = @Content)
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id){
+    public ResponseEntity<?> delete(@PathVariable UUID id){
 
         pacienteServicio.delete(id);
 

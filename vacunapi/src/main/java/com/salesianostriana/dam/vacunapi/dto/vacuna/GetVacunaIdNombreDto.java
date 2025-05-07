@@ -10,7 +10,7 @@ import java.util.List;
 
 public record GetVacunaIdNombreDto(
         @JsonView({AdministracionView.findAll.class})
-        Long id,
+        String id,
 
         @JsonView({AdministracionView.findAll.class})
         String nombre,
@@ -23,7 +23,7 @@ public record GetVacunaIdNombreDto(
 
     public static GetVacunaIdNombreDto of(Vacuna v){
         return new GetVacunaIdNombreDto(
-                v.getId(),
+                v.getId().toString(),
                 v.getNombre(),
                 v.getDescripcion(),
                 v.getMomentos()

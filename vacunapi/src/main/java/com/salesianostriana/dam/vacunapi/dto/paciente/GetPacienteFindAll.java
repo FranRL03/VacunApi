@@ -11,7 +11,7 @@ import java.time.temporal.ChronoUnit;
 public record GetPacienteFindAll(
 
         @JsonView({findByIdWithAllEntities.class, findAll.class})
-        Long id,
+        String id,
 
         @JsonView({findByIdWithAllEntities.class, create.class, findById.class})
         String nombre,
@@ -32,7 +32,7 @@ public record GetPacienteFindAll(
         String edad = edad(p);
 
             return new GetPacienteFindAll(
-                    p.getId(),
+                    p.getId().toString(),
                     p.getNombre(),
                     p.getApellidos(),
                     p.getNombre() + " " + p.getApellidos(),

@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 
 @Service
@@ -38,7 +39,7 @@ public class CalendarioServicio {
         c.setRecomendaciones(nuevo.recomendaciones());
         c.setDiscriminante(nuevo.discriminante());
 
-        Optional<Vacuna> vacuna = Optional.ofNullable(vacunaServicio.findById(nuevo.id()));
+        Optional<Vacuna> vacuna = Optional.ofNullable(vacunaServicio.findById(UUID.fromString(nuevo.id())));
         if (vacuna.isPresent()) {
             c.setVacuna(vacuna.get());
             c.getVacuna().getNombre();
@@ -61,17 +62,17 @@ public class CalendarioServicio {
         return calendarios;
     }
 
-    public Optional<Calendario> findById (Long id) {
+    public Optional<Calendario> findById (UUID id) {
 
         return repositorio.findById(id);
     }
 
-    public int cantidadMomentos (Long id){
+    public int cantidadMomentos (UUID id){
         return repositorio.cantidadDeMomentos(id);
     }
 
 
-    public Calendario getVacunaCalendarioById (Long id){
+    public Calendario getVacunaCalendarioById (UUID id){
 
         Optional<Calendario> momento = repositorio.findById(id);
 
@@ -82,7 +83,7 @@ public class CalendarioServicio {
 
     }
 
-    public Calendario edit (EditCalendarioDto editCalendario, Long id){
+    public Calendario edit (EditCalendarioDto editCalendario, UUID id){
         Optional<Calendario> optionalCalendario = repositorio.findById(id);
 
         int num = repositorio.comprobarCalendarioEnAdministracion(id);
@@ -95,7 +96,7 @@ public class CalendarioServicio {
             edit.setRecomendaciones(editCalendario.recomendaciones());
             edit.setDiscriminante(editCalendario.discriminante());
 
-            Optional<Vacuna> vacuna = Optional.ofNullable(vacunaServicio.findById(editCalendario.id()));
+            Optional<Vacuna> vacuna = Optional.ofNullable(vacunaServicio.findById(UUID.fromString(editCalendario.id())));
 
             if (vacuna.isPresent()) {
                 edit.setVacuna(vacuna.get());
@@ -109,7 +110,7 @@ public class CalendarioServicio {
         throw new ErrorEditCalendarioException();
     }
 
-    public void delete (Long id){
+    public void delete (UUID id){
 
         int num = repositorio.comprobarCalendarioEnAdministracion(id);
         System.out.println(num);

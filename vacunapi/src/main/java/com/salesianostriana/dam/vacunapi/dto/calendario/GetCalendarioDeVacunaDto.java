@@ -9,7 +9,7 @@ import com.salesianostriana.dam.vacunapi.modelo.Calendario;
 public record GetCalendarioDeVacunaDto(
 
         @JsonView({AdministracionView.findById.class, VacunaView.VacunaDetails.class})
-        Long id,
+        String id,
 
         @JsonView({VacunaView.VacunaDetails.class})
         String edad,
@@ -27,7 +27,7 @@ public record GetCalendarioDeVacunaDto(
     public static GetCalendarioDeVacunaDto of (Calendario c){
 
         return  new GetCalendarioDeVacunaDto(
-                c.getId(),
+                c.getId().toString(),
                 c.getEdad() == 1 ? c.getEdad() + " mes" : c.getEdad() + " meses",
                 c.getTipoDosis(),
                 c.getRecomendaciones(),

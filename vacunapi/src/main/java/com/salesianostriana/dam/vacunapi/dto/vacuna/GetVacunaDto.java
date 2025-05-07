@@ -15,7 +15,7 @@ public record GetVacunaDto(
 
         @JsonView({VacunaList.class, CalendarioView.VacunaCalendario.class, CalendarioEdit.class,
                 AdministracionView.findAll.class, AdministracionView.create.class})
-        Long id,
+        String id,
 
         @JsonView({VacunaList.class, PacienteView.findByIdWithAllEntities.class,
                 CalendarioEdit.class, AdministracionView.findAll.class,
@@ -33,7 +33,7 @@ public record GetVacunaDto(
     public static GetVacunaDto of (Vacuna v){
 
         return new GetVacunaDto(
-                v.getId(),
+                v.getId().toString(),
                 v.getNombre(),
                 v.getDescripcion(),
                 v.getMomentos()

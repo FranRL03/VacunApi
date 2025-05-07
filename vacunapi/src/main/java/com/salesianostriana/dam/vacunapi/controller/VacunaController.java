@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 /*
 http://localhost:8080/swagger-ui/index.html
@@ -126,7 +127,7 @@ public class VacunaController {
                     content = @Content)
     })
     @GetMapping("/{id}")
-    public GetVacunaDto findById(@PathVariable Long id){
+    public GetVacunaDto findById(@PathVariable UUID id){
 
         Vacuna v = vacunaServicio.findById(id);
 
@@ -136,7 +137,7 @@ public class VacunaController {
 
     @JsonView(VacunaList.class)
     @PutMapping("/{id}")
-    public ResponseEntity<GetVacunaDto> edit (@PathVariable Long id,
+    public ResponseEntity<GetVacunaDto> edit (@PathVariable UUID id,
                                               @RequestBody EditVacunaDto editVacuna){
 
         return ResponseEntity.ok(
@@ -150,7 +151,7 @@ public class VacunaController {
             description = "Borrado con éxito",
             content = @Content)
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id){
+    public ResponseEntity<?> delete(@PathVariable UUID id){
 
         vacunaServicio.delete(id);
 

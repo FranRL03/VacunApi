@@ -14,7 +14,7 @@ import java.time.temporal.ChronoUnit;
 
 public record GetAdministracionDto(
         @JsonView({findByIdWithAllEntities.class, AdministracionView.findAll.class})
-        Long id,
+        String id,
 
         @JsonView({findByIdWithAllEntities.class, AdministracionView.findAll.class})
         String fecha,
@@ -45,7 +45,7 @@ public record GetAdministracionDto(
     public static GetAdministracionDto of (Administracion a){
 
         return new GetAdministracionDto(
-                a.getId(),
+                a.getId().toString(),
                 a.getFecha().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")),
                 edad(a),
                 a.getMomento().getVacuna().getNombre(),
@@ -60,7 +60,7 @@ public record GetAdministracionDto(
     public static GetAdministracionDto find (Administracion a){
 
         return new GetAdministracionDto(
-                a.getId(),
+                a.getId().toString(),
                 a.getFecha().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")),
                 edad(a),
                 a.getMomento().getVacuna().getNombre(),
