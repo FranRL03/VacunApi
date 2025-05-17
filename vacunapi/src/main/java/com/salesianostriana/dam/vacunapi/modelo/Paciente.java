@@ -31,6 +31,11 @@ public class Paciente extends Usuario {
     @Schema(example = "07-02-2003", description = "Fecha de nacimiento del paciente dd-MM-yyyy")
     private LocalDate fechaNacimiento;
 
+    @Column(name = "dni", unique = true, updatable = false)
+    private String dni;
+
+    private String direccion;
+
     @Schema(example = "El paciente está en tratamiento", description = "Anotación sobre el paciente")
     private String notas;
 

@@ -5,7 +5,6 @@ import com.salesianostriana.dam.vacunapi.View.PacienteView.*;
 import com.salesianostriana.dam.vacunapi.dto.paciente.EditPacienteDto;
 import com.salesianostriana.dam.vacunapi.dto.paciente.GetPacienteDto;
 import com.salesianostriana.dam.vacunapi.dto.paciente.GetPacienteFindAll;
-import com.salesianostriana.dam.vacunapi.dto.paciente.GetUpdatePacienteDto;
 import com.salesianostriana.dam.vacunapi.modelo.Paciente;
 import com.salesianostriana.dam.vacunapi.servicios.PacienteServicio;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,10 +23,10 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/paciente")
+@RequestMapping("/admin")
 @RequiredArgsConstructor
 @Tag(name = "Paciente", description = "API REST de paciente con operaciones CRUD")
-public class PacienteController {
+public class AdminController {
 
     private final PacienteServicio pacienteServicio;
 
@@ -151,18 +150,6 @@ public class PacienteController {
         Paciente p = pacienteServicio.findById(id);
 
         return GetPacienteDto.find(p);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<GetUpdatePacienteDto> edit (@PathVariable UUID id,
-                                                      @RequestBody EditPacienteDto editPaciente){
-
-        if (pacienteServicio.findAll().isEmpty())
-            return ResponseEntity.notFound().build();
-
-        return ResponseEntity.ok(
-                GetUpdatePacienteDto.of(
-                        pacienteServicio.edit(id, editPaciente)));
     }
 
     @Operation(summary = "Borra un paciente por su id")
