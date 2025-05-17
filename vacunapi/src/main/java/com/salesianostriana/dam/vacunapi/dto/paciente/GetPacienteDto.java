@@ -25,6 +25,12 @@ public record GetPacienteDto(
         String fechaNacimiento,
 
         @JsonView({informacionPaciente.class, findByIdWithAllEntities.class})
+        String dni,
+
+        @JsonView({informacionPaciente.class, findByIdWithAllEntities.class})
+        String direccion,
+
+        @JsonView({informacionPaciente.class, findByIdWithAllEntities.class})
         String notas,
 
         @JsonView({findByIdWithAllEntities.class})
@@ -40,6 +46,8 @@ public record GetPacienteDto(
                 p.getApellidos(),
                 p.getTelefonoContacto(),
                 p.getFechaNacimiento().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")),
+                p.getDni(),
+                p.getDireccion(),
                 p.getNotas(),
                 p.getVacunasAdministradas()
                         .stream()
@@ -56,6 +64,8 @@ public record GetPacienteDto(
                 p.getApellidos(),
                 p.getTelefonoContacto(),
                 p.getFechaNacimiento().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")),
+                p.getDni(),
+                p.getDireccion(),
                 p.getNotas(),
                 p.getVacunasAdministradas()
                         .stream()

@@ -2,6 +2,7 @@ package com.salesianostriana.dam.vacunapi.servicios;
 
 
 import com.salesianostriana.dam.vacunapi.dto.paciente.EditPacienteDto;
+import com.salesianostriana.dam.vacunapi.dto.usuario.EditLoggedUserDto;
 import com.salesianostriana.dam.vacunapi.exception.PacienteException.EmptyPacienteListException;
 import com.salesianostriana.dam.vacunapi.exception.PacienteException.PacienteNotDeleteException;
 import com.salesianostriana.dam.vacunapi.exception.PacienteException.PacienteNotFoundExcepcion;
@@ -58,20 +59,21 @@ public class PacienteServicio {
         return encontrado.get();
     }
 
-    public Paciente edit (UUID id, EditPacienteDto editPaciente){
+    public Paciente editLoggedUser (EditLoggedUserDto edit, Paciente p){
 
-        Optional<Paciente> p = Optional.ofNullable(findById(id));
-
-        if(p.isPresent()){
-            Paciente edit = p.get();
-            edit.setNombre(editPaciente.nombre());
-            edit.setApellidos(editPaciente.apellidos());
-            edit.setTelefonoContacto(editPaciente.telefonoContacto());
-            edit.setNotas(editPaciente.notas());
-            return repositorio.save(edit);
-        }else{
-            throw new PacienteNotFoundExcepcion();
-        }
+        Paciente editado = Paciente.builder()
+                .id(p.getId())
+                .username(edit.username())
+                .nombre(edit.nombre())
+                .email(p.getEmail())
+                .apellidos(edit.apellidos())
+                .dni(p.getDni())
+                .direccion(edit.direccion())
+                .telefonoContacto(edit.telefono())
+                .fechaNacimiento(p.getFechaNacimiento())
+                .vacunasAdministradas(p.getVacunasAdministradas())
+                .build();
+        return repositorio.save(editado);
     }
 
     public void delete (UUID id){
