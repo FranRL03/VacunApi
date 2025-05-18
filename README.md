@@ -1,5 +1,8 @@
 # VacunApi
 
+[!CAUTION]
+> Ejecutar el proyecto en la rama main, ya que la rama develop sigue en desarrollo.
+
 <p>Este proyecto contiene el código de una aplicacíon que gestiona las vacunas de administradas de un paciente.</p>
 
 <h2 align=center">Estructura del proyecto</h2>
