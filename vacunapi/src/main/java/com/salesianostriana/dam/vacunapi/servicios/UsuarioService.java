@@ -22,28 +22,36 @@ public class UsuarioService {
     private final PasswordEncoder passwordEncoder;
     private final UsuarioRepository userRepository;
     private final PacienteRepositorio pacienteRepository;
+    private final EmailService emailService;
 
     public Paciente createUser(CreatePacienteDto created, EnumSet<RolUsuario> roles) {
 
         if (userRepository.existsByUsernameIgnoreCase(created.username()))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El nombre de usuario ya existe");
 
-        if(!created.password().equalsIgnoreCase(created.verifyPassword())){
-            throw new PasswordNotValidException();
-        }
+//        if(!created.password().equalsIgnoreCase(created.verifyPassword())){
+//            throw new PasswordNotValidException();
+//        }
 
         Paciente p = Paciente.builder()
                 .username(created.username())
                 .nombre(created.nombre())
                 .apellidos(created.apellidos())
                 .telefonoContacto(created.telefono())
-                .password(passwordEncoder.encode(created.password()))
+//                .password(passwordEncoder.encode(created.password()))
                 .dni(created.dni())
                 .direccion(created.direccion())
                 .fechaNacimiento(created.fechaNacimiento())
                 .email(created.email())
                 .roles(Set.of(RolUsuario.PACIENTE))
                 .build();
+
+        String plainPassword = passwordGenerate();
+        String hashedPassword = passwordEncoder.encode((plainPassword));
+
+        p.setPassword(hashedPassword);
+
+        emailService.senToEmail(plainPassword, p.getEmail(), p.getUsername());
 
         return pacienteRepository.save(p);
     }
@@ -55,7 +63,7 @@ public class UsuarioService {
     public String passwordGenerate() {
 
         String caracters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        int longitud = 8;
+        int longitud = 15;
         StringBuilder contrasena = new StringBuilder();
         Random random = new Random();
 

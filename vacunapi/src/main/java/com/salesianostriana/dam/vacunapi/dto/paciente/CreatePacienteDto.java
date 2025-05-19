@@ -10,8 +10,8 @@ import java.time.LocalDate;
 public record CreatePacienteDto(
 //        @NotBlank(message = "{createClient.username}")
         String username,
-        String password,
-        String verifyPassword,
+//        String password,
+//        String verifyPassword,
         String nombre,
         String apellidos,
         String telefono,
