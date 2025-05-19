@@ -5,13 +5,17 @@ import com.resend.core.exception.ResendException;
 import com.resend.services.emails.model.CreateEmailOptions;
 import com.resend.services.emails.model.CreateEmailResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class EmailService {
 
-    Resend resend = new Resend("re_egbdhEMX_Pi2fQuStuBqBqbaLC7EKS2J8");
+    @Value("${resend.api.key}")
+    private final String apiKey;
+
+    Resend resend = new Resend(apiKey);
 
     public void senToEmail(String password, String email, String username) {
 
