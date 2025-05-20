@@ -21,6 +21,7 @@ public class UserResponse {
     protected String username;
     protected Set<String> roles;
     protected String password;
+    protected String email;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
     protected LocalDateTime createdAt;
@@ -31,6 +32,7 @@ public class UserResponse {
         return UserResponse.builder()
                 .id(user.getId().toString())
                 .username(user.getUsername())
+                .email(user.getEmail())
                 .password(user.getPassword())
                 .roles(user.getRoles().stream()
                         .map(Enum::name)

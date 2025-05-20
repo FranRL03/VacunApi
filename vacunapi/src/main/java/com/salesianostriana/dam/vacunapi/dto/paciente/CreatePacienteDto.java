@@ -10,15 +10,12 @@ import java.time.LocalDate;
 public record CreatePacienteDto(
 //        @NotBlank(message = "{createClient.username}")
         String username,
-//        String password,
-//        String verifyPassword,
         String nombre,
         String apellidos,
         String telefono,
         String dni,
         String direccion,
         LocalDate fechaNacimiento,
-
 //        @Email(message = "{loggedUser.email}")
         String email
 ) {

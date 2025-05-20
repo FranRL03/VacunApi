@@ -29,16 +29,14 @@ public class UsuarioService {
         if (userRepository.existsByUsernameIgnoreCase(created.username()))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El nombre de usuario ya existe");
 
-//        if(!created.password().equalsIgnoreCase(created.verifyPassword())){
-//            throw new PasswordNotValidException();
-//        }
+        if(userRepository.existsByEmail(created.email()))
+            throw new ResponseStatusException((HttpStatus.BAD_REQUEST), "El email ya existe");
 
         Paciente p = Paciente.builder()
                 .username(created.username())
                 .nombre(created.nombre())
                 .apellidos(created.apellidos())
                 .telefonoContacto(created.telefono())
-//                .password(passwordEncoder.encode(created.password()))
                 .dni(created.dni())
                 .direccion(created.direccion())
                 .fechaNacimiento(created.fechaNacimiento())

@@ -9,13 +9,19 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class EmailService {
 
-    @Value("${resend.api.key}")
-    private final String apiKey;
+//    @Value("${resend.api.key}")
+//    private final String apiKey;
+//
+//    Resend resend = new Resend(apiKey);
 
-    Resend resend = new Resend(apiKey);
+    private final Resend resend;
+
+    public EmailService(@Value("${resend.api.key}") String apiKey) {
+        this.resend = new Resend(apiKey);
+    }
 
     public void senToEmail(String password, String email, String username) {
 
