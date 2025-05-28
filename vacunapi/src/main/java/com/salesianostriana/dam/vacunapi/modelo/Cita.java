@@ -8,6 +8,7 @@ import org.hibernate.annotations.Parameter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.UUID;
 
 @Entity
@@ -34,9 +35,13 @@ public class Cita {
     @Column(columnDefinition = "uuid")
     private UUID id;
 
-    private LocalDateTime fecha;
+    private LocalDate dia;
+    private LocalTime hora;
     private String motivo;
     private String notas;
+    private String sala;
+    @Enumerated(EnumType.STRING)
+    private EstadoCitas estado;
 
     @ManyToOne
     @JoinColumn(name = "paciente_id")
