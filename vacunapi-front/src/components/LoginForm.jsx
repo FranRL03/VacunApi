@@ -70,7 +70,7 @@ export const LoginForm = () => {
                 <button
                     title="Sign In"
                     type="submit"
-                    className="sign-in_btn"
+                    className="sign-in_btn btn btn-primary"
                     disabled={loading}
                 >
                     <span>{loading ? 'Cargando...' : 'Entrar'}</span>
