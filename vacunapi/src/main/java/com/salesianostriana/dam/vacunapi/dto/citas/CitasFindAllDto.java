@@ -15,8 +15,8 @@ public record CitasFindAllDto(
         String notas,
         String sala,
         EstadoCitas estado,
-        String idPaciente,
-        String idMedico
+        String paciente,
+        String medico
 ) {
 
     public static CitasFindAllDto of (Cita c){
@@ -29,8 +29,8 @@ public record CitasFindAllDto(
                 c.getNotas(),
                 c.getSala(),
                 c.getEstado(),
-                c.getPaciente().getId().toString(),
-                c.getMedico().getId().toString()
+                c.getPaciente().getNombre(),
+                c.getMedico().getNombre()
         );
 
     }

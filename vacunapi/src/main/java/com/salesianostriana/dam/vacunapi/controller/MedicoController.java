@@ -99,9 +99,9 @@ public class MedicoController {
     })
     @Operation(summary = "createUser", description = "Registrarme como Cliente")
     @GetMapping("/citas")
-    public List<CitasFindAllDto> findAll (@AuthenticationPrincipal Medico m) {
+    public List<CitasFindAllDto> findToday (@AuthenticationPrincipal Medico m) {
 
-        return medicoServicio.find(m.getId())
+        return medicoServicio.findToday(m.getId())
                 .stream()
                 .map(CitasFindAllDto::of)
                 .toList();

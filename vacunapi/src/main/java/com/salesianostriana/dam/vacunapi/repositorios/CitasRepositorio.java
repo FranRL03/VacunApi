@@ -13,7 +13,8 @@ public interface CitasRepositorio extends JpaRepository<Cita, UUID> {
             SELECT c
             FROM Cita c
             WHERE c.medico.id = ?1
+            AND c.dia = CURRENT_DATE
             ORDER BY c.dia ASC, c.hora ASC
             """)
-    List<Cita> findCitasByMedicoId(UUID id);
+    List<Cita> findTodayCitasByMedicoId(UUID id);
 }

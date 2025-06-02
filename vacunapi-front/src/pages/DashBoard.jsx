@@ -1,16 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import '../styles/dashboard.css';
 import { Container, Row, Col, Card, Button, Table } from 'react-bootstrap';
+import { useListCitasByMedico } from "../hooks/useMedico";
 
 
 export const Dashboard = () => {
 
-  const citasHoy = [
-    { hora: "9:00 AM", paciente: "Jane Doe" },
-    { hora: "10:00 AM", paciente: "John Doe" },
-    { hora: "11:30 AM", paciente: "Alice Johnson" },
-    { hora: "2:00 PM", paciente: "Bob Brown" },
-  ];
+  const { data, loading, error, listaCitas } = useListCitasByMedico();
+
+  useEffect(() => {
+    listaCitas();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <div className="d-flex">
@@ -21,7 +22,7 @@ export const Dashboard = () => {
             <a className="nav-link text-white active" href="#">Home</a>
           </li>
           <li className="nav-item">
-            <a className="nav-link text-white" href="#">Features</a>
+            <a className="nav-link text-white" href="#">Calendario</a>
           </li>
           <li className="nav-item">
             <a className="nav-link text-white" href="#">Pricing</a>
@@ -46,12 +47,20 @@ export const Dashboard = () => {
       <div className="p-4 flex-grow-1">
         <h2 className="mb-4">Bienvenido, Dr. Pérez</h2>
 
+        {loading && <p>Cargando...</p>}
+        {error && <p className="text-danger">{error}</p>}
+
         <Row className="mb-4">
           <Col md={4}>
             <Card>
               <Card.Body>
                 <Card.Title>Próxima cita</Card.Title>
-                <Card.Text>10:00 AM con John Doe</Card.Text>
+                <Card.Text>
+                  {
+                    data.length === 0 ? "No hay pacientes para hoy" : `${data[0].hora} con ${data[0].paciente}`
+                  }
+                </Card.Text>
+
               </Card.Body>
             </Card>
           </Col>
@@ -60,7 +69,9 @@ export const Dashboard = () => {
             <Card>
               <Card.Body>
                 <Card.Title>Pacientes de hoy</Card.Title>
-                <Card.Text>5</Card.Text>
+                <Card.Text>
+                  {data.length === 0 ? 0 : data.length}
+                </Card.Text>
               </Card.Body>
             </Card>
           </Col>
@@ -79,24 +90,33 @@ export const Dashboard = () => {
         <Card className="mb-4">
           <Card.Body>
             <Card.Title>Citas de hoy</Card.Title>
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>Hora</th>
-                  <th>Paciente</th>
-                  <th>Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                {citasHoy.map((cita, index) => (
-                  <tr key={index}>
-                    <td>{cita.hora}</td>
-                    <td>{cita.paciente}</td>
-                    <td><Button variant="outline-primary" size="sm">Ver</Button></td>
+
+            {!loading && !error && (
+              <Table striped bordered hover>
+                <thead>
+                  <tr>
+                    <th>Hora</th>
+                    <th>Paciente</th>
+                    <th>Acciones</th>
                   </tr>
-                ))}
-              </tbody>
-            </Table>
+                </thead>
+                <tbody>
+                  {data.length === 0 ? (
+                    <tr><td colSpan="3">No hay citas para hoy</td></tr>
+                  ) : (
+                    data.map((cita) => (
+                      <tr key={cita.id}>
+                        <td>{cita.hora}</td>
+                        <td>{cita.paciente}</td>
+                        <td>
+                          <Button variant="outline-primary" size="sm">Ver</Button>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </Table>
+            )}
           </Card.Body>
         </Card>
       </div>

@@ -12,7 +12,7 @@ export const useLogin = () => {
         try {
             const userData = await loginUser(data);
             dispatch({ type: 'LOGIN_SUCCESS', payload: userData });
-            localStorage.setItem('token', JSON.stringify(userData.token))
+            localStorage.setItem('token', userData.token)
             localStorage.setItem('user', JSON.stringify(userData));
             return true;
         } catch (error) {
