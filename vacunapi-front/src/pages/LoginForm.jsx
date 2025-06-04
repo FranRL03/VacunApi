@@ -69,7 +69,7 @@ export const LoginForm = () => {
                     type="submit"
                     className="sign-in_btn btn btn-primary"
                 >
-                Iniciar Sesión
+                    Iniciar Sesión
                 </button>
 
                 <div className="separator">

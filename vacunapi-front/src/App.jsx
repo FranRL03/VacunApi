@@ -4,16 +4,21 @@ import { LoginForm } from './pages/LoginForm'
 import { Dashboard } from './pages/DashBoard'
 import injectContext from './store/appContext.jsx'
 import { Error } from './components/Error.jsx'
+import ScrollToTop from './components/ScrollToTop.jsx'
+import { Alert } from './components/Alert.jsx'
 
 // eslint-disable-next-line react-refresh/only-export-components
 const App = () => {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<LoginForm />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route element={<Error />} path='*' />
-      </Routes>
+      <ScrollToTop>
+        {/* <Alert /> */}
+        <Routes>
+          <Route path="/" element={<LoginForm />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route element={<Error />} path='*' />
+        </Routes>
+      </ScrollToTop>
     </BrowserRouter>
   )
 }

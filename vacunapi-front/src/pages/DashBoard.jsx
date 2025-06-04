@@ -2,14 +2,18 @@ import React, { useContext } from "react";
 import '../styles/dashboard.css';
 import { Row, Col, Card, Button, Table } from 'react-bootstrap';
 import { Context } from "../store/appContext";
+import { LoginForm } from "./LoginForm";
 
 export const Dashboard = () => {
 
-    const { store } = useContext(Context);
-    const user = store.user;
+  const { store } = useContext(Context);
+  const user = store.user;
 
-    console.log(user.username);
-    
+  console.log(user);
+
+   if (!store.isLogged || !user || !user.roles.includes('MEDICO')) {
+    return <LoginForm />;
+  }
 
   return (
     <div className="d-flex">
@@ -85,34 +89,33 @@ export const Dashboard = () => {
         <Card className="mb-4">
           <Card.Body>
             <Card.Title>Citas de hoy</Card.Title>
-              <Table striped bordered hover>
-                <thead>
-                  <tr>
-                    <th>Hora</th>
-                    <th>Paciente</th>
-                    <th>Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {store.listCitas.length === 0 ? (
-                    <tr><td colSpan="3">No hay citas para hoy</td></tr>
-                  ) : (
-                    store.listCitas.map((cita) => (
-                      <tr key={cita.id}>
-                        <td>{cita.hora}</td>
-                        <td>{cita.paciente}</td>
-                        <td>
-                          <Button variant="outline-primary" size="sm">Ver</Button>
-                        </td>
-                      </tr>
-                    ))
-                  )}
-                </tbody>
-              </Table>
+            <Table striped bordered hover>
+              <thead>
+                <tr>
+                  <th>Hora</th>
+                  <th>Paciente</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {store.listCitas.length === 0 ? (
+                  <tr><td colSpan="3">No hay citas para hoy</td></tr>
+                ) : (
+                  store.listCitas.map((cita) => (
+                    <tr key={cita.id}>
+                      <td>{cita.hora}</td>
+                      <td>{cita.paciente}</td>
+                      <td>
+                        <Button variant="outline-primary" size="sm">Ver</Button>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </Table>
           </Card.Body>
         </Card>
       </div>
     </div>
-
   )
 }

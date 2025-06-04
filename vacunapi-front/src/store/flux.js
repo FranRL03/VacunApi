@@ -14,6 +14,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			listCitas: [],
 		},
 		actions: {
+			setAlert: (alertData) => {
+				setStore({ alert: alertData });
+			},
 			login: async (userLogin) => {
 				const response = await fetch(`${url}/auth/login`,
 					{
@@ -30,17 +33,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setTimeout(() => {
 						setStore({ alert: { visible: false, text: "", background: "" } });
 					}, 2000);
+					return;
 				}
 
 				const data = await response.json();
 				setStore({
 					isLogged: true,
 					user: data,
-					alert: { visible: true, text: "Login successful", background: "success" }
 				})
-				setTimeout(() => {
-					setStore({ alert: { visible: false, text: "", background: "" } });
-				}, 2000);
 
 				localStorage.setItem('token', data.token);
 				localStorage.setItem('user', JSON.stringify(data))
