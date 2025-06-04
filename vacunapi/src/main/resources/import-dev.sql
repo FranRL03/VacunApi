@@ -26,8 +26,8 @@ INSERT INTO USUARIO_ROLES (roles, usuario_id) VALUES (1,'1cef9086-93a1-49de-b5e7
 INSERT INTO ADMINISTRACION (id, calendario_id, paciente_id, fecha, edad_al_administrar, notas) VALUES ('e6f7fba6-bb90-4645-98d1-36cfb02ae04d', '0934fd8a-8ae2-4f78-b287-dffde17bc221', 'f5288a99-f910-4424-961d-d088a01f5ce0', '2023-10-19', 10, 'EDFWREREV');
 
 --Insertar en Cita MEDICO 1
-INSERT INTO CITA (id, dia, hora, motivo, notas, sala, estado, paciente_id, medico_id) VALUES ('d290f1ee-6c54-4b01-90e6-d701748f0853', '2025-06-16', '09:30:00', 'Revisión general', 'Revisión anual del paciente', 'Sala 1', 'PENDIENTE', 'f5288a99-f910-4424-961d-d088a01f5ce0', '1cef9086-93a1-49de-b5e7-fb3d01d44baa');
-INSERT INTO CITA (id, dia, hora, motivo, notas, sala, estado, paciente_id, medico_id) VALUES ('d290f1ee-6c54-4b01-90e6-d701748f0852', '2025-06-15', '10:30:00', 'Revisión general', 'Revisión anual del paciente', 'Sala 1', 'CONFIRMADA', 'f5288a99-f910-4424-961d-d088a01f5ce0', '1cef9086-93a1-49de-b5e7-fb3d01d44baa');
+INSERT INTO CITA (id, dia, hora, motivo, notas, sala, estado, paciente_id, medico_id) VALUES ('d290f1ee-6c54-4b01-90e6-d701748f0853', '2025-06-04', '18:30:00', 'Revisión general', 'Revisión anual del paciente', 'Sala 1', 'PENDIENTE', 'f5288a99-f910-4424-961d-d088a01f5ce0', '1cef9086-93a1-49de-b5e7-fb3d01d44baa');
+INSERT INTO CITA (id, dia, hora, motivo, notas, sala, estado, paciente_id, medico_id) VALUES ('d290f1ee-6c54-4b01-90e6-d701748f0852', '2025-06-04', '19:30:00', 'Revisión general', 'Revisión anual del paciente', 'Sala 1', 'CONFIRMADA', 'f5288a99-f910-4424-961d-d088a01f5ce0', '1cef9086-93a1-49de-b5e7-fb3d01d44baa');
 INSERT INTO CITA (id, dia, hora, motivo, notas, sala, estado, paciente_id, medico_id) VALUES ('d290f1ee-6c54-4b01-90e6-d701748f0851', '2025-06-15', '09:30:00', 'Revisión general', 'Revisión anual del paciente', 'Sala 1', 'CONFIRMADA', 'f5288a99-f910-4424-961d-d088a01f5ce0', '1cef9086-93a1-49de-b5e7-fb3d01d44baa');
 
 --Insertar en Cita MEDICO 20

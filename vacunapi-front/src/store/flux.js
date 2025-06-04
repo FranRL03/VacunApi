@@ -10,11 +10,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 			isAdmin: false,
 			user: {},
 			isLoadingUser: true,
-			alert: {text: '', visible: false, background: 'primary'},
+			alert: { text: '', visible: false, background: 'primary' },
+			listCitas: [],
 		},
 		actions: {
+			setAlert: (alertData) => {
+				setStore({ alert: alertData });
+			},
 			login: async (userLogin) => {
-				const response = await fetch (`${url}/auth/login`,
+				const response = await fetch(`${url}/auth/login`,
 					{
 						method: 'POST',
 						headers: { 'Content-Type': 'application/json' },
@@ -29,20 +33,44 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setTimeout(() => {
 						setStore({ alert: { visible: false, text: "", background: "" } });
 					}, 2000);
+					return;
 				}
 
 				const data = await response.json();
 				setStore({
 					isLogged: true,
 					user: data,
-					alert: { visible: true, text: "Login successful", background: "success" }
 				})
-				setTimeout(() => {
-					setStore({ alert: { visible: false, text: "", background: "" } });
-				}, 2000);
 
 				localStorage.setItem('token', data.token);
 				localStorage.setItem('user', JSON.stringify(data))
+			},
+			isUserLogged: () => {
+				const data = JSON.parse(localStorage.getItem('user'));
+				if (data) {
+					setStore({
+						isLogged: true,
+						user: data.nombre,
+						isLoadingUser: false
+					})
+				}
+			},
+			listCita: async () => {
+				const token = localStorage.getItem('token')
+				const response = await fetch(`${url}/medico/citas`,
+					{
+						method: 'GET',
+						headers: {
+							"Authorization": `Bearer ${token}`
+						},
+					});
+
+				if (!response) {
+					const errorData = await response.json();
+					throw new Error(errorData.message || 'Error al obtener la lista');
+				}
+				const data = await response.json();
+				setStore({ listCitas: data })
 			}
 		}
 	};

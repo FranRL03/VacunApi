@@ -1,8 +1,9 @@
 package com.salesianostriana.dam.vacunapi.servicios;
 
-import com.salesianostriana.dam.vacunapi.exception.CitaException.ListaCitasEmptyException;
+import com.salesianostriana.dam.vacunapi.exception.PacienteException.PacienteNotFoundExcepcion;
 import com.salesianostriana.dam.vacunapi.modelo.Cita;
 import com.salesianostriana.dam.vacunapi.modelo.Medico;
+import com.salesianostriana.dam.vacunapi.modelo.Paciente;
 import com.salesianostriana.dam.vacunapi.repositorios.CitasRepositorio;
 import com.salesianostriana.dam.vacunapi.repositorios.MedicoRepositorio;
 import lombok.RequiredArgsConstructor;
@@ -19,13 +20,18 @@ public class MedicoServicio {
     private final MedicoRepositorio medicoRepositorio;
     private final CitasRepositorio citasRepositorio;
 
-    public List<Cita> find (UUID id) {
+    public List<Cita> findToday (UUID id) {
 
-        List<Cita> citas = citasRepositorio.findCitasByMedicoId(id);
+        return citasRepositorio.findTodayCitasByMedicoId(id);
+    }
 
-        if (citas.isEmpty())
-            throw new ListaCitasEmptyException();
+    public Medico findById (UUID id){
 
-        return citas;
+        Optional<Medico> encontrado = medicoRepositorio.findById(id);
+
+        if (!encontrado.isPresent())
+            throw new PacienteNotFoundExcepcion();
+
+        return encontrado.get();
     }
 }

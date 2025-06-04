@@ -1,16 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import '../styles/dashboard.css';
-import { Container, Row, Col, Card, Button, Table } from 'react-bootstrap';
-
+import { Row, Col, Card, Button, Table } from 'react-bootstrap';
+import { Context } from "../store/appContext";
+import { LoginForm } from "./LoginForm";
 
 export const Dashboard = () => {
 
-  const citasHoy = [
-    { hora: "9:00 AM", paciente: "Jane Doe" },
-    { hora: "10:00 AM", paciente: "John Doe" },
-    { hora: "11:30 AM", paciente: "Alice Johnson" },
-    { hora: "2:00 PM", paciente: "Bob Brown" },
-  ];
+  const { store } = useContext(Context);
+  const user = store.user;
+
+  console.log(user);
+
+   if (!store.isLogged || !user || !user.roles.includes('MEDICO')) {
+    return <LoginForm />;
+  }
 
   return (
     <div className="d-flex">
@@ -21,7 +24,7 @@ export const Dashboard = () => {
             <a className="nav-link text-white active" href="#">Home</a>
           </li>
           <li className="nav-item">
-            <a className="nav-link text-white" href="#">Features</a>
+            <a className="nav-link text-white" href="#">Calendario</a>
           </li>
           <li className="nav-item">
             <a className="nav-link text-white" href="#">Pricing</a>
@@ -44,14 +47,19 @@ export const Dashboard = () => {
 
       {/* Main Content */}
       <div className="p-4 flex-grow-1">
-        <h2 className="mb-4">Bienvenido, Dr. Pérez</h2>
+        <h2 className="mb-4">Bienvenido, {user.username}</h2>
 
         <Row className="mb-4">
           <Col md={4}>
             <Card>
               <Card.Body>
                 <Card.Title>Próxima cita</Card.Title>
-                <Card.Text>10:00 AM con John Doe</Card.Text>
+                <Card.Text>
+                  {
+                    store.listCitas.length === 0 ? "No hay pacientes para hoy" : `${store.listCitas[0].hora} con ${store.listCitas[0].paciente}`
+                  }
+                </Card.Text>
+
               </Card.Body>
             </Card>
           </Col>
@@ -60,7 +68,9 @@ export const Dashboard = () => {
             <Card>
               <Card.Body>
                 <Card.Title>Pacientes de hoy</Card.Title>
-                <Card.Text>5</Card.Text>
+                <Card.Text>
+                  {store.listCitas.length === 0 ? 0 : store.listCitas.length}
+                </Card.Text>
               </Card.Body>
             </Card>
           </Col>
@@ -88,19 +98,24 @@ export const Dashboard = () => {
                 </tr>
               </thead>
               <tbody>
-                {citasHoy.map((cita, index) => (
-                  <tr key={index}>
-                    <td>{cita.hora}</td>
-                    <td>{cita.paciente}</td>
-                    <td><Button variant="outline-primary" size="sm">Ver</Button></td>
-                  </tr>
-                ))}
+                {store.listCitas.length === 0 ? (
+                  <tr><td colSpan="3">No hay citas para hoy</td></tr>
+                ) : (
+                  store.listCitas.map((cita) => (
+                    <tr key={cita.id}>
+                      <td>{cita.hora}</td>
+                      <td>{cita.paciente}</td>
+                      <td>
+                        <Button variant="outline-primary" size="sm">Ver</Button>
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </Table>
           </Card.Body>
         </Card>
       </div>
     </div>
-
   )
 }
