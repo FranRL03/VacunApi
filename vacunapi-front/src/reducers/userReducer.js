@@ -5,6 +5,12 @@ export const initialStateUser = {
     loading: false
 }
 
+export const initialStateProfile = {
+    loading: false,
+    error: null,
+    data: {}
+}
+
 export const authReducer = (state, action) => {
   switch (action.type) {
 
@@ -21,3 +27,15 @@ export const authReducer = (state, action) => {
 
   }  
 };
+
+export const profile = (state, action) => {
+    switch (action.type) {
+
+        case 'PROFILE_INIT':
+            return { ...state, loading: true, error: null};
+        case 'PROFILE_SUCCESS': 
+            return { ...state, loading: false, data: action.payload};
+        case 'PROFILE_ERROR':
+            return { ...state, loading: false, error: action.payload};
+    }
+}

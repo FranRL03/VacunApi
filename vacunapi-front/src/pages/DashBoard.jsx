@@ -1,17 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useContext } from "react";
 import '../styles/dashboard.css';
-import { Container, Row, Col, Card, Button, Table } from 'react-bootstrap';
-import { useListCitasByMedico } from "../hooks/useMedico";
-
+import { Row, Col, Card, Button, Table } from 'react-bootstrap';
+import { Context } from "../store/appContext";
 
 export const Dashboard = () => {
 
-  const { data, loading, error, listaCitas } = useListCitasByMedico();
+    const { store } = useContext(Context);
+    const user = store.user;
 
-  useEffect(() => {
-    listaCitas();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    console.log(user.username);
+    
 
   return (
     <div className="d-flex">
@@ -45,10 +43,7 @@ export const Dashboard = () => {
 
       {/* Main Content */}
       <div className="p-4 flex-grow-1">
-        <h2 className="mb-4">Bienvenido, Dr. Pérez</h2>
-
-        {loading && <p>Cargando...</p>}
-        {error && <p className="text-danger">{error}</p>}
+        <h2 className="mb-4">Bienvenido, {user.username}</h2>
 
         <Row className="mb-4">
           <Col md={4}>
@@ -57,7 +52,7 @@ export const Dashboard = () => {
                 <Card.Title>Próxima cita</Card.Title>
                 <Card.Text>
                   {
-                    data.length === 0 ? "No hay pacientes para hoy" : `${data[0].hora} con ${data[0].paciente}`
+                    store.listCitas.length === 0 ? "No hay pacientes para hoy" : `${store.listCitas[0].hora} con ${store.listCitas[0].paciente}`
                   }
                 </Card.Text>
 
@@ -70,7 +65,7 @@ export const Dashboard = () => {
               <Card.Body>
                 <Card.Title>Pacientes de hoy</Card.Title>
                 <Card.Text>
-                  {data.length === 0 ? 0 : data.length}
+                  {store.listCitas.length === 0 ? 0 : store.listCitas.length}
                 </Card.Text>
               </Card.Body>
             </Card>
@@ -90,8 +85,6 @@ export const Dashboard = () => {
         <Card className="mb-4">
           <Card.Body>
             <Card.Title>Citas de hoy</Card.Title>
-
-            {!loading && !error && (
               <Table striped bordered hover>
                 <thead>
                   <tr>
@@ -101,10 +94,10 @@ export const Dashboard = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.length === 0 ? (
+                  {store.listCitas.length === 0 ? (
                     <tr><td colSpan="3">No hay citas para hoy</td></tr>
                   ) : (
-                    data.map((cita) => (
+                    store.listCitas.map((cita) => (
                       <tr key={cita.id}>
                         <td>{cita.hora}</td>
                         <td>{cita.paciente}</td>
@@ -116,7 +109,6 @@ export const Dashboard = () => {
                   )}
                 </tbody>
               </Table>
-            )}
           </Card.Body>
         </Card>
       </div>

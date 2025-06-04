@@ -1,26 +1,27 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useLogin } from "../hooks/useUsers.js"
 import TextField from '@mui/material/TextField';
 import logo from '../assets/img/logo.png'
 import '../styles/login.css'
+import { Context } from "../store/appContext.jsx";
 
 
 export const LoginForm = () => {
 
-    const { loading, error, login } = useLogin();
+    const { actions } = useContext(Context);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
 
-        const success = await login({ email, password });
-
-        if (success) {
-            navigate('/dashboard');
-        }
+        const userLogin = {
+            email,
+            password
+        };
+        actions.login(userLogin);
+        navigate('/dashboard')
     }
 
     return (
@@ -45,8 +46,6 @@ export const LoginForm = () => {
                         placeholder="Correo"
                         variant="standard"
                         required
-                        error={!!error}
-                        helperText={error && "Error en el correo o contraseña"}
                         fullWidth
                     />
                 </div>
@@ -61,8 +60,6 @@ export const LoginForm = () => {
                         placeholder="Contraseña"
                         variant="standard"
                         required
-                        error={!!error}
-                        helperText={error && "Error en el correo o contraseña"}
                         fullWidth
                     />
                 </div>
@@ -71,9 +68,8 @@ export const LoginForm = () => {
                     title="Sign In"
                     type="submit"
                     className="sign-in_btn btn btn-primary"
-                    disabled={loading}
                 >
-                    <span>{loading ? 'Cargando...' : 'Entrar'}</span>
+                Iniciar Sesión
                 </button>
 
                 <div className="separator">

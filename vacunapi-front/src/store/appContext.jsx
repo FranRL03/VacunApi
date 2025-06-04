@@ -31,7 +31,8 @@ const injectContext = PassedComponent => {
 		 * store, instead use actions, like this:
 		 **/
 		useEffect(() => {
-	
+			state.actions.isUserLogged();
+			state.actions.listCita();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		}, []);
 
