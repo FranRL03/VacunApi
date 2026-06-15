@@ -7,7 +7,8 @@
 
 <h2 align=center">Estructura del proyecto</h2>
 
-![Captura de pantalla 2023-10-20 125948](https://github.com/FranRL03/VacunApi/assets/122262348/20ca9697-b981-42b7-9c0d-9553555225b8)
+<img width="4413" height="2405" alt="SQL Import (postgresql) (1)" src="https://github.com/user-attachments/assets/ff95f297-3b91-449e-87c2-27700aaf2240" />
+
 
 
 <p>El proyecto se base en: </p>
