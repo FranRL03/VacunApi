@@ -1,6 +1,5 @@
 package com.salesianostriana.dam.vacunapi.dto;
 
-import com.salesianostriana.dam.vacunapi.dto.administracion.GetAdministracionDto;
 import com.salesianostriana.dam.vacunapi.dto.paciente.GetPacienteDto;
 import com.salesianostriana.dam.vacunapi.modelo.Medico;
 import com.salesianostriana.dam.vacunapi.modelo.Paciente;

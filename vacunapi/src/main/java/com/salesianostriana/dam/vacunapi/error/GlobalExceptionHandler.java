@@ -1,6 +1,5 @@
 package com.salesianostriana.dam.vacunapi.error;
 
-import com.salesianostriana.dam.vacunapi.exception.VacunaException.VacunaNotFoundExcepcion;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -13,7 +12,7 @@ import java.time.format.DateTimeFormatter;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
-    @ExceptionHandler(VacunaNotFoundExcepcion.class)
+    /* @ExceptionHandler(VacunaNotFoundExcepcion.class)
     ProblemDetail handleRutaNotFoundException (VacunaNotFoundExcepcion v) {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, v.getMessage());
         problemDetail.setDetail("Ruta Not Found");
@@ -21,5 +20,5 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         problemDetail.setProperty("timestamp",
                 LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")));
         return problemDetail;
-    }
+    } */
 }

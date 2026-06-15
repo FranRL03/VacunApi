@@ -21,10 +21,7 @@ public record GetPacienteFindAll(
         @JsonView({findAll.class})
         String nombreCompleto,
 
-        String edad,
-
-        @JsonView({findByIdWithAllEntities.class, findAll.class, create.class})
-        int cantidadVacuna
+        String edad
 ) {
 
     public static GetPacienteFindAll of(Paciente p) {
@@ -36,9 +33,7 @@ public record GetPacienteFindAll(
                     p.getNombre(),
                     p.getApellidos(),
                     p.getNombre() + " " + p.getApellidos(),
-                    edad,
-                    p.getVacunasAdministradas().size()
-            );
+                    edad);
         }
 
     public static String edad (Paciente p){

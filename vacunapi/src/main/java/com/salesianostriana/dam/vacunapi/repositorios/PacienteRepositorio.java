@@ -8,6 +8,4 @@ import java.util.UUID;
 
 public interface PacienteRepositorio extends JpaRepository<Paciente, UUID> {
 
-    @Query("SELECT COUNT(a) FROM Administracion a WHERE a.paciente.id = ?1")
-    int comprobarPacienteEnAdministracion(UUID vacunaId);
 }

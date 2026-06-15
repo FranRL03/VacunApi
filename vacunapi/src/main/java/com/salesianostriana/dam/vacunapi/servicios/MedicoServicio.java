@@ -20,11 +20,6 @@ public class MedicoServicio {
     private final MedicoRepositorio medicoRepositorio;
     private final CitasRepositorio citasRepositorio;
 
-    public List<Cita> findToday (UUID id) {
-
-        return citasRepositorio.findTodayCitasByMedicoId(id);
-    }
-
     public Medico findById (UUID id){
 
         Optional<Medico> encontrado = medicoRepositorio.findById(id);

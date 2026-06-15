@@ -23,8 +23,8 @@ public record CitasFindAllDto(
 
         return new CitasFindAllDto(
                 c.getId().toString(),
-                c.getDia().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                c.getHora().format(DateTimeFormatter.ofPattern("HH:mm")),
+                c.getFecha_inicio().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")),
+                c.getFecha_fin().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")),
                 c.getMotivo(),
                 c.getNotas(),
                 c.getSala(),

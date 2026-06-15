@@ -152,17 +152,5 @@ public class AdminController {
         return GetPacienteDto.find(p);
     }
 
-    @Operation(summary = "Borra un paciente por su id")
-    @ApiResponse(responseCode = "204 No Content",
-            description = "Borrado con éxito",
-            content = @Content)
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable UUID id){
-
-        pacienteServicio.delete(id);
-
-        return ResponseEntity.noContent().build();
-    }
-
 
 }

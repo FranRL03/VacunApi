@@ -2,7 +2,6 @@ package com.salesianostriana.dam.vacunapi.dto.paciente;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.salesianostriana.dam.vacunapi.View.PacienteView.*;
-import com.salesianostriana.dam.vacunapi.dto.administracion.GetAdministracionDto;
 import com.salesianostriana.dam.vacunapi.modelo.Paciente;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -31,10 +30,7 @@ public record GetPacienteDto(
         String direccion,
 
         @JsonView({informacionPaciente.class, findByIdWithAllEntities.class})
-        String notas,
-
-        @JsonView({findByIdWithAllEntities.class})
-        List<GetAdministracionDto> vacunasAdministradas
+        String notas
 
 ) {
 
@@ -48,11 +44,7 @@ public record GetPacienteDto(
                 p.getFechaNacimiento().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")),
                 p.getDni(),
                 p.getDireccion(),
-                p.getNotas(),
-                p.getVacunasAdministradas()
-                        .stream()
-                        .map(GetAdministracionDto::of)
-                        .toList()
+                p.getNotas()
         );
     }
 
@@ -66,11 +58,7 @@ public record GetPacienteDto(
                 p.getFechaNacimiento().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")),
                 p.getDni(),
                 p.getDireccion(),
-                p.getNotas(),
-                p.getVacunasAdministradas()
-                        .stream()
-                        .map(GetAdministracionDto::of)
-                        .toList()
+                p.getNotas()
         );
     }
 

@@ -102,49 +102,4 @@ public class MedicoController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(UserResponse.fromUser(paciente));
     }
-
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Listar las citas", content = {
-                    @Content(mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = CitasFindAllDto.class)),
-                            examples = {@ExampleObject(
-                                    value = """
-                                            [
-                                                {
-                                                    "id": "d290f1ee-6c54-4b01-90e6-d701748f0851",
-                                                    "dia": "15/06/2025",
-                                                    "hora": "09:30",
-                                                    "motivo": "RevisiÃ³n general",
-                                                    "notas": "RevisiÃ³n anual del paciente",
-                                                    "sala": "Sala 1",
-                                                    "estado": "CONFIRMADA",
-                                                    "idPaciente": "f5288a99-f910-4424-961d-d088a01f5ce0",
-                                                    "idMedico": "1cef9086-93a1-49de-b5e7-fb3d01d44baa"
-                                                },
-                                                {
-                                                    "id": "d290f1ee-6c54-4b01-90e6-d701748f0852",
-                                                    "dia": "15/06/2025",
-                                                    "hora": "10:30",
-                                                    "motivo": "RevisiÃ³n general",
-                                                    "notas": "RevisiÃ³n anual del paciente",
-                                                    "sala": "Sala 1",
-                                                    "estado": "CONFIRMADA",
-                                                    "idPaciente": "f5288a99-f910-4424-961d-d088a01f5ce0",
-                                                    "idMedico": "1cef9086-93a1-49de-b5e7-fb3d01d44baa"
-                                                },
-                                            ]
-                                            """
-                            )}
-                    )}),
-            @ApiResponse(responseCode = "400", description = "Dato introducido inválido", content = @Content)
-    })
-    @Operation(summary = "createUser", description = "Registrarme como Cliente")
-    @GetMapping("/citas")
-    public List<CitasFindAllDto> findToday (@AuthenticationPrincipal Medico m) {
-
-        return medicoServicio.findToday(m.getId())
-                .stream()
-                .map(CitasFindAllDto::of)
-                .toList();
-    }
 }

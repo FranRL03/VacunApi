@@ -22,7 +22,6 @@ public class UsuarioService {
     private final PasswordEncoder passwordEncoder;
     private final UsuarioRepository userRepository;
     private final PacienteRepositorio pacienteRepository;
-    private final EmailService emailService;
 
     public Paciente createUser(CreatePacienteDto created, EnumSet<RolUsuario> roles) {
 
@@ -48,8 +47,6 @@ public class UsuarioService {
         String hashedPassword = passwordEncoder.encode((plainPassword));
 
         p.setPassword(hashedPassword);
-
-        emailService.senToEmail(plainPassword, p.getEmail(), p.getUsername());
 
         return pacienteRepository.save(p);
     }

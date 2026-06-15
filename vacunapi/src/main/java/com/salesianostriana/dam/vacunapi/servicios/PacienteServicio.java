@@ -6,10 +6,7 @@ import com.salesianostriana.dam.vacunapi.dto.usuario.EditLoggedUserDto;
 import com.salesianostriana.dam.vacunapi.exception.PacienteException.EmptyPacienteListException;
 import com.salesianostriana.dam.vacunapi.exception.PacienteException.PacienteNotDeleteException;
 import com.salesianostriana.dam.vacunapi.exception.PacienteException.PacienteNotFoundExcepcion;
-import com.salesianostriana.dam.vacunapi.exception.VacunaException.VacunaNotDeleteException;
-import com.salesianostriana.dam.vacunapi.exception.VacunaException.VacunaNotFoundExcepcion;
 import com.salesianostriana.dam.vacunapi.modelo.Paciente;
-import com.salesianostriana.dam.vacunapi.modelo.Vacuna;
 import com.salesianostriana.dam.vacunapi.repositorios.PacienteRepositorio;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -71,17 +68,8 @@ public class PacienteServicio {
                 .direccion(edit.direccion())
                 .telefonoContacto(edit.telefono())
                 .fechaNacimiento(p.getFechaNacimiento())
-                .vacunasAdministradas(p.getVacunasAdministradas())
                 .build();
         return repositorio.save(editado);
-    }
-
-    public void delete (UUID id){
-        int num = repositorio.comprobarPacienteEnAdministracion(id);
-        if (num == 0)
-            repositorio.deleteById(id);
-        else
-            throw new PacienteNotDeleteException();
     }
 
 }

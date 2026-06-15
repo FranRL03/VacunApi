@@ -6,9 +6,11 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -35,8 +37,8 @@ public class Cita {
     @Column(columnDefinition = "uuid")
     private UUID id;
 
-    private LocalDate dia;
-    private LocalTime hora;
+    private LocalDateTime fecha_inicio;
+    private LocalDateTime fecha_fin;
     private String motivo;
     private String notas;
     private String sala;
