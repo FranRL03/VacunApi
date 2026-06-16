@@ -1,4 +1,4 @@
-package com.salesianostriana.dam.vacunapi.modelo;
+package com.salesianostriana.dam.vacunapi.domain.user.model;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -15,9 +15,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -65,7 +63,7 @@ public class User implements UserDetails {
     private boolean enabled = true;
 
     @Enumerated(EnumType.STRING)
-    private RolUser role;
+    private RolUser rol;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
@@ -77,7 +75,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
+        return List.of(new SimpleGrantedAuthority("ROLE_" + rol.name()));
     }
 
     @Override

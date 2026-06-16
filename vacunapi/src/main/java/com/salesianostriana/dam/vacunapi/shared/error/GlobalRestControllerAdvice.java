@@ -53,11 +53,14 @@ public class GlobalRestControllerAdvice {
     @ExceptionHandler(Exception.class)
     public ProblemDetail handleGeneric(Exception ex) {
 
+        ex.printStackTrace();
+
         ProblemDetail pd =
                 ProblemDetail.forStatus(HttpStatus.INTERNAL_SERVER_ERROR);
 
         pd.setTitle("Internal Server Error");
         pd.setDetail("Unexpected error occurred");
+        pd.setDetail(ex.getMessage());
 
         return pd;
     }

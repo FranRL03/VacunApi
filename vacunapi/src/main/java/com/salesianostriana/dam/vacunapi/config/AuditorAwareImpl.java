@@ -1,6 +1,6 @@
 package com.salesianostriana.dam.vacunapi.config;
 
-import com.salesianostriana.dam.vacunapi.modelo.User;
+import com.salesianostriana.dam.vacunapi.domain.user.model.User;
 import lombok.extern.java.Log;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.core.Authentication;

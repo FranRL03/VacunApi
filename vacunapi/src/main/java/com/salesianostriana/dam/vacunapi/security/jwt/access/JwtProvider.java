@@ -1,6 +1,6 @@
 package com.salesianostriana.dam.vacunapi.security.jwt.access;
 
-import com.salesianostriana.dam.vacunapi.modelo.User;
+import com.salesianostriana.dam.vacunapi.domain.user.model.User;
 import com.salesianostriana.dam.vacunapi.security.errorhandling.JwtTokenException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
