@@ -1,9 +1,8 @@
 package com.salesianostriana.dam.vacunapi.dto.citas;
 
-import com.salesianostriana.dam.vacunapi.modelo.Cita;
-import com.salesianostriana.dam.vacunapi.modelo.EstadoCitas;
+import com.salesianostriana.dam.vacunapi.modelo.Appointment;
+import com.salesianostriana.dam.vacunapi.modelo.AppointmentStatus;
 
-import java.text.DateFormat;
 import java.time.format.DateTimeFormatter;
 
 public record CitasFindAllDto(
@@ -14,12 +13,12 @@ public record CitasFindAllDto(
         String motivo,
         String notas,
         String sala,
-        EstadoCitas estado,
+        AppointmentStatus estado,
         String paciente,
         String medico
 ) {
 
-    public static CitasFindAllDto of (Cita c){
+    public static CitasFindAllDto of (Appointment c){
 
         return new CitasFindAllDto(
                 c.getId().toString(),
