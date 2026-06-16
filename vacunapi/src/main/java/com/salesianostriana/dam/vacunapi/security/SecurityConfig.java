@@ -7,8 +7,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -20,11 +20,9 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
-
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
 
@@ -35,20 +33,20 @@ public class SecurityConfig {
     private final AccessDeniedHandler jwtAccessDeniedHandler;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    @Bean
+   /* @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
         AuthenticationManagerBuilder authenticationManagerBuilder =
                 http.getSharedObject(AuthenticationManagerBuilder.class);
 
 
         // Versión 1
-        /*
+
         AuthenticationManager authenticationManager =
                 authenticationManagerBuilder
                 .userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder)
                         .and().build();
-        */
+
 
         // Versión 2
         AuthenticationManager authenticationManager =
@@ -57,22 +55,26 @@ public class SecurityConfig {
 
         return authenticationManager;
 
+    } */
+
+    @Bean
+    public AuthenticationManager authenticationManager(
+            AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
     }
+
 
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        DaoAuthenticationProvider authenticationProvider =
+                new DaoAuthenticationProvider(userDetailsService);
 
-        authenticationProvider.setUserDetailsService(userDetailsService);
         authenticationProvider.setPasswordEncoder(passwordEncoder);
-        authenticationProvider.setHideUserNotFoundExceptions(false);
+        authenticationProvider.setHideUserNotFoundExceptions(true);
 
         return authenticationProvider;
-
     }
-
-
 
 
 
@@ -81,41 +83,24 @@ public class SecurityConfig {
 
         http
                 .cors(Customizer.withDefaults())
-                //.csrf().disable()
-                .csrf((csrf)-> csrf
-                        .ignoringRequestMatchers(antMatcher("/**")))
-                /*
-                        .exceptionHandling()
-                                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                                .accessDeniedHandler(jwtAccessDeniedHandler)*/
+                .csrf(csrf -> csrf.disable())
+                .logout(logout -> logout.disable())
                 .exceptionHandling((exceptionHandling) -> exceptionHandling
                         .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                         .accessDeniedHandler(jwtAccessDeniedHandler)
                 )
-                /*
-                        .and()
-                                .sessionManagement()
-                                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                */
                 .sessionManagement((session) -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                /*
-                        .and()
-                                .authorizeRequests()
-                                .antMatchers("/note/**").hasRole("USER")
-                                .antMatchers("/auth/register/admin").hasRole("ADMIN")
-                                .anyRequest().authenticated();*/
                 .authorizeHttpRequests((authz) -> authz
-                        .requestMatchers(
-                                antMatcher("/paciente/**"),
-                                antMatcher("/vacuna/**")
-                        ).hasRole("PACIENTE")
-                        .requestMatchers(
-                                antMatcher("/medico/**")
-                        ).hasRole("MEDICO")
-                        .requestMatchers(
-                                antMatcher("/admin/**")
-                        ).hasRole("ADMIN")
+                       // .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers("/auth/login", "/auth/register", "/auth/refreshtoken","/auth/logout").permitAll()
+                        .requestMatchers(("/admin/**")).hasRole("ADMIN")
+            //            .requestMatchers("/api/v1/products/**").hasRole("ADMIN")
+//                        .requestMatchers("/users/**").hasRole("ADMIN")
+
+                        //.requestMatchers("/**").hasRole("USER")
+                        //.requestMatchers("/tickets/**").hasRole("USER")
+                        //.requestMatchers("/enums/**").hasRole("USER")
                         .anyRequest().authenticated());
 
 
@@ -135,13 +120,13 @@ public class SecurityConfig {
         //return (web -> web.ignoring().antMatchers("/h2-console/**", "/auth/register", "/auth/login", "/refreshtoken"));
         return (web -> web.ignoring()
                 .requestMatchers(
-                        antMatcher("/h2-console/**"),
+                        ("/h2-console/**"),
 //                        antMatcher("/auth/register"),
-                        antMatcher("/auth/login"),
-                        antMatcher("/api-docs"),
-                        antMatcher("/swagger-ui/**"),
-                        antMatcher("/swagger-ui-miapi.html"),
-                        antMatcher("/error")
+//                        ("/auth/login"),
+                        ("/api-docs"),
+                        ("/swagger-ui/**"),
+                        ("/swagger-ui-miapi.html"),
+                        ("/error")
                 ));
 
     }

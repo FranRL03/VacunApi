@@ -1,6 +1,6 @@
 package com.salesianostriana.dam.vacunapi.security.jwt.access;
 
-import com.salesianostriana.dam.vacunapi.modelo.Usuario;
+import com.salesianostriana.dam.vacunapi.modelo.User;
 import com.salesianostriana.dam.vacunapi.security.errorhandling.JwtTokenException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
@@ -51,13 +51,13 @@ public class JwtProvider {
 
     public String generateToken(Authentication authentication) {
 
-        Usuario user = (Usuario) authentication.getPrincipal();
+        User user = (User) authentication.getPrincipal();
 
         return generateToken(user);
 
     }
 
-    public String generateToken(Usuario user) {
+    public String generateToken(User user) {
         Date tokenExpirationDateTime =
                 Date.from(
                         LocalDateTime

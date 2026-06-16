@@ -1,21 +1,19 @@
 package com.salesianostriana.dam.vacunapi.dto.usuario;
 
 
-import com.salesianostriana.dam.vacunapi.modelo.Usuario;
+import com.salesianostriana.dam.vacunapi.modelo.User;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public record GetUserDetailDto(String id, String username, String email, Set<String> roles) {
+public record GetUserDetailDto(String id, String username, String email, String roles) {
 
-    public static GetUserDetailDto of(Usuario u){
+    public static GetUserDetailDto of(User u){
         return new GetUserDetailDto(
                 u.getId().toString(),
                 u.getUsername(),
                 u.getEmail(),
-                u.getRoles().stream()
-                        .map(Enum::name)
-                        .collect(Collectors.toSet())
+                u.getRole().toString()
 
         );
     }

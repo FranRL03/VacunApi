@@ -1,10 +1,6 @@
 package com.salesianostriana.dam.vacunapi.dto;
 
-import com.salesianostriana.dam.vacunapi.dto.paciente.GetPacienteDto;
-import com.salesianostriana.dam.vacunapi.modelo.Medico;
-import com.salesianostriana.dam.vacunapi.modelo.Paciente;
-
-import java.time.format.DateTimeFormatter;
+import com.salesianostriana.dam.vacunapi.modelo.Doctor;
 
 public record GetMedicoDto(
 
@@ -15,7 +11,7 @@ public record GetMedicoDto(
         String telefeono
 ) {
 
-    public static GetMedicoDto of (Medico m){
+    public static GetMedicoDto of (Doctor m){
 
         return new GetMedicoDto(
                 m.getId().toString(),

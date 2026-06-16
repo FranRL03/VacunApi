@@ -1,8 +1,8 @@
 package com.salesianostriana.dam.vacunapi.security.jwt.access;
 
-import com.salesianostriana.dam.vacunapi.modelo.Usuario;
+import com.salesianostriana.dam.vacunapi.modelo.User;
 import com.salesianostriana.dam.vacunapi.security.errorhandling.JwtTokenException;
-import com.salesianostriana.dam.vacunapi.servicios.UsuarioService;
+import com.salesianostriana.dam.vacunapi.servicios.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,7 +28,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private final UsuarioService userService;
+    private final UserService userService;
     private final JwtProvider jwtProvider;
 
     @Autowired
@@ -46,10 +46,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             if (StringUtils.hasText(token) && jwtProvider.validateToken(token)) {
                 UUID userId = jwtProvider.getUserIdFromJwtToken(token);
 
-                Optional<Usuario> result = userService.findById(userId);
+                Optional<User> result = userService.findById(userId);
 
                 if (result.isPresent()) {
-                    Usuario user = result.get();
+                    User user = result.get();
 
                     UsernamePasswordAuthenticationToken authentication =
                             new UsernamePasswordAuthenticationToken(
