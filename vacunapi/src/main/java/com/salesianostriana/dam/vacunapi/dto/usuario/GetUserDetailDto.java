@@ -1,10 +1,7 @@
 package com.salesianostriana.dam.vacunapi.dto.usuario;
 
 
-import com.salesianostriana.dam.vacunapi.modelo.User;
-
-import java.util.Set;
-import java.util.stream.Collectors;
+import com.salesianostriana.dam.vacunapi.domain.user.model.User;
 
 public record GetUserDetailDto(String id, String username, String email, String roles) {
 
@@ -13,7 +10,7 @@ public record GetUserDetailDto(String id, String username, String email, String 
                 u.getId().toString(),
                 u.getUsername(),
                 u.getEmail(),
-                u.getRole().toString()
+                u.getRol().toString()
 
         );
     }

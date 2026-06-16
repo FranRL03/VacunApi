@@ -1,5 +1,7 @@
 package com.salesianostriana.dam.vacunapi.modelo;
 
+import com.salesianostriana.dam.vacunapi.domain.doctor.model.Doctor;
+import com.salesianostriana.dam.vacunapi.domain.patient.model.Patient;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;

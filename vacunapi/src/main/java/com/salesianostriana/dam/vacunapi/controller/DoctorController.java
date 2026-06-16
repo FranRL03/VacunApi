@@ -1,25 +1,6 @@
 package com.salesianostriana.dam.vacunapi.controller;
 
-import com.salesianostriana.dam.vacunapi.dto.GetMedicoDto;
-import com.salesianostriana.dam.vacunapi.dto.usuario.GetUserDetailDto;
-import com.salesianostriana.dam.vacunapi.dto.usuario.UserResponse;
-import com.salesianostriana.dam.vacunapi.modelo.Doctor;
-import com.salesianostriana.dam.vacunapi.modelo.Patient;
-import com.salesianostriana.dam.vacunapi.servicios.DoctorService;
-import com.salesianostriana.dam.vacunapi.servicios.UserService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.ExampleObject;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

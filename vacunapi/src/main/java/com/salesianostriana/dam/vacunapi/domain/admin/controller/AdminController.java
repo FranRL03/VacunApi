@@ -1,9 +1,11 @@
-package com.salesianostriana.dam.vacunapi.controller;
+package com.salesianostriana.dam.vacunapi.domain.admin.controller;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import com.salesianostriana.dam.vacunapi.View.PacienteView.*;
-import com.salesianostriana.dam.vacunapi.modelo.Patient;
-import com.salesianostriana.dam.vacunapi.servicios.PatientService;
+import com.salesianostriana.dam.vacunapi.domain.admin.service.AdminService;
+import com.salesianostriana.dam.vacunapi.domain.doctor.dto.CreateDoctorDto;
+import com.salesianostriana.dam.vacunapi.domain.doctor.dto.DoctorDto;
+import com.salesianostriana.dam.vacunapi.domain.doctor.model.Doctor;
+import com.salesianostriana.dam.vacunapi.domain.patient.dto.CreatePatientDto;
+import com.salesianostriana.dam.vacunapi.domain.patient.dto.PatientDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -13,56 +15,49 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/admin")
 @RequiredArgsConstructor
-@Tag(name = "Paciente", description = "API REST de paciente con operaciones CRUD")
+@Tag(name = "Admin", description = "Administrator Operations REST API")
 public class AdminController {
 
-//    private final PatientService pacienteServicio;
-//
-//    @Operation(summary = "Añades un paciente")
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "201",
-//                    description = "Creación de paciente",
-//                    content = {@Content(mediaType = "aplication/json",
-//                            array = @ArraySchema(schema = @Schema(implementation = Patient.class)),
-//                            examples = {@ExampleObject(
-//                                    value = """
-//                                            [
-//                                                {
-//                                                  "id": 1,
-//                                                  "nombre": "Fran",
-//                                                  "apellidos": "Ruiz",
-//                                                  "telefonoContacto": "987654321",
-//                                                  "fechaNacimiento": "2003-02-07",
-//                                                  "notas": "Este paciente esta en tratamiento"
-//                                                }
-//                                            ]
-//                                            """
-//                            )}
-//                    )}),
-//
-//            @ApiResponse(responseCode = "400",
-//                    description = "Error al crear un paciente",
-//                    content = @Content)
-//    })
-//    @PostMapping("/")
-//    @JsonView({informacionPaciente.class})
-//    public ResponseEntity<GetPacienteDto> addPaciente(@RequestBody EditPacienteDto newPaciente) {
-//
-//        Patient p = pacienteServicio.save(newPaciente);
-//
-//        return ResponseEntity
-//                .status(201)
-//                .body(GetPacienteDto.of(p));
-//    }
+    private final AdminService service;
+
+    @Operation(summary = "Add patient")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201",
+                    description = "Create doctor",
+                    content = {@Content(mediaType = "aplication/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Doctor.class)),
+                            examples = {@ExampleObject(
+                                    value = """
+                                            [
+                                                {
+                                                  "id": 1,
+                                                  "nombre": "Fran",
+                                                  "apellidos": "Ruiz",
+                                                  "telefonoContacto": "987654321",
+                                                  "fechaNacimiento": "2003-02-07",
+                                                  "notas": "Este paciente esta en tratamiento"
+                                                }
+                                            ]
+                                            """
+                            )}
+                    )}),
+
+            @ApiResponse(responseCode = "400",
+                    description = "Error creating doctor",
+                    content = @Content)
+    })
+    @PostMapping("/")
+    public ResponseEntity<DoctorDto> addDoctor(@RequestBody CreateDoctorDto newDoctor) {
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.createDoctor(newDoctor));
+    }
 //
 //    @Operation(summary = "Muestra una lista de los pacientes")
 //    @ApiResponses(value = {

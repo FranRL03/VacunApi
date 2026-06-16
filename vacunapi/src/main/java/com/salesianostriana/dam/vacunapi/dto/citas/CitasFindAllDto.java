@@ -28,8 +28,8 @@ public record CitasFindAllDto(
                 c.getNotas(),
                 c.getSala(),
                 c.getEstado(),
-                c.getPaciente().getNombre(),
-                c.getMedico().getNombre()
+                c.getPaciente().getName(),
+                c.getMedico().getName()
         );
 
     }

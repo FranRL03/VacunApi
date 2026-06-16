@@ -1,7 +1,7 @@
 package com.salesianostriana.dam.vacunapi.dto.usuario;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.salesianostriana.dam.vacunapi.modelo.User;
+import com.salesianostriana.dam.vacunapi.domain.user.model.User;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 

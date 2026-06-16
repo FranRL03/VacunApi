@@ -1,6 +1,6 @@
 package com.salesianostriana.dam.vacunapi.security.jwt.refresh;
 
-import com.salesianostriana.dam.vacunapi.modelo.User;
+import com.salesianostriana.dam.vacunapi.domain.user.model.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.NaturalId;

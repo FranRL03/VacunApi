@@ -1,8 +1,8 @@
 package com.salesianostriana.dam.vacunapi.security.jwt.access;
 
-import com.salesianostriana.dam.vacunapi.modelo.User;
+import com.salesianostriana.dam.vacunapi.domain.user.model.User;
 import com.salesianostriana.dam.vacunapi.security.errorhandling.JwtTokenException;
-import com.salesianostriana.dam.vacunapi.servicios.UserService;
+import com.salesianostriana.dam.vacunapi.domain.user.service.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

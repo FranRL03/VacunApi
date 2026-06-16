@@ -1,7 +1,7 @@
-package com.salesianostriana.dam.vacunapi.servicios;
+package com.salesianostriana.dam.vacunapi.domain.user.service;
 
-import com.salesianostriana.dam.vacunapi.modelo.User;
-import com.salesianostriana.dam.vacunapi.repositorios.UserRepository;
+import com.salesianostriana.dam.vacunapi.domain.user.model.User;
+import com.salesianostriana.dam.vacunapi.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -35,10 +35,6 @@ public class UserService {
 
     public Optional<User> findById(UUID id) {
         return userRepository.findById(id);
-    }
-
-    public Optional<User> findByUsername(String username) {
-        return userRepository.findFirstByUsername(username);
     }
 
     public Optional<User> findByEmail(String email) {
