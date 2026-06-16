@@ -1,17 +1,8 @@
 package com.salesianostriana.dam.vacunapi.servicios;
 
 
-import com.salesianostriana.dam.vacunapi.dto.usuario.EditLoggedUserDto;
-import com.salesianostriana.dam.vacunapi.exception.PacienteException.EmptyPacienteListException;
-import com.salesianostriana.dam.vacunapi.exception.PacienteException.PacienteNotFoundExcepcion;
-import com.salesianostriana.dam.vacunapi.modelo.Patient;
-import com.salesianostriana.dam.vacunapi.repositorios.PacienteRepositorio;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor

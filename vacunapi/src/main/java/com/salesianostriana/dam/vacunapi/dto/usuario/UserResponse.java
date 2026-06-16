@@ -1,15 +1,13 @@
 package com.salesianostriana.dam.vacunapi.dto.usuario;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.salesianostriana.dam.vacunapi.modelo.User;
+import com.salesianostriana.dam.vacunapi.domain.user.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
@@ -19,8 +17,8 @@ public class UserResponse {
 
     protected String id;
     protected String username;
-    protected String roles;
-    protected String password;
+    protected String rol;
+    //protected String password;
     protected String email;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
@@ -33,8 +31,8 @@ public class UserResponse {
                 .id(user.getId().toString())
                 .username(user.getUsername())
                 .email(user.getEmail())
-                .password(user.getPassword())
-                .roles(user.getRole().toString())
+                //.password(user.getPassword())
+                .rol(user.getRol().toString())
                 .createdAt(user.getCreatedAt())
                 .build();
     }

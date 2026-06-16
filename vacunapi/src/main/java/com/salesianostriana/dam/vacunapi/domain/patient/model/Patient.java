@@ -1,11 +1,13 @@
-package com.salesianostriana.dam.vacunapi.modelo;
+package com.salesianostriana.dam.vacunapi.domain.patient.model;
 
+import com.salesianostriana.dam.vacunapi.domain.user.model.User;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -14,26 +16,31 @@ import java.time.LocalDate;
 @ToString
 @SuperBuilder
 @NoArgsConstructor
-public class Patient extends User {
+public class Patient {
+
+    @Id
+    private UUID id;
 
     @Schema(example = "Fran", description = "Nombre del paciente")
-    private String nombre;
+    private String name;
 
     @Schema(example = "Ruiz", description = "Apellido del paciente")
-    private String apellidos;
+    private String lastName;
 
     @Schema(example = "987654321", description = "Número de teléfono para contactar con el paciente")
-    private String telefonoContacto;
+    private String phone;
 
     @Schema(example = "07-02-2003", description = "Fecha de nacimiento del paciente dd-MM-yyyy")
-    private LocalDate fechaNacimiento;
+    private LocalDate birthday;
 
     @Column(name = "dni", unique = true, updatable = false)
     private String dni;
 
-    private String direccion;
+    private String address;
 
-    @Schema(example = "El paciente está en tratamiento", description = "Anotación sobre el paciente")
-    private String notas;
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "id")
+    private User user;
 
 }
