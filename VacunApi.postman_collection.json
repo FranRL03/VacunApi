@@ -77,7 +77,12 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n  \"username\": \"DOCTOR02\",\r\n  \"password\": \"12345678\",\r\n  \"email\": \"doctor03@example.com\",\r\n  \"name\": \"Juan\",\r\n  \"lastName\": \"García\",\r\n  \"speciality\": \"Dermatología\",\r\n  \"phone\": \"612345678\"\r\n}"
+                  "raw": "{\r\n  \"username\": \"DOCTOR03\",\r\n  \"password\": \"12345678\",\r\n  \"email\": \"doctor3@example.com\",\r\n  \"name\": \"Juan\",\r\n  \"lastName\": \"García\",\r\n  \"speciality\": \"Dermatología\",\r\n  \"phone\": \"612345678\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
                 },
                 "url": {
                   "raw": "{{BASE.URL}}/admin/",
@@ -87,6 +92,75 @@
                   "path": [
                     "admin",
                     ""
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "createAgenda",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"dayOfWeek\":  1,\r\n  \"startTime\": \"09:00\",\r\n  \"endTime\": \"14:00\",\r\n  \"duration\": 20\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{BASE.URL}}/admin/doctors/1cef9086-93a1-49de-b5e7-fb3d01d44baa/agendas",
+                  "host": [
+                    "{{BASE.URL}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "doctors",
+                    "1cef9086-93a1-49de-b5e7-fb3d01d44baa",
+                    "agendas"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "listAgendas",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{BASE.URL}}/admin/doctors/1cef9086-93a1-49de-b5e7-fb3d01d44baa/agendas",
+                  "host": [
+                    "{{BASE.URL}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "doctors",
+                    "1cef9086-93a1-49de-b5e7-fb3d01d44baa",
+                    "agendas"
                   ]
                 }
               },

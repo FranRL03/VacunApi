@@ -15,6 +15,7 @@ import com.salesianostriana.dam.vacunapi.domain.user.mapper.UserMapper;
 import com.salesianostriana.dam.vacunapi.domain.user.model.RolUser;
 import com.salesianostriana.dam.vacunapi.domain.user.model.User;
 import com.salesianostriana.dam.vacunapi.domain.user.repository.UserRepository;
+import com.salesianostriana.dam.vacunapi.shared.exception.EmptyException;
 import com.salesianostriana.dam.vacunapi.shared.exception.EntityExistException;
 import com.salesianostriana.dam.vacunapi.shared.exception.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -82,6 +83,23 @@ public class AdminService {
 
         agendaRepository.save(agenda);
         return agendaMapper.toDto(agenda);
+    }
+
+    public List<AgendaDto> getAgendasToDoctor(UUID doctorId) {
+
+        Doctor doctor = doctorRepository.findById(doctorId)
+                .orElseThrow(() -> new EntityNotFoundException("The doctor", doctorId));
+
+        List<DoctorAgenda> list = agendaRepository.getAgendasToDoctor(doctor.getId());
+
+        if (list.isEmpty()) {
+            throw new EmptyException("No agendas assigned");
+        }
+
+        return list.stream()
+                .map(agendaMapper::toDto)
+                .toList();
+
     }
 
 }
