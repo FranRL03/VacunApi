@@ -1,6 +1,10 @@
 package com.salesianostriana.dam.vacunapi.domain.admin.controller;
 
 import com.salesianostriana.dam.vacunapi.domain.admin.service.AdminService;
+import com.salesianostriana.dam.vacunapi.domain.agenda.dto.AgendaDto;
+import com.salesianostriana.dam.vacunapi.domain.agenda.dto.CreateAgendaDto;
+import com.salesianostriana.dam.vacunapi.domain.agenda.dto.UpdateAgendaDto;
+import com.salesianostriana.dam.vacunapi.domain.agenda.model.DoctorAgenda;
 import com.salesianostriana.dam.vacunapi.domain.doctor.dto.CreateDoctorDto;
 import com.salesianostriana.dam.vacunapi.domain.doctor.dto.DoctorDto;
 import com.salesianostriana.dam.vacunapi.domain.doctor.model.Doctor;
@@ -19,6 +23,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/admin")
 @RequiredArgsConstructor
@@ -35,16 +42,15 @@ public class AdminController {
                             array = @ArraySchema(schema = @Schema(implementation = Doctor.class)),
                             examples = {@ExampleObject(
                                     value = """
-                                            [
-                                                {
-                                                  "id": 1,
-                                                  "nombre": "Fran",
-                                                  "apellidos": "Ruiz",
-                                                  "telefonoContacto": "987654321",
-                                                  "fechaNacimiento": "2003-02-07",
-                                                  "notas": "Este paciente esta en tratamiento"
-                                                }
-                                            ]
+                                            {
+                                                 "id": "c0a89694-9ed5-12f2-819e-d5e3e4fa0000",
+                                                 "username": "DOCTOR03",
+                                                 "name": "Juan",
+                                                 "lastName": "García",
+                                                 "email": "doctor3@example.com",
+                                                 "speciality": "Dermatología",
+                                                 "phone": "612345678"
+                                             }
                                             """
                             )}
                     )}),
@@ -58,91 +64,90 @@ public class AdminController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(service.createDoctor(newDoctor));
     }
-//
-//    @Operation(summary = "Muestra una lista de los pacientes")
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "200",
-//                    description = "Lista de los pacientes que hay en la base de datos",
-//                    content = {@Content(mediaType = "aplication/json",
-//                            array = @ArraySchema(schema = @Schema(implementation = Patient.class)),
-//                            examples = {@ExampleObject(
-//                                    value = """
-//                                            [
-//                                                  {
-//                                                      "id": 1,
-//                                                      "nombre": "Fran",
-//                                                      "apellidos": "Ruiz",
-//                                                      "edad": "20 años",
-//                                                      "cantidadVacuna": 1
-//                                                  },
-//                                                  {
-//                                                      "id": 2,
-//                                                      "nombre": "Paciente",
-//                                                      "apellidos": "1",
-//                                                      "edad": "5 meses",
-//                                                      "cantidadVacuna": 1
-//                                                  }
-//                                              ]
-//                                            """
-//                            )}
-//                    )}),
-//
-//            @ApiResponse(responseCode = "404",
-//                    description = "Not found",
-//                    content = @Content)
-//    })
-//    @GetMapping("/")
-//    public List<GetPacienteFindAll> findAll() {
-//
-//        return pacienteServicio.findAll()
-//                        .stream()
-//                        .map(GetPacienteFindAll::of)
-//                        .toList();
-//
-//    }
-//
-//    @Operation(summary = "Buscas un paciente por su id")
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "200",
-//                    description = "Paciente por id",
-//                    content = { @Content(mediaType = "aplication/json",
-//                            array = @ArraySchema(schema = @Schema(implementation = Patient.class)),
-//                            examples = {@ExampleObject(
-//                                    value = """
-//                                            {
-//                                                  "id": 1,
-//                                                  "nombre": "Fran",
-//                                                  "apellidos": "Ruiz",
-//                                                  "telefonoContacto": "987654321",
-//                                                  "fechaNacimiento": "07-02-2003",
-//                                                  "notas": "Este paciente está en tratamiento",
-//                                                  "vacunasAdministradas": [
-//                                                      {
-//                                                          "id": 1,
-//                                                          "fecha": "19-10-2023",
-//                                                          "edadAlAdministrar": "10 meses",
-//                                                          "vacuna": "Alergia",
-//                                                          "tipoDosis": "Primera"
-//                                                      }
-//                                                  ]
-//                                              }
-//
-//                                            """
-//                            )}
-//                    )}),
-//
-//            @ApiResponse(responseCode = "404",
-//                    description = "Error al buscar un paciente",
-//                    content = @Content)
-//    })
-//    @GetMapping("/{id}")
-//    @JsonView(findByIdWithAllEntities.class)
-//    public GetPacienteDto findById(@PathVariable UUID id){
-//
-//        Patient p = pacienteServicio.findById(id);
-//
-//        return GetPacienteDto.find(p);
-//    }
 
+    @Operation(summary = "Create agenda")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201",
+                    description = "Create agenda",
+                    content = {@Content(mediaType = "aplication/json",
+                            array = @ArraySchema(schema = @Schema(implementation = DoctorAgenda.class)),
+                            examples = {@ExampleObject(
+                                    value = """
+                                            {
+                                                   "id": "c0a89694-9ed5-18ce-819e-d5e97faa0000",
+                                                   "dayOfWeek": "Monday",
+                                                   "startTime": "09:00:00",
+                                                   "endTime": "14:00:00",
+                                                   "duration": 20,
+                                                   "active": true,
+                                                   "doctorName": "DOCTOR"
+                                               }
+                                            """
+                            )}
+                    )}),
+
+            @ApiResponse(responseCode = "400",
+                    description = "Error creating agenda",
+                    content = @Content)
+    })
+    @PostMapping("/doctors/{doctorId}/agendas")
+    public ResponseEntity<AgendaDto> addAAgenda(@PathVariable UUID doctorId, @RequestBody CreateAgendaDto agenda) {
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.createAgenda(agenda, doctorId));
+    }
+
+    @Operation(summary = "Get agendas")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201",
+                    description = "Get agendas",
+                    content = {@Content(mediaType = "aplication/json",
+                            array = @ArraySchema(schema = @Schema(implementation = DoctorAgenda.class)),
+                            examples = {@ExampleObject(
+                                    value = """
+                                            [
+                                                    {
+                                                        "id": "c0a89694-9ed6-18a6-819e-d6096e260000",
+                                                        "dayOfWeek": "Monday",
+                                                        "startTime": "09:00:00",
+                                                        "endTime": "14:00:00",
+                                                        "duration": 20,
+                                                        "active": true,
+                                                        "doctorName": "DOCTOR"
+                                                    },
+                                                    {
+                                                        "id": "c0a89694-9ed6-18a6-819e-d60997d80001",
+                                                        "dayOfWeek": "Tuesday",
+                                                        "startTime": "09:00:00",
+                                                        "endTime": "14:00:00",
+                                                        "duration": 20,
+                                                        "active": true,
+                                                        "doctorName": "DOCTOR"
+                                                    }
+                                                ]
+                                            """
+                            )}
+                    )}),
+
+            @ApiResponse(responseCode = "404",
+                    description = "Error displaying agendas",
+                    content = @Content)
+    })
+    @GetMapping("/doctors/{doctorId}/agendas")
+    public ResponseEntity<List<AgendaDto>> getAgendas(@PathVariable UUID doctorId) {
+
+        return ResponseEntity.status(HttpStatus.OK).body(service.getAgendasToDoctor(doctorId));
+    }
+
+    @PutMapping("/agendas/{agendaId}")
+    public ResponseEntity<AgendaDto> updateAgenda(@PathVariable UUID agendaId, @RequestBody UpdateAgendaDto dto) {
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.updateAgenda(dto, agendaId));
+    }
+
+    @PatchMapping("/agendas/{agendaId}/status")
+    public ResponseEntity<AgendaDto> statusAgenda(@PathVariable UUID agendaId, @RequestBody UpdateAgendaDto dto) {
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.updateAgenda(dto, agendaId));
+    }
 
 }
