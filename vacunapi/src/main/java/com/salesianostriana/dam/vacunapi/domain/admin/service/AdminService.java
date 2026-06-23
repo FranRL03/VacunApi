@@ -3,6 +3,7 @@ package com.salesianostriana.dam.vacunapi.domain.admin.service;
 import com.salesianostriana.dam.vacunapi.domain.admin.mapper.AdminMapper;
 import com.salesianostriana.dam.vacunapi.domain.agenda.dto.AgendaDto;
 import com.salesianostriana.dam.vacunapi.domain.agenda.dto.CreateAgendaDto;
+import com.salesianostriana.dam.vacunapi.domain.agenda.dto.UpdateAgendaDto;
 import com.salesianostriana.dam.vacunapi.domain.agenda.mapper.AgendaMapper;
 import com.salesianostriana.dam.vacunapi.domain.agenda.model.DoctorAgenda;
 import com.salesianostriana.dam.vacunapi.domain.agenda.respository.AgendaRepository;
@@ -100,6 +101,18 @@ public class AdminService {
                 .map(agendaMapper::toDto)
                 .toList();
 
+    }
+
+    @Transactional
+    public AgendaDto updateAgenda(UpdateAgendaDto dto, UUID agendaId) {
+
+        DoctorAgenda agenda = agendaRepository.findById(agendaId)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Agenda", agendaId));
+
+        adminMapper.updateAgendaFromDto(dto, agenda);
+
+        return agendaMapper.toDto(agendaRepository.save(agenda));
     }
 
 }

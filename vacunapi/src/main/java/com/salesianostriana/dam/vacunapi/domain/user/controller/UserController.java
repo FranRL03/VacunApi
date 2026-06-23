@@ -1,6 +1,9 @@
-package com.salesianostriana.dam.vacunapi.controller;
+package com.salesianostriana.dam.vacunapi.domain.user.controller;
 
-import com.salesianostriana.dam.vacunapi.dto.usuario.*;
+import com.salesianostriana.dam.vacunapi.domain.user.dto.ChangePasswordRequest;
+import com.salesianostriana.dam.vacunapi.domain.user.dto.JwtUserResponse;
+import com.salesianostriana.dam.vacunapi.domain.user.dto.LoginRequest;
+import com.salesianostriana.dam.vacunapi.domain.user.dto.UserResponse;
 import com.salesianostriana.dam.vacunapi.domain.user.model.User;
 import com.salesianostriana.dam.vacunapi.security.jwt.access.JwtProvider;
 import com.salesianostriana.dam.vacunapi.security.jwt.refresh.RefreshToken;

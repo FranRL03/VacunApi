@@ -1,4 +1,4 @@
-package com.salesianostriana.dam.vacunapi.dto.usuario;
+package com.salesianostriana.dam.vacunapi.domain.user.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.salesianostriana.dam.vacunapi.domain.user.model.User;

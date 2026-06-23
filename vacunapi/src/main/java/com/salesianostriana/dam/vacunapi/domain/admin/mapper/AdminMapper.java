@@ -1,13 +1,13 @@
 package com.salesianostriana.dam.vacunapi.domain.admin.mapper;
 
 import com.salesianostriana.dam.vacunapi.domain.agenda.dto.CreateAgendaDto;
+import com.salesianostriana.dam.vacunapi.domain.agenda.dto.UpdateAgendaDto;
 import com.salesianostriana.dam.vacunapi.domain.agenda.model.DoctorAgenda;
 import com.salesianostriana.dam.vacunapi.domain.doctor.dto.CreateDoctorDto;
 import com.salesianostriana.dam.vacunapi.domain.doctor.model.Doctor;
 import com.salesianostriana.dam.vacunapi.domain.patient.dto.CreatePatientDto;
 import com.salesianostriana.dam.vacunapi.domain.patient.model.Patient;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.*;
 
 @Mapper(componentModel = "spring")
 public interface AdminMapper {
@@ -19,4 +19,7 @@ public interface AdminMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "doctor", ignore = true)
     DoctorAgenda toEntityAgenda(CreateAgendaDto dto);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void updateAgendaFromDto(UpdateAgendaDto dto, @MappingTarget DoctorAgenda agenda);
 }

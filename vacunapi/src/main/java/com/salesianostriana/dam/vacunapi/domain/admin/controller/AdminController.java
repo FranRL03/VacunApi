@@ -3,6 +3,7 @@ package com.salesianostriana.dam.vacunapi.domain.admin.controller;
 import com.salesianostriana.dam.vacunapi.domain.admin.service.AdminService;
 import com.salesianostriana.dam.vacunapi.domain.agenda.dto.AgendaDto;
 import com.salesianostriana.dam.vacunapi.domain.agenda.dto.CreateAgendaDto;
+import com.salesianostriana.dam.vacunapi.domain.agenda.dto.UpdateAgendaDto;
 import com.salesianostriana.dam.vacunapi.domain.agenda.model.DoctorAgenda;
 import com.salesianostriana.dam.vacunapi.domain.doctor.dto.CreateDoctorDto;
 import com.salesianostriana.dam.vacunapi.domain.doctor.dto.DoctorDto;
@@ -137,5 +138,10 @@ public class AdminController {
         return ResponseEntity.status(HttpStatus.OK).body(service.getAgendasToDoctor(doctorId));
     }
 
+    @PutMapping("/agendas/{agendaId}")
+    public ResponseEntity<AgendaDto> updateAgenda(@PathVariable UUID agendaId, @RequestBody UpdateAgendaDto dto) {
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.updateAgenda(dto, agendaId));
+    }
 
 }

@@ -1,6 +1,4 @@
-package com.salesianostriana.dam.vacunapi.dto.usuario;
-
-import java.time.LocalDate;
+package com.salesianostriana.dam.vacunapi.domain.user.dto;
 
 public record EditLoggedUserDto(
         String nombre,

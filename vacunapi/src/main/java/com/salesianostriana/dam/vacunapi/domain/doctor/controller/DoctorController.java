@@ -1,4 +1,4 @@
-package com.salesianostriana.dam.vacunapi.controller;
+package com.salesianostriana.dam.vacunapi.domain.doctor.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

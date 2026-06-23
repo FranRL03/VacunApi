@@ -1,4 +1,4 @@
-package com.salesianostriana.dam.vacunapi.dto.usuario;
+package com.salesianostriana.dam.vacunapi.domain.user.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
