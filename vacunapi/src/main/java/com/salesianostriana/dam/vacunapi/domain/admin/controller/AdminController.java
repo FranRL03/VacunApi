@@ -144,4 +144,10 @@ public class AdminController {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.updateAgenda(dto, agendaId));
     }
 
+    @PatchMapping("/agendas/{agendaId}/status")
+    public ResponseEntity<AgendaDto> statusAgenda(@PathVariable UUID agendaId, @RequestBody UpdateAgendaDto dto) {
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.updateAgenda(dto, agendaId));
+    }
+
 }
