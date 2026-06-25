@@ -10,7 +10,6 @@ import com.salesianostriana.dam.vacunapi.security.jwt.refresh.RefreshToken;
 import com.salesianostriana.dam.vacunapi.security.jwt.refresh.RefreshTokenException;
 import com.salesianostriana.dam.vacunapi.security.jwt.refresh.RefreshTokenRequest;
 import com.salesianostriana.dam.vacunapi.security.jwt.refresh.RefreshTokenService;
-import com.salesianostriana.dam.vacunapi.servicios.PatientService;
 import com.salesianostriana.dam.vacunapi.domain.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -39,7 +38,6 @@ import java.util.Optional;
 public class UserController {
 
     private final UserService userService;
-    private final PatientService pacienteServicio;
     private final AuthenticationManager authManager;
     private final JwtProvider jwtProvider;
     private final RefreshTokenService refreshTokenService;

@@ -41,6 +41,7 @@ public class DoctorAgenda {
     private boolean active;
 
     @ManyToOne
+    @JoinColumn(name = "doctor_id")
     private Doctor doctor;
 
 }
