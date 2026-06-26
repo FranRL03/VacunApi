@@ -5,7 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;
 
-public interface CitasRepositorio extends JpaRepository<Appointment, UUID> {
-
+public interface AppointmentRepository extends JpaRepository<Appointment, UUID> {
 
 }
