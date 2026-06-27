@@ -1,6 +1,7 @@
 package com.salesianostriana.dam.vacunapi.domain.appointment.repositorios;
 
 import com.salesianostriana.dam.vacunapi.domain.appointment.modelo.Appointment;
+import com.salesianostriana.dam.vacunapi.domain.appointment.modelo.AppointmentStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -18,5 +19,6 @@ public interface AppointmentRepository extends JpaRepository<Appointment, UUID> 
             UUID doctorId, LocalDateTime start, LocalDateTime end);
 
     List<Appointment> findByDoctorId (UUID id);
-    ;
+
+    List<Appointment> findByStatus (AppointmentStatus status);
 }

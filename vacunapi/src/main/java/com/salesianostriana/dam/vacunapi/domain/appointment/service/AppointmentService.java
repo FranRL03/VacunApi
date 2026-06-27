@@ -3,6 +3,7 @@ package com.salesianostriana.dam.vacunapi.domain.appointment.service;
 import com.salesianostriana.dam.vacunapi.domain.appointment.dto.AppointmentDto;
 import com.salesianostriana.dam.vacunapi.domain.appointment.mapper.AppointmentMapper;
 import com.salesianostriana.dam.vacunapi.domain.appointment.modelo.Appointment;
+import com.salesianostriana.dam.vacunapi.domain.appointment.modelo.AppointmentStatus;
 import com.salesianostriana.dam.vacunapi.domain.appointment.repositorios.AppointmentRepository;
 import com.salesianostriana.dam.vacunapi.shared.exception.EmptyException;
 import lombok.RequiredArgsConstructor;
@@ -55,6 +56,19 @@ public class AppointmentService {
          }
 
         return appointments.stream()
+                .map(appointmentMapper::toDto)
+                .toList();
+    }
+
+    public List<AppointmentDto> findByStatus (AppointmentStatus status) {
+
+        List<Appointment> list = appointmentRepository.findByStatus(status);
+
+        if (list.isEmpty()) {
+            throw new EmptyException("No appointments found for this status");
+        }
+
+        return list.stream()
                 .map(appointmentMapper::toDto)
                 .toList();
     }

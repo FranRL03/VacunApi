@@ -7,6 +7,7 @@ import com.salesianostriana.dam.vacunapi.domain.agenda.dto.UpdateAgendaDto;
 import com.salesianostriana.dam.vacunapi.domain.agenda.model.DoctorAgenda;
 import com.salesianostriana.dam.vacunapi.domain.agenda.service.AgendaService;
 import com.salesianostriana.dam.vacunapi.domain.appointment.dto.AppointmentDto;
+import com.salesianostriana.dam.vacunapi.domain.appointment.modelo.AppointmentStatus;
 import com.salesianostriana.dam.vacunapi.domain.appointment.service.AppointmentService;
 import com.salesianostriana.dam.vacunapi.domain.doctor.dto.CreateDoctorDto;
 import com.salesianostriana.dam.vacunapi.domain.doctor.dto.DoctorDto;
@@ -178,6 +179,12 @@ public class AdminController {
             @PathVariable UUID doctorId) {
 
         return ResponseEntity.status(HttpStatus.OK).body(appointmentService.findByDoctor(doctorId, date));
+    }
+
+    @GetMapping(value = "/appointments/state", params = "status")
+    public ResponseEntity<List<AppointmentDto>> findByStatus(
+            @RequestParam("status") AppointmentStatus status) {
+        return ResponseEntity.status(HttpStatus.OK).body(appointmentService.findByStatus(status));
     }
 
 }
