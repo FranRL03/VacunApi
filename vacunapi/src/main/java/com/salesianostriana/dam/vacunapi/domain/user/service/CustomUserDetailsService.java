@@ -1,6 +1,5 @@
-package com.salesianostriana.dam.vacunapi.servicios;
+package com.salesianostriana.dam.vacunapi.domain.user.service;
 
-import com.salesianostriana.dam.vacunapi.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

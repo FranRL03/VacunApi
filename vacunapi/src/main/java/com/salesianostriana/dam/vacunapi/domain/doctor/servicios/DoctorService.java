@@ -1,8 +1,8 @@
-package com.salesianostriana.dam.vacunapi.servicios;
+package com.salesianostriana.dam.vacunapi.domain.doctor.servicios;
 
 import com.salesianostriana.dam.vacunapi.exception.PacienteException.PacienteNotFoundExcepcion;
 import com.salesianostriana.dam.vacunapi.domain.doctor.model.Doctor;
-import com.salesianostriana.dam.vacunapi.repositorios.CitasRepositorio;
+import com.salesianostriana.dam.vacunapi.domain.appointment.repositorios.AppointmentRepository;
 import com.salesianostriana.dam.vacunapi.domain.doctor.repository.DoctorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ import java.util.UUID;
 public class DoctorService {
 
     private final DoctorRepository medicoRepositorio;
-    private final CitasRepositorio citasRepositorio;
+    private final AppointmentRepository citasRepositorio;
 
     public Doctor findById (UUID id){
 

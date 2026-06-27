@@ -7,6 +7,9 @@ import com.salesianostriana.dam.vacunapi.domain.agenda.dto.UpdateAgendaDto;
 import com.salesianostriana.dam.vacunapi.domain.agenda.mapper.AgendaMapper;
 import com.salesianostriana.dam.vacunapi.domain.agenda.model.DoctorAgenda;
 import com.salesianostriana.dam.vacunapi.domain.agenda.respository.AgendaRepository;
+import com.salesianostriana.dam.vacunapi.domain.appointment.dto.AppointmentDto;
+import com.salesianostriana.dam.vacunapi.domain.appointment.mapper.AppointmentMapper;
+import com.salesianostriana.dam.vacunapi.domain.appointment.repositorios.AppointmentRepository;
 import com.salesianostriana.dam.vacunapi.domain.doctor.dto.CreateDoctorDto;
 import com.salesianostriana.dam.vacunapi.domain.doctor.dto.DoctorDto;
 import com.salesianostriana.dam.vacunapi.domain.doctor.mapper.DoctorMapper;
@@ -20,6 +23,8 @@ import com.salesianostriana.dam.vacunapi.shared.exception.EmptyException;
 import com.salesianostriana.dam.vacunapi.shared.exception.EntityExistException;
 import com.salesianostriana.dam.vacunapi.shared.exception.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -84,23 +89,6 @@ public class AdminService {
 
         agendaRepository.save(agenda);
         return agendaMapper.toDto(agenda);
-    }
-
-    public List<AgendaDto> getAgendasToDoctor(UUID doctorId) {
-
-        Doctor doctor = doctorRepository.findById(doctorId)
-                .orElseThrow(() -> new EntityNotFoundException("The doctor", doctorId));
-
-        List<DoctorAgenda> list = agendaRepository.getAgendasToDoctor(doctor.getId());
-
-        if (list.isEmpty()) {
-            throw new EmptyException("No agendas assigned");
-        }
-
-        return list.stream()
-                .map(agendaMapper::toDto)
-                .toList();
-
     }
 
     @Transactional

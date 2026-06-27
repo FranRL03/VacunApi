@@ -5,6 +5,10 @@ import com.salesianostriana.dam.vacunapi.domain.agenda.dto.AgendaDto;
 import com.salesianostriana.dam.vacunapi.domain.agenda.dto.CreateAgendaDto;
 import com.salesianostriana.dam.vacunapi.domain.agenda.dto.UpdateAgendaDto;
 import com.salesianostriana.dam.vacunapi.domain.agenda.model.DoctorAgenda;
+import com.salesianostriana.dam.vacunapi.domain.agenda.service.AgendaService;
+import com.salesianostriana.dam.vacunapi.domain.appointment.dto.AppointmentDto;
+import com.salesianostriana.dam.vacunapi.domain.appointment.modelo.AppointmentStatus;
+import com.salesianostriana.dam.vacunapi.domain.appointment.service.AppointmentService;
 import com.salesianostriana.dam.vacunapi.domain.doctor.dto.CreateDoctorDto;
 import com.salesianostriana.dam.vacunapi.domain.doctor.dto.DoctorDto;
 import com.salesianostriana.dam.vacunapi.domain.doctor.model.Doctor;
@@ -19,10 +23,15 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -33,6 +42,8 @@ import java.util.UUID;
 public class AdminController {
 
     private final AdminService service;
+    private final AgendaService agendaService;
+    private final AppointmentService appointmentService;
 
     @Operation(summary = "Add patient")
     @ApiResponses(value = {
@@ -135,7 +146,7 @@ public class AdminController {
     @GetMapping("/doctors/{doctorId}/agendas")
     public ResponseEntity<List<AgendaDto>> getAgendas(@PathVariable UUID doctorId) {
 
-        return ResponseEntity.status(HttpStatus.OK).body(service.getAgendasToDoctor(doctorId));
+        return ResponseEntity.status(HttpStatus.OK).body(agendaService.getAgendasToDoctor(doctorId));
     }
 
     @PutMapping("/agendas/{agendaId}")
@@ -148,6 +159,32 @@ public class AdminController {
     public ResponseEntity<AgendaDto> statusAgenda(@PathVariable UUID agendaId, @RequestBody UpdateAgendaDto dto) {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(service.updateAgenda(dto, agendaId));
+    }
+
+    @GetMapping(value ="/appointments", params = "!date")
+    public Page<AppointmentDto> getAllAppointments(@PageableDefault(page=0, size =10, sort = "startDateTime") Pageable pageable) {
+        return appointmentService.findAll(pageable);
+    }
+
+    @GetMapping(value = "/appointments", params = "date")
+    ResponseEntity<List<AppointmentDto>> findByDate(
+            @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+
+        return ResponseEntity.status(HttpStatus.OK).body(appointmentService.findByDate(date));
+    }
+
+    @GetMapping("/doctors/{doctorId}/appointments")
+    ResponseEntity<List<AppointmentDto>> findAppointmentsByDoctor (
+            @RequestParam(value = "date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+            @PathVariable UUID doctorId) {
+
+        return ResponseEntity.status(HttpStatus.OK).body(appointmentService.findByDoctor(doctorId, date));
+    }
+
+    @GetMapping(value = "/appointments/state", params = "status")
+    public ResponseEntity<List<AppointmentDto>> findByStatus(
+            @RequestParam("status") AppointmentStatus status) {
+        return ResponseEntity.status(HttpStatus.OK).body(appointmentService.findByStatus(status));
     }
 
 }

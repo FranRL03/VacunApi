@@ -1,4 +1,4 @@
-package com.salesianostriana.dam.vacunapi.servicios;
+package com.salesianostriana.dam.vacunapi.domain.patient.service;
 
 
 import lombok.RequiredArgsConstructor;

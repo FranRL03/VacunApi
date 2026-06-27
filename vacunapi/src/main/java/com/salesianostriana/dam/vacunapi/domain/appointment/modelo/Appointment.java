@@ -1,5 +1,6 @@
-package com.salesianostriana.dam.vacunapi.modelo;
+package com.salesianostriana.dam.vacunapi.domain.appointment.modelo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.salesianostriana.dam.vacunapi.domain.doctor.model.Doctor;
 import com.salesianostriana.dam.vacunapi.domain.patient.model.Patient;
 import jakarta.persistence.*;
@@ -34,19 +35,18 @@ public class Appointment {
     )
     @Column(columnDefinition = "uuid")
     private UUID id;
-
-    private LocalDateTime fecha_inicio;
-    private LocalDateTime fecha_fin;
-    private String motivo;
-    private String notas;
-    private String sala;
+    private LocalDateTime startDateTime;
+    private LocalDateTime endDateTime;
+    private String reason;
+    private String notes;
+    private String room;
     @Enumerated(EnumType.STRING)
-    private AppointmentStatus estado;
+    private AppointmentStatus status;
 
     @ManyToOne
-    @JoinColumn(name = "paciente_id")
-    private Patient paciente;
+    @JoinColumn(name = "patient_id")
+    private Patient patient;
     @ManyToOne
-    @JoinColumn(name = "medico_id")
-    private Doctor medico;
+    @JoinColumn(name = "doctor_id")
+    private Doctor doctor;
 }
