@@ -172,4 +172,12 @@ public class AdminController {
         return ResponseEntity.status(HttpStatus.OK).body(appointmentService.findByDate(date));
     }
 
+    @GetMapping("/doctors/{doctorId}/appointments")
+    ResponseEntity<List<AppointmentDto>> findAppointmentsByDoctor (
+            @RequestParam(value = "date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+            @PathVariable UUID doctorId) {
+
+        return ResponseEntity.status(HttpStatus.OK).body(appointmentService.findByDoctor(doctorId, date));
+    }
+
 }

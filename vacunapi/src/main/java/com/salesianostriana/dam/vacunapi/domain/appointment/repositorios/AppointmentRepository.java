@@ -13,4 +13,10 @@ public interface AppointmentRepository extends JpaRepository<Appointment, UUID> 
 
     @Query("SELECT a FROM Appointment a WHERE a.startDateTime >= ?1 AND a.startDateTime < ?2")
     List<Appointment> findByDateRange(LocalDateTime start, LocalDateTime end);
+
+    List<Appointment> findByDoctorIdAndStartDateTimeGreaterThanEqualAndStartDateTimeLessThan(
+            UUID doctorId, LocalDateTime start, LocalDateTime end);
+
+    List<Appointment> findByDoctorId (UUID id);
+    ;
 }

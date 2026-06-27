@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -40,5 +41,29 @@ public class AppointmentService {
         return list.stream()
                 .map(appointmentMapper::toDto)
                 .toList();
+    }
+
+    public List<AppointmentDto> findByDoctor (UUID doctorId, LocalDate date) {
+
+        List<Appointment> appointments = (date != null)
+                ? findByDoctorAndDate(doctorId, date)
+                : appointmentRepository.findByDoctorId(doctorId);
+
+         if (appointments.isEmpty()) {
+             throw new EmptyException("No appointments found for this doctor"
+                     + (date != null ? " on " + date : ""));
+         }
+
+        return appointments.stream()
+                .map(appointmentMapper::toDto)
+                .toList();
+    }
+
+    private List<Appointment> findByDoctorAndDate(UUID doctorId, LocalDate date) {
+        LocalDateTime startOfDay = date.atStartOfDay();
+        LocalDateTime endOfDay = date.plusDays(1).atStartOfDay();
+
+        return appointmentRepository.findByDoctorIdAndStartDateTimeGreaterThanEqualAndStartDateTimeLessThan(
+                doctorId, startOfDay, endOfDay);
     }
 }
