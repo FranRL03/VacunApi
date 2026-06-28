@@ -19,6 +19,7 @@ import com.salesianostriana.dam.vacunapi.domain.user.mapper.UserMapper;
 import com.salesianostriana.dam.vacunapi.domain.user.model.RolUser;
 import com.salesianostriana.dam.vacunapi.domain.user.model.User;
 import com.salesianostriana.dam.vacunapi.domain.user.repository.UserRepository;
+import com.salesianostriana.dam.vacunapi.domain.user.service.UserService;
 import com.salesianostriana.dam.vacunapi.shared.exception.EmptyException;
 import com.salesianostriana.dam.vacunapi.shared.exception.EntityExistException;
 import com.salesianostriana.dam.vacunapi.shared.exception.EntityNotFoundException;
@@ -40,6 +41,8 @@ public class AdminService {
     private final DoctorRepository doctorRepository;
     private final AgendaRepository agendaRepository;
 
+    private final UserService userService;
+
     private final AdminMapper adminMapper;
     private final DoctorMapper doctorMapper;
     private final UserMapper userMapper;
@@ -50,15 +53,9 @@ public class AdminService {
     @Transactional
     public DoctorDto createDoctor(CreateDoctorDto dto) {
 
-            if (userRepository.findByUsername(dto.username()).isPresent()) {
-                throw new EntityExistException("The username ");
-            }
+            userService.validatorUser(dto.username(), dto.email());
 
-            if (userRepository.findByEmail(dto.email()).isPresent()) {
-                throw new EntityExistException("The email ");
-            }
-
-            User user = userMapper.toEntity(dto);
+            User user = userMapper.toEntityUser(dto);
 
             user.setPassword(passwordEncoder.encode(dto.password()));
             user.setRol(RolUser.DOCTOR);

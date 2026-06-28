@@ -19,6 +19,7 @@ import java.util.UUID;
 public class Patient {
 
     @Id
+    @Column(name = "id")
     private UUID id;
 
     @Schema(example = "Fran", description = "Nombre del paciente")

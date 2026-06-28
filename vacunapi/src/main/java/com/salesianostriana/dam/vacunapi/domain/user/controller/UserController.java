@@ -1,5 +1,8 @@
 package com.salesianostriana.dam.vacunapi.domain.user.controller;
 
+import com.salesianostriana.dam.vacunapi.domain.patient.dto.CreatePatientDto;
+import com.salesianostriana.dam.vacunapi.domain.patient.dto.PatientDto;
+import com.salesianostriana.dam.vacunapi.domain.patient.service.PatientService;
 import com.salesianostriana.dam.vacunapi.domain.user.dto.ChangePasswordRequest;
 import com.salesianostriana.dam.vacunapi.domain.user.dto.JwtUserResponse;
 import com.salesianostriana.dam.vacunapi.domain.user.dto.LoginRequest;
@@ -38,6 +41,7 @@ import java.util.Optional;
 public class UserController {
 
     private final UserService userService;
+    private final PatientService patientService;
     private final AuthenticationManager authManager;
     private final JwtProvider jwtProvider;
     private final RefreshTokenService refreshTokenService;
@@ -94,6 +98,12 @@ public class UserController {
         Map<String, String> response = new HashMap<>();
         response.put("message", "Session closed successfully");
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/auth/register")
+    public ResponseEntity<PatientDto> register (@RequestBody CreatePatientDto dto) {
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(patientService.save(dto));
     }
 
 
