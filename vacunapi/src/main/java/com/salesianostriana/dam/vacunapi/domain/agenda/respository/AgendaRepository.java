@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface AgendaRepository extends JpaRepository<DoctorAgenda, UUID> {
@@ -16,4 +17,6 @@ public interface AgendaRepository extends JpaRepository<DoctorAgenda, UUID> {
             WHERE a.doctor.id = ?1
             """)
     List<DoctorAgenda> getAgendasToDoctor (UUID doctorId);
+
+    Optional<DoctorAgenda> findByDoctorIdAndDayOfWeekAndActive (UUID doctorId, int dayOfWeek, boolean active);
 }
