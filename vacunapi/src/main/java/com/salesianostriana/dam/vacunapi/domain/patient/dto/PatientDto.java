@@ -7,23 +7,25 @@ import java.time.format.DateTimeFormatter;
 public record PatientDto(
 
         String id,
+        String username,
         String name,
         String lastName,
+        String email,
         String phone,
         String birthday,
         String dni,
         String address
 ) {
 
-    public static PatientDto of(Patient p) {
-        return new PatientDto(
-          p.getId().toString(),
-          p.getName(),
-          p.getLastName(),
-          p.getPhone(),
-          p.getBirthday().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-          p.getDni(),
-          p.getAddress()
-        );
-    }
+//    public static PatientDto of(Patient p) {
+//        return new PatientDto(
+//          p.getId().toString(),
+//          p.getName(),
+//          p.getLastName(),
+//          p.getPhone(),
+//          p.getBirthday().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+//          p.getDni(),
+//          p.getAddress()
+//        );
+//    }
 }

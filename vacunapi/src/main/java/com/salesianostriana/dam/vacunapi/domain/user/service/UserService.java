@@ -2,6 +2,7 @@ package com.salesianostriana.dam.vacunapi.domain.user.service;
 
 import com.salesianostriana.dam.vacunapi.domain.user.model.User;
 import com.salesianostriana.dam.vacunapi.domain.user.repository.UserRepository;
+import com.salesianostriana.dam.vacunapi.shared.exception.EntityExistException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,18 @@ public class UserService {
         }
 
         return contrasena.toString();
+    }
+
+    public void validatorUser (String username, String email) {
+
+        if (userRepository.findByUsername(username).isPresent()) {
+            throw new EntityExistException("The username ");
+        }
+
+        if (userRepository.findByEmail(email).isPresent()) {
+            throw new EntityExistException("The email ");
+        }
+
     }
     public List<User> findAll() {
         return userRepository.findAll();

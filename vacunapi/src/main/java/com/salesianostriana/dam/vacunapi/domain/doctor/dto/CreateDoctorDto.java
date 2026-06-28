@@ -1,9 +1,10 @@
 package com.salesianostriana.dam.vacunapi.domain.doctor.dto;
 
+import com.salesianostriana.dam.vacunapi.domain.user.dto.CreateUserDto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
-public record CreateDoctorDto(
+public record CreateDoctorDto (
 
         @NotBlank(message = "{create.null}")
         String username,
@@ -22,5 +23,5 @@ public record CreateDoctorDto(
 
         @NotBlank(message = "{create.null}")
         String phone
-) {
+) implements CreateUserDto{
 }
