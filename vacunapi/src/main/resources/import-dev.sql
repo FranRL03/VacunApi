@@ -13,11 +13,11 @@ INSERT INTO PATIENT (id, name, last_name, phone, birthday, dni, address) VALUES 
 
 -- INSERTS AGENDAS
 
-INSERT INTO DOCTOR_AGENDA (id, day_of_week, start_time, end_time, duration, active, doctor_id) VALUES ('2cef9086-93a1-49de-b5e7-fb3d01d44baa', 3, '09:00', '14:00', 20, true, '1cef9086-93a1-49de-b5e7-fb3d01d44baa');
+INSERT INTO DOCTOR_AGENDA (id, day_of_week, start_time, end_time, duration, active, doctor_id) VALUES ('2cef9086-93a1-49de-b5e7-fb3d01d44baa', 2, '09:00', '14:00', 20, true, '1cef9086-93a1-49de-b5e7-fb3d01d44baa');
 INSERT INTO DOCTOR_AGENDA (id, day_of_week, start_time, end_time, duration, active, doctor_id) VALUES ('2cef9086-93a1-49de-b5e7-fb3d01d44bab', 2, '09:00', '15:00', 20, false, '1cef9086-93a1-49de-b5e7-fb3d01d44baa');
 INSERT INTO DOCTOR_AGENDA (id, day_of_week, start_time, end_time, duration, active, doctor_id) VALUES ('2cef9086-93a1-49de-b5e7-fb3d01d44bac', 1, '08:30', '14:00', 20, true, '1cef9086-93a1-49de-b5e7-fb3d01d44baa');
 
 -- INSERTS APPOINTMENT
 
-INSERT INTO APPOINTMENT (id, start_date_time, end_date_time, reason, notes, room, status, patient_id, doctor_id) VALUES ('3cef9086-93a1-49de-b5e7-fb3d01d44baa', '2026-06-26 10:00', '2026-06-26 10:20', 'revision', '', 'Room 1-A', 'PENDING', '1cef9086-93a1-49de-b5e7-fb3d01d44bac', '1cef9086-93a1-49de-b5e7-fb3d01d44baa');
-INSERT INTO APPOINTMENT (id, start_date_time, end_date_time, reason, notes, room, status, patient_id, doctor_id) VALUES ('3cef9086-93a1-49de-b5e7-fb3d01d44bab', '2026-07-26 10:00', '2026-06-26 10:20', 'revision 2', '', 'Room 2-A', 'CONFIRMED', '1cef9086-93a1-49de-b5e7-fb3d01d44bac', '1cef9086-93a1-49de-b5e7-fb3d01d44bab');
+INSERT INTO APPOINTMENT (id, start_date_time, end_date_time, reason, notes, room, status, patient_id, doctor_id) VALUES ('3cef9086-93a1-49de-b5e7-fb3d01d44baa', '2026-06-30 10:00', '2026-06-30 10:20', 'revision', '', 'Room 1-A', 'PENDING', '1cef9086-93a1-49de-b5e7-fb3d01d44bac', '1cef9086-93a1-49de-b5e7-fb3d01d44baa');
+INSERT INTO APPOINTMENT (id, start_date_time, end_date_time, reason, notes, room, status, patient_id, doctor_id) VALUES ('3cef9086-93a1-49de-b5e7-fb3d01d44bab', '2026-06-29 10:00', '2026-06-29 10:20', 'revision 2', '', 'Room 2-A', 'CONFIRMED', '1cef9086-93a1-49de-b5e7-fb3d01d44bac', '1cef9086-93a1-49de-b5e7-fb3d01d44bab');

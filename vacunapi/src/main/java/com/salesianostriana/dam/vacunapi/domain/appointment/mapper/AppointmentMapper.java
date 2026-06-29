@@ -1,6 +1,7 @@
 package com.salesianostriana.dam.vacunapi.domain.appointment.mapper;
 
 import com.salesianostriana.dam.vacunapi.domain.appointment.dto.AppointmentDto;
+import com.salesianostriana.dam.vacunapi.domain.appointment.dto.CreateAppointmentDto;
 import com.salesianostriana.dam.vacunapi.domain.appointment.modelo.Appointment;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -17,6 +18,7 @@ public interface AppointmentMapper {
     @Mapping(source = "startDateTime", target = "startDateTime", qualifiedByName = "formatDate")
     @Mapping(source = "endDateTime", target = "endDateTime", qualifiedByName = "formatDate")
     AppointmentDto toDto (Appointment appointment);
+
 
     @Named("formatDate")
     default String formatDate(LocalDateTime date) {
