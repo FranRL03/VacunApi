@@ -12,10 +12,10 @@ import com.salesianostriana.dam.vacunapi.domain.doctor.model.Doctor;
 import com.salesianostriana.dam.vacunapi.domain.doctor.repository.DoctorRepository;
 import com.salesianostriana.dam.vacunapi.domain.patient.model.Patient;
 import com.salesianostriana.dam.vacunapi.domain.patient.repository.PatientRepository;
+import com.salesianostriana.dam.vacunapi.shared.exception.AppointmentException;
 import com.salesianostriana.dam.vacunapi.shared.exception.EmptyException;
 import com.salesianostriana.dam.vacunapi.shared.exception.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.BadRequestException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -99,20 +98,24 @@ public class AppointmentService {
 
         int dayOfWeek = dto.date().getDayOfWeek().getValue();
 
-        Optional<DoctorAgenda> doctorAgenda = agendaRepository.findByDoctorIdAndDayOfWeekAndActive(dto.doctorId(), dayOfWeek, true);
+        DoctorAgenda doctorAgenda = agendaRepository.findByDoctorIdAndDayOfWeekAndActive(dto.doctorId(), dayOfWeek, true)
+                .orElseThrow(() -> new EntityNotFoundException("No agenda assigned for this day ", dayOfWeek));
 
-        LocalTime hourLimited = dto.hour().plusMinutes(doctorAgenda.get().getDuration());
+        LocalTime hourLimited = dto.hour().plusMinutes(doctorAgenda.getDuration());
 
-        if(hourLimited.isAfter(doctorAgenda.get().getEndTime()))
-            throw new IllegalArgumentException("The appointment exceeds the doctor's available schedule");
+        if(hourLimited.isAfter(doctorAgenda.getEndTime()) || dto.hour().isBefore(doctorAgenda.getStartTime()))
+            throw new AppointmentException("The appointment exceeds the doctor's available schedule.");
 
         LocalDateTime start = dto.date().atTime(dto.hour());
-        LocalDateTime end = start.plusMinutes(doctorAgenda.get().getDuration());
+        LocalDateTime end = start.plusMinutes(doctorAgenda.getDuration());
+
+        if (start.isBefore(LocalDateTime.now()))
+            throw new AppointmentException("The appointment start time is earlier than the current time.");
 
         List<Appointment> list = appointmentRepository.findOverlappingAppointments(dto.doctorId(), start, end);
 
         if (!list.isEmpty()) {
-            throw new IllegalArgumentException("There is already an appointment in that time slot");
+            throw new AppointmentException("There is already an appointment in that time slot");
         }
 
         Appointment appointment = Appointment.builder()
