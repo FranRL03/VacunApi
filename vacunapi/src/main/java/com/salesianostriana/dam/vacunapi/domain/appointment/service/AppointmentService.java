@@ -3,6 +3,7 @@ package com.salesianostriana.dam.vacunapi.domain.appointment.service;
 import com.salesianostriana.dam.vacunapi.domain.agenda.model.DoctorAgenda;
 import com.salesianostriana.dam.vacunapi.domain.agenda.respository.AgendaRepository;
 import com.salesianostriana.dam.vacunapi.domain.appointment.dto.AppointmentDto;
+import com.salesianostriana.dam.vacunapi.domain.appointment.dto.CanceledAppointmentDto;
 import com.salesianostriana.dam.vacunapi.domain.appointment.dto.CreateAppointmentDto;
 import com.salesianostriana.dam.vacunapi.domain.appointment.mapper.AppointmentMapper;
 import com.salesianostriana.dam.vacunapi.domain.appointment.modelo.Appointment;
@@ -12,6 +13,7 @@ import com.salesianostriana.dam.vacunapi.domain.doctor.model.Doctor;
 import com.salesianostriana.dam.vacunapi.domain.doctor.repository.DoctorRepository;
 import com.salesianostriana.dam.vacunapi.domain.patient.model.Patient;
 import com.salesianostriana.dam.vacunapi.domain.patient.repository.PatientRepository;
+import com.salesianostriana.dam.vacunapi.shared.exception.AccessDeniedException;
 import com.salesianostriana.dam.vacunapi.shared.exception.AppointmentException;
 import com.salesianostriana.dam.vacunapi.shared.exception.EmptyException;
 import com.salesianostriana.dam.vacunapi.shared.exception.EntityNotFoundException;
@@ -127,6 +129,27 @@ public class AppointmentService {
                 .doctor(doctor)
                 .patient(patient)
                 .build();
+
+        Appointment savedAppointment = appointmentRepository.save(appointment);
+
+        return appointmentMapper.toDto(savedAppointment);
+
+    }
+
+    public AppointmentDto canceledAppointment (CanceledAppointmentDto dto, UUID user, UUID appointmentId) {
+
+        Appointment appointment = appointmentRepository.findById(appointmentId)
+                .orElseThrow(() -> new EntityNotFoundException("This appointment ", appointmentId));
+
+        boolean isPatientOfAppointment = appointment.getPatient().getId().equals(user);
+        boolean isDoctorOfAppointment = appointment.getDoctor().getId().equals(user);
+
+        if (!isPatientOfAppointment && !isDoctorOfAppointment) {
+            throw new AccessDeniedException("You are not allowed to cancel this appointment");
+        }
+
+        appointment.setStatus(AppointmentStatus.CANCELED);
+        appointment.setReason(dto.cancellationReason());
 
         Appointment savedAppointment = appointmentRepository.save(appointment);
 
