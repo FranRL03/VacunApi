@@ -149,7 +149,7 @@ public class AppointmentService {
         }
 
         appointment.setStatus(AppointmentStatus.CANCELED);
-        appointment.setReason(dto.cancellationReason());
+        appointment.setNotes(dto.cancellationReason());
 
         Appointment savedAppointment = appointmentRepository.save(appointment);
 
