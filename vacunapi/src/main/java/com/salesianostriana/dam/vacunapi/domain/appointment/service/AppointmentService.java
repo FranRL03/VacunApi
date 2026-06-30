@@ -26,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.UUID;
 
@@ -136,20 +137,33 @@ public class AppointmentService {
 
     }
 
-    public AppointmentDto canceledAppointment (CanceledAppointmentDto dto, UUID user, UUID appointmentId) {
+    public AppointmentDto canceledAppointment (CanceledAppointmentDto dto, UUID userId, UUID appointmentId) {
 
         Appointment appointment = appointmentRepository.findById(appointmentId)
                 .orElseThrow(() -> new EntityNotFoundException("This appointment ", appointmentId));
 
-        boolean isPatientOfAppointment = appointment.getPatient().getId().equals(user);
-        boolean isDoctorOfAppointment = appointment.getDoctor().getId().equals(user);
+        boolean isPatientOfAppointment = appointment.getPatient().getId().equals(userId);
+        boolean isDoctorOfAppointment = appointment.getDoctor().getId().equals(userId);
 
-        if (!isPatientOfAppointment && !isDoctorOfAppointment) {
-            throw new AccessDeniedException("You are not allowed to cancel this appointment");
-        }
+        if (!isPatientOfAppointment && !isDoctorOfAppointment)
+            throw new AccessDeniedException("You are not allowed to cancel this appointment.");
+
+        if (appointment.getStatus() == AppointmentStatus.CONFIRMED || appointment.getStatus() == AppointmentStatus.CANCELED)
+            throw new AppointmentException((appointment.getStatus() == AppointmentStatus.CANCELED)
+                    ? "This appointment is already canceled."
+                    :  "This appointment cannot be cancel.");
+
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime start = appointment.getStartDateTime();
+
+        if (start.isBefore(now))
+            throw new AppointmentException("You cannot cancel past appointments.");
+
+        if (start.isBefore(now.plusHours(2)))
+            throw new AppointmentException("You cannot cancel less than 2 hours before the appointment.");
 
         appointment.setStatus(AppointmentStatus.CANCELED);
-        appointment.setNotes(dto.cancellationReason());
+        appointment.setNotes(dto.cancellationReason()); // cambiar una vez tenga hecha la auditoria
 
         Appointment savedAppointment = appointmentRepository.save(appointment);
 

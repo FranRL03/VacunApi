@@ -25,6 +25,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, UUID> 
     @Query("SELECT a FROM Appointment a " +
             "WHERE a.doctor.id = ?1 " +
             "AND a.startDateTime < ?3 " +
-            "AND a.endDateTime > ?2")
+            "AND a.endDateTime > ?2 " +
+            "AND a.status != CANCELED")
     List<Appointment> findOverlappingAppointments(UUID doctorId, LocalDateTime start, LocalDateTime end);
 }
