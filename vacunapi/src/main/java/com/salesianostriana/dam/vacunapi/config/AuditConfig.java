@@ -1,5 +1,6 @@
 package com.salesianostriana.dam.vacunapi.config;
 
+import com.salesianostriana.dam.vacunapi.domain.user.model.User;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
