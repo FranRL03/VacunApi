@@ -14,6 +14,7 @@ import com.salesianostriana.dam.vacunapi.domain.doctor.dto.DoctorDto;
 import com.salesianostriana.dam.vacunapi.domain.doctor.model.Doctor;
 import com.salesianostriana.dam.vacunapi.domain.patient.dto.CreatePatientDto;
 import com.salesianostriana.dam.vacunapi.domain.patient.dto.PatientDto;
+import com.salesianostriana.dam.vacunapi.domain.user.model.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -29,6 +30,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -71,9 +73,9 @@ public class AdminController {
                     content = @Content)
     })
     @PostMapping("/")
-    public ResponseEntity<DoctorDto> addDoctor(@RequestBody CreateDoctorDto newDoctor) {
+    public ResponseEntity<DoctorDto> addDoctor(@RequestBody CreateDoctorDto newDoctor, @AuthenticationPrincipal User userAuth) {
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.createDoctor(newDoctor));
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.createDoctor(newDoctor,userAuth));
     }
 
     @Operation(summary = "Create agenda")
@@ -102,9 +104,9 @@ public class AdminController {
                     content = @Content)
     })
     @PostMapping("/doctors/{doctorId}/agendas")
-    public ResponseEntity<AgendaDto> addAAgenda(@PathVariable UUID doctorId, @RequestBody CreateAgendaDto agenda) {
+    public ResponseEntity<AgendaDto> addAAgenda(@PathVariable UUID doctorId, @RequestBody CreateAgendaDto agenda, @AuthenticationPrincipal User userAuth) {
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.createAgenda(agenda, doctorId));
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.createAgenda(agenda, doctorId, userAuth));
     }
 
     @Operation(summary = "Get agendas")

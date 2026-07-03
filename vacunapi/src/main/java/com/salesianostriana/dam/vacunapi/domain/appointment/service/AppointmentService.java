@@ -9,10 +9,15 @@ import com.salesianostriana.dam.vacunapi.domain.appointment.mapper.AppointmentMa
 import com.salesianostriana.dam.vacunapi.domain.appointment.modelo.Appointment;
 import com.salesianostriana.dam.vacunapi.domain.appointment.modelo.AppointmentStatus;
 import com.salesianostriana.dam.vacunapi.domain.appointment.repositorios.AppointmentRepository;
+import com.salesianostriana.dam.vacunapi.domain.audit.model.AuditAction;
+import com.salesianostriana.dam.vacunapi.domain.audit.model.AuditEntity;
+import com.salesianostriana.dam.vacunapi.domain.audit.service.AuditService;
 import com.salesianostriana.dam.vacunapi.domain.doctor.model.Doctor;
 import com.salesianostriana.dam.vacunapi.domain.doctor.repository.DoctorRepository;
 import com.salesianostriana.dam.vacunapi.domain.patient.model.Patient;
 import com.salesianostriana.dam.vacunapi.domain.patient.repository.PatientRepository;
+import com.salesianostriana.dam.vacunapi.domain.user.model.User;
+import com.salesianostriana.dam.vacunapi.domain.user.repository.UserRepository;
 import com.salesianostriana.dam.vacunapi.shared.exception.AccessDeniedException;
 import com.salesianostriana.dam.vacunapi.shared.exception.AppointmentException;
 import com.salesianostriana.dam.vacunapi.shared.exception.EmptyException;
@@ -39,6 +44,8 @@ public class AppointmentService {
     private final DoctorRepository doctorRepository;
     private final AgendaRepository agendaRepository;
     private final PatientRepository patientRepository;
+    private final AuditService auditService;
+    private final UserRepository userRepository;
 
     public Page<AppointmentDto> findAll (Pageable pageable) {
 
@@ -133,11 +140,16 @@ public class AppointmentService {
 
         Appointment savedAppointment = appointmentRepository.save(appointment);
 
+        auditService.audit(patient.getUser(), AuditAction.CREATE, AuditEntity.APPOINTMENT, savedAppointment.getId(), "New apppointment");
+
         return appointmentMapper.toDto(savedAppointment);
 
     }
 
     public AppointmentDto canceledAppointment (CanceledAppointmentDto dto, UUID userId, UUID appointmentId) {
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User", userId));
 
         Appointment appointment = appointmentRepository.findById(appointmentId)
                 .orElseThrow(() -> new EntityNotFoundException("This appointment ", appointmentId));
@@ -166,6 +178,8 @@ public class AppointmentService {
         appointment.setNotes(dto.cancellationReason()); // cambiar una vez tenga hecha la auditoria
 
         Appointment savedAppointment = appointmentRepository.save(appointment);
+
+        auditService.audit(user, AuditAction.CANCEL, AuditEntity.APPOINTMENT, appointmentId, dto.cancellationReason());
 
         return appointmentMapper.toDto(savedAppointment);
 

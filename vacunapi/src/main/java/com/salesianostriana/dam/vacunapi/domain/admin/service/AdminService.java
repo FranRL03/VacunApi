@@ -10,6 +10,9 @@ import com.salesianostriana.dam.vacunapi.domain.agenda.respository.AgendaReposit
 import com.salesianostriana.dam.vacunapi.domain.appointment.dto.AppointmentDto;
 import com.salesianostriana.dam.vacunapi.domain.appointment.mapper.AppointmentMapper;
 import com.salesianostriana.dam.vacunapi.domain.appointment.repositorios.AppointmentRepository;
+import com.salesianostriana.dam.vacunapi.domain.audit.model.AuditAction;
+import com.salesianostriana.dam.vacunapi.domain.audit.model.AuditEntity;
+import com.salesianostriana.dam.vacunapi.domain.audit.service.AuditService;
 import com.salesianostriana.dam.vacunapi.domain.doctor.dto.CreateDoctorDto;
 import com.salesianostriana.dam.vacunapi.domain.doctor.dto.DoctorDto;
 import com.salesianostriana.dam.vacunapi.domain.doctor.mapper.DoctorMapper;
@@ -42,6 +45,7 @@ public class AdminService {
     private final AgendaRepository agendaRepository;
 
     private final UserService userService;
+    private final AuditService auditService;
 
     private final AdminMapper adminMapper;
     private final DoctorMapper doctorMapper;
@@ -51,7 +55,7 @@ public class AdminService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public DoctorDto createDoctor(CreateDoctorDto dto) {
+    public DoctorDto createDoctor(CreateDoctorDto dto, User userAuth) {
 
             userService.validatorUser(dto.username(), dto.email());
 
@@ -68,12 +72,14 @@ public class AdminService {
 
             Doctor savedDoctor = doctorRepository.save(doctor);
 
+            auditService.audit(userAuth, AuditAction.CREATE, AuditEntity.DOCTOR, savedDoctor.getId(), "Create doctor");
+
             return doctorMapper.toDto(savedDoctor);
 
     }
 
     @Transactional
-    public AgendaDto createAgenda(CreateAgendaDto dto, UUID doctorId) {
+    public AgendaDto createAgenda(CreateAgendaDto dto, UUID doctorId, User userAuth) {
 
         Doctor doctor = doctorRepository.findById(doctorId)
                 .orElseThrow(() -> new EntityNotFoundException("The doctor", doctorId));
@@ -84,8 +90,11 @@ public class AdminService {
         agenda.setDuration(20);
         agenda.setActive(true);
 
-        agendaRepository.save(agenda);
-        return agendaMapper.toDto(agenda);
+        DoctorAgenda savedAgenda = agendaRepository.save(agenda);
+
+        auditService.audit(userAuth, AuditAction.CREATE, AuditEntity.AGENDA, savedAgenda.getId(), "Create agenda for a doctor");
+
+        return agendaMapper.toDto(savedAgenda);
     }
 
     @Transactional

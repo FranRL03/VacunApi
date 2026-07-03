@@ -25,4 +25,16 @@ public class AuditorAwareImpl implements AuditorAware<String> {
 
 
     }
+
+    // AUDITORIA AUTOMATICA
+
+//    @Override
+//    public Optional<User> getCurrentAuditor() {
+//        return Optional.ofNullable(SecurityContextHolder.getContext())
+//                .map(SecurityContext::getAuthentication)
+//                .filter(Authentication::isAuthenticated)
+//                .map(Authentication::getPrincipal)
+//                .filter(principal -> principal instanceof User)
+//                .map(User.class::cast);
+//    }
 }
