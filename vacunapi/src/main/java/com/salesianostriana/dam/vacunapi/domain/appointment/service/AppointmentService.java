@@ -185,6 +185,16 @@ public class AppointmentService {
 
     }
 
+    public Page<AppointmentDto> listAppointmentsPatientLoggedIn(Pageable page, UUID patientId) {
+
+        Patient patient = patientRepository.findById(patientId)
+                .orElseThrow(() -> new EntityNotFoundException("The patient", patientId));
+
+        return appointmentRepository.findByPatientId(patient.getId(), page)
+                .map(appointmentMapper::toDto);
+
+    }
+
     private List<Appointment> findByDoctorAndDate(UUID doctorId, LocalDate date) {
         LocalDateTime startOfDay = date.atStartOfDay();
         LocalDateTime endOfDay = date.plusDays(1).atStartOfDay();
