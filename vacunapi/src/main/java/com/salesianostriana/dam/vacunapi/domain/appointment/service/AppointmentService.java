@@ -140,6 +140,8 @@ public class AppointmentService {
 
         Appointment savedAppointment = appointmentRepository.save(appointment);
 
+        auditService.audit(patient.getUser(), AuditAction.CREATE, AuditEntity.APPOINTMENT, savedAppointment.getId(), "New apppointment");
+
         return appointmentMapper.toDto(savedAppointment);
 
     }
