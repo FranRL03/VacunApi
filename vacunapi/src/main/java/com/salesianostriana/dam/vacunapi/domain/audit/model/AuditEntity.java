@@ -5,5 +5,6 @@ public enum AuditEntity {
     DOCTOR,
     PATIENT,
     APPOINTMENT,
-    AGENDA
+    AGENDA,
+    WAITING_LIST,
 }
