@@ -195,7 +195,7 @@ public class AppointmentService {
 
     }
 
-    private List<Appointment> findByDoctorAndDate(UUID doctorId, LocalDate date) {
+    public List<Appointment> findByDoctorAndDate(UUID doctorId, LocalDate date) {
         LocalDateTime startOfDay = date.atStartOfDay();
         LocalDateTime endOfDay = date.plusDays(1).atStartOfDay();
 
